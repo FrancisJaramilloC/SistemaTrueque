@@ -1,8 +1,9 @@
 from pydantic import BaseModel
 
-class UserSchema(BaseModel):
+class ClienteSchema(BaseModel):
     id: str | None = None #El id es opcional porque lo genera la base de datos
-    name: str
+    email: str
     username: str
-    user_password: str
-    user_email: str
+    contrasena: str
+    estado: bool
+    persona_id: int #Llave foranea
