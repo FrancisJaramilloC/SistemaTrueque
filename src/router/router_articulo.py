@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from src.schema.articulo_schema import ArticuloSchema
 from config.db import conn, engine
 from src.model.articulo import articulos
+from fastapi import Depends, HTTPException
 
 articulo_router = APIRouter()
 
@@ -24,22 +25,29 @@ def create_articulo(data_articulo: ArticuloSchema):
         conn.execute(articulos.insert().values(new_articulo))
     return {"message": "Articulo creado correctamente"}
 
-@articulo_router.patch("/api/articulo/update/{id}")
-def update_articulo(id: int, data_articulo: ArticuloSchema):
-    data = data_articulo.dict(exclude_unset=True)
-    if "id" in data:
-        data.pop("id")  # Evitamos conflictos con el id en el cuerpo
-    with engine.begin() as conn:
-        result = conn.execute(articulos.update().where(articulos.c.id == id).values(data))
-    if result.rowcount == 0:
-        return {"message": f"No se encontró articulo con id {id}"}
-    return {"message": "Articulo actualizado correctamente"}
+@articulo_router.delete("/api/articulo/delete/{articulo_id}")
+def delete_articulo(articulo_id: int):
 
-@articulo_router.delete("/api/articulo/delete/{id}")
-def delete_articulo(id: int):
-    with engine.begin() as conn:
-        result = conn.execute(articulos.delete().where(articulos.c.id == id))
-    if result.rowcount == 0:
-        return {"message": f"No se encontró articulo con id {id}"}
-    return {"message": "Articulo eliminado correctamente"}
+    existing_articulo = conn.execute(select(articulos).where(articulos.c.id == articulo_id)).fetchone()
+    if existing_articulo is None:
+        raise HTTPException(status_code=404, detail="Artículo no encontrado")
 
+    conn.execute(articulos.delete().where(articulos.c.id == articulo_id))
+    return {"message": "Artículo eliminado correctamente"}
+
+# Seguridad mejorada: solo el propietario puede eliminar su artículo
+
+
+@articulo_router.delete("/api/articulo/delete/{articulo_id}")
+def delete_articulo(articulo_id: int, usuario_actual: dict = Depends(get_usuario_actual)): 
+    
+    articulo = conn.execute(select(articulos).where(articulos.c.id == articulo_id)).fetchone()
+
+    if not articulo:
+        raise HTTPException(status_code=404, detail="Artículo no encontrado")
+
+    if articulo.id_usuario != usuario_actual["id"]:
+        raise HTTPException(status_code=403, detail="Acción no permitida. No eres el propietario de este artículo.")
+
+    conn.execute(articulos.delete().where(articulos.c.id == articulo_id))
+    return {"message": "Artículo eliminado correctamente"}

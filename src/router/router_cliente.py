@@ -3,7 +3,9 @@ from src.schema.cliente_schema import ClienteSchema
 from config.db import conn
 from src.model.cliente import clientes
 from config.db import engine
+from passlib.context import CryptContext
 
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 cliente_router = APIRouter()
 
@@ -22,13 +24,20 @@ def get_cliente(id: int):
     if result:
         return dict(result._mapping)
     return {"message": f"No se encontró cliente con id {id}"}
-
+ 
 @cliente_router.post("/api/cliente/create")
 def create_cliente(data_cliente: ClienteSchema):
     new_cliente = data_cliente.dict()
+    
+    hashed_password = pwd_context.hash(new_cliente["contrasena"])
+    new_cliente["contrasena"] = hashed_password
+    
     with engine.begin() as conn:
+
         conn.execute(clientes.insert().values(new_cliente))
     return {"message": "Cliente creado correctamente"}
+
+
 
 @cliente_router.put("/api/cliente/update/{id}")
 def update_cliente(id: int, data_cliente: ClienteSchema):

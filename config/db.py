@@ -1,6 +1,16 @@
+import os
+from dotenv import load_dotenv
 from sqlalchemy import create_engine, MetaData
 
-engine = create_engine("mariadb+mariadbconnector://root:1234@localhost:3307/sistema_trueques") 
+load_dotenv()
 
-meta_data = MetaData()
-conn = engine.connect() #Mantiene la conexion abierta
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = os.getenv("DB_HOST")
+DB_PORT = os.getenv("DB_PORT")
+DB_NAME = os.getenv("DB_NAME")
+db_url = f"mariadb+mariadbconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+
+engine = create_engine(db_url)
+
+
