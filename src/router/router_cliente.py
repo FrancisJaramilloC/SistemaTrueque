@@ -25,6 +25,10 @@ def get_cliente(id: int):
         return dict(result._mapping)
     return {"message": f"No se encontró cliente con id {id}"}
  
+
+#Toma la contraseña en texto plano que viene del usuario.
+#Reemplaza en el diccionario new_cliente por su versión hasheada.
+#Guarda ese diccionario en la base de datos. Por lo tanto, lo que se almacena no es la contraseña original, sino el hash.
 @cliente_router.post("/api/cliente/create")
 def create_cliente(data_cliente: ClienteSchema):
     new_cliente = data_cliente.dict()

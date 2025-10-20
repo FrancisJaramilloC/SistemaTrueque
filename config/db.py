@@ -2,6 +2,9 @@ import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, MetaData
 
+# Se leen las credenciales de la BD desde variables de entorno para evitar exponerlas en el código.
+# La configuración se carga desde un archivo .env usando python-dotenv.
+
 load_dotenv()
 
 DB_USER = os.getenv("DB_USER")

@@ -37,7 +37,6 @@ def delete_articulo(articulo_id: int):
 
 # Seguridad mejorada: solo el propietario puede eliminar su artículo
 
-
 @articulo_router.delete("/api/articulo/delete/{articulo_id}")
 def delete_articulo(articulo_id: int, usuario_actual: dict = Depends(get_usuario_actual)): 
     
