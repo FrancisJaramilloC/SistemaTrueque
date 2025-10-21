@@ -3,6 +3,7 @@ from src.schema.articulo_schema import ArticuloSchema
 from config.db import conn, engine
 from src.model.articulo import articulos
 from fastapi import Depends, HTTPException
+from fastapi import Depends
 
 articulo_router = APIRouter()
 
@@ -36,6 +37,8 @@ def delete_articulo(articulo_id: int):
     return {"message": "Artículo eliminado correctamente"}
 
 # Seguridad mejorada: solo el propietario puede eliminar su artículo
+def get_usuario_actual():
+    return {"id": 1}
 
 @articulo_router.delete("/api/articulo/delete/{articulo_id}")
 def delete_articulo(articulo_id: int, usuario_actual: dict = Depends(get_usuario_actual)): 
@@ -50,3 +53,6 @@ def delete_articulo(articulo_id: int, usuario_actual: dict = Depends(get_usuario
 
     conn.execute(articulos.delete().where(articulos.c.id == articulo_id))
     return {"message": "Artículo eliminado correctamente"}
+
+
+

@@ -7,4 +7,4 @@ trueques = Table("trueques", meta_data,
                 Column("fecha", Date, nullable=False),
                 Column("articulo_id", Integer, ForeignKey("articulos.id"), nullable=False)
             )
-
+ 
