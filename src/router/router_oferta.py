@@ -2,6 +2,8 @@ from fastapi import APIRouter
 from src.schema.oferta_schema import OfertaSchema
 from config.db import conn, engine
 from src.model.oferta import ofertas
+from fastapi import Depends, HTTPException
+from fastapi import Depends
 
 oferta_router = APIRouter()
 
@@ -35,10 +37,30 @@ def update_oferta(id: int, data_oferta: OfertaSchema):
         return {"message": f"No se encontró oferta con id {id}"}
     return {"message": "Oferta actualizada correctamente"}
 
-@oferta_router.delete("/api/oferta/delete/{id}")
-def delete_oferta(id: int): 
-    with engine.begin() as conn:
-        result = conn.execute(ofertas.delete().where(ofertas.c.id == id))
-    if result.rowcount == 0:
-        return {"message": f"No se encontró oferta con id {id}"}
-    return {"message": "Oferta eliminada correctamente"}
+@oferta_router.delete("/api/oferta/delete/{oferta_id}")
+def delete_oferta(oferta_id: int):
+
+    existing_oferta = conn.execute(select(ofertas).where(ofertas.c.id == oferta_id)).fetchone()
+    if existing_oferta is None:
+        raise HTTPException(status_code=404, detail="oferta no encontrado")
+
+    conn.execute(ofertas.delete().where(ofertas.c.id == oferta_id))
+    return {"message": "oferta eliminado correctamente"}
+
+# Seguridad mejorada: solo el propietario puede eliminar su oferta
+def get_usuario_actual():
+    return {"id": 1}
+
+@oferta_router.delete("/api/oferta/delete/{oferta_id}")
+def delete_oferta(oferta_id: int, usuario_actual: dict = Depends(get_usuario_actual)):
+
+    oferta = conn.execute(select(ofertas).where(ofertas.c.id == oferta_id)).fetchone()
+
+    if not oferta:
+        raise HTTPException(status_code=404, detail="oferta no encontrado")
+
+    if oferta.id_usuario != usuario_actual["id"]:
+        raise HTTPException(status_code=403, detail="Acción no permitida. No eres el propietario de este oferta.")
+
+    conn.execute(ofertas.delete().where(ofertas.c.id == oferta_id))
+    return {"message": "oferta eliminado correctamente"}

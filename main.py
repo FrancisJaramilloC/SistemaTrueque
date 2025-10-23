@@ -6,7 +6,9 @@ from src.router.router_persona import persona_router
 from src.router.router_categoria import categoria_router
 from src.router.router_articulo import articulo_router
 from src.router.router_oferta import oferta_router
-from src.model import  *
+from src.model import *
+from config.db import engine, meta_data
+meta_data.create_all(engine)
 
 app = FastAPI()
 
