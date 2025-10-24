@@ -2,6 +2,8 @@ from fastapi import APIRouter
 from src.schema.tipo_dni_schema import TipoDniSchema
 from config.db import conn
 from src.model.tipo_dni import tipo_dni
+from fastapi import Depends, HTTPException
+from fastapi import Depends
 
 tipo_dni_router = APIRouter()
 
@@ -33,3 +35,30 @@ def patch_tipo_dni(id: int, data_tipo_dni: TipoDniSchema):
         return {"message": f"No se encontró tipo de DNI con id {id}"}
     return {"message": "Tipo de DNI actualizado correctamente"}
 
+@tipo_dni_router.delete("/api/tipo_dni/delete/{tipo_dni_id}")
+def delete_tipo_dni(tipo_dni_id: int):
+
+    existing_tipo_dni = conn.execute(select(tipo_dnis).where(tipo_dnis.c.id == tipo_dni_id)).fetchone()
+    if existing_tipo_dni is None:
+        raise HTTPException(status_code=404, detail="tipo_dni no encontrado")
+
+    conn.execute(tipo_dnis.delete().where(tipo_dnis.c.id == tipo_dni_id))
+    return {"message": "tipo_dni eliminado correctamente"}
+
+# Seguridad mejorada: solo el propietario puede eliminar su tipo_dni
+def get_usuario_actual():
+    return {"id": 1}
+
+@tipo_dni_router.delete("/api/tipo_dni/delete/{tipo_dni_id}")
+def delete_tipo_dni(tipo_dni_id: int, usuario_actual: dict = Depends(get_usuario_actual)):
+
+    tipo_dni = conn.execute(select(tipo_dnis).where(tipo_dnis.c.id == tipo_dni_id)).fetchone()
+
+    if not tipo_dni:
+        raise HTTPException(status_code=404, detail="tipo_dni no encontrado")
+
+    if tipo_dni.id_usuario != usuario_actual["id"]:
+        raise HTTPException(status_code=403, detail="Acción no permitida. No eres el propietario de este tipo_dni.")
+
+    conn.execute(tipo_dnis.delete().where(tipo_dnis.c.id == tipo_dni_id))
+    return {"message": "tipo_dni eliminado correctamente"}

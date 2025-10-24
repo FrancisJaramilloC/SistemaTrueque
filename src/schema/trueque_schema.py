@@ -1,6 +1,12 @@
 from pydantic import BaseModel
-from datetime import date
+from datetime import datetime
+from typing import Optional
 
 class TruequeSchema(BaseModel):
-    id: str | None = None #El id es opcional porque lo genera la base de datos
-    fecha: date
+   
+    id: int | None = None  
+    id_articulo_ofertado: int
+    id_articulo_solicitado: int
+    estado: str
+    fecha_propuesta: datetime | None = None
+    fecha_aceptacion: datetime | None = None
