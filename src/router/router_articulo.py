@@ -4,6 +4,7 @@ from config.db import conn, engine
 from src.model.articulo import articulos
 from fastapi import Depends, HTTPException
 from fastapi import Depends
+from sqlalchemy import select
 
 articulo_router = APIRouter()
 

@@ -4,6 +4,7 @@ from config.db import conn
 from src.model.categoria import categorias
 from fastapi import Depends
 from fastapi import HTTPException
+from sqlalchemy import select
 
 categoria_router = APIRouter()
 

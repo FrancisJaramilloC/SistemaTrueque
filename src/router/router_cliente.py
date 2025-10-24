@@ -5,8 +5,7 @@ from src.model.cliente import clientes
 from config.db import engine
 from passlib.context import CryptContext
 from fastapi import Depends, HTTPException
-from fastapi import Depends
-
+from sqlalchemy import select
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

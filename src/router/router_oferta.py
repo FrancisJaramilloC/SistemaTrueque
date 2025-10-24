@@ -3,7 +3,7 @@ from src.schema.oferta_schema import OfertaSchema
 from config.db import conn, engine
 from src.model.oferta import ofertas
 from fastapi import Depends, HTTPException
-from fastapi import Depends
+from sqlalchemy import select
 
 oferta_router = APIRouter()
 

@@ -4,7 +4,7 @@ from config.db import conn
 from src.model.persona import personas
 from config.db import engine
 from fastapi import Depends, HTTPException
-from fastapi import Depends
+from sqlalchemy import select
 
 persona_router = APIRouter()
 

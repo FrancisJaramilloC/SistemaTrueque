@@ -2,8 +2,8 @@ from fastapi import APIRouter
 from src.schema.trueque_schema import TruequeSchema
 from config.db import conn 
 from src.model.trueque import trueques
-from fastapi import Depends
-from fastapi import HTTPException
+from fastapi import Depends, HTTPException
+from sqlalchemy import select
 
 trueque_router = APIRouter()
 
