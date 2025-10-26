@@ -1,38 +1,38 @@
 version: '3.8'
 
 services:
-  mariadb:
-    image: mariadb:10.11
-    container_name: mariadb_trueque
-    ports:
-      - "3307:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=admin
-      - MYSQL_DATABASE=sistematrueque
-    volumes:
-      - mariadb_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-padmin"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+  # mariadb:
+  #   image: mariadb:10.11
+  #   container_name: mariadb_trueque
+  #   ports:
+  #     - "3307:3306"
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=admin
+  #     - MYSQL_DATABASE=sistematrueque
+  #   volumes:
+  #     - mariadb_data:/var/lib/mysql
+  #   healthcheck:
+  #     test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-padmin"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
 
   backend:
     build:
-      context: ./SistemaTrueque
+      context: .
     container_name: sistema_trueque_backend
     ports:
       - "8001:8001"
     environment:
       - DB_USER=root
-      - DB_PASSWORD=admin
-      - DB_HOST=mariadb
-      - DB_PORT=3306
-      - DB_NAME=sistematrueque
+      - DB_PASSWORD=1234
+      - DB_HOST=host.docker.internal
+      - DB_PORT=3307
+      - DB_NAME=sistema_trueques
       - MICRO_CAT_URL=http://categorias:8000
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     depends_on:
-      mariadb:
-        condition: service_healthy
       categorias:
         condition: service_started
 
@@ -44,13 +44,12 @@ services:
       - "8000:8000"
     environment:
       - DB_USER=root
-      - DB_PASSWORD=admin
-      - DB_HOST=mariadb
-      - DB_PORT=3306
-      - DB_NAME=sistematrueque
-    depends_on:
-      mariadb:
-        condition: service_healthy
+      - DB_PASSWORD=1234
+      - DB_HOST=host.docker.internal
+      - DB_PORT=3307
+      - DB_NAME=sistema_trueques
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
 volumes:
   mariadb_data:
