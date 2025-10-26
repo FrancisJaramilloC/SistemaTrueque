@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:10.11
+    container_name: mariadb_trueque
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=sistematrueque
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-padmin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./SistemaTrueque
+    container_name: sistema_trueque_backend
+    ports:
+      - "8001:8001"
+    environment:
+      - DB_USER=root
+      - DB_PASSWORD=admin
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_NAME=sistematrueque
+      - MICRO_CAT_URL=http://categorias:8000
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      categorias:
+        condition: service_started
+
+  categorias:
+    build:
+      context: ./microservicio-categoria
+    container_name: microservicio_categoria
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_USER=root
+      - DB_PASSWORD=admin
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_NAME=sistematrueque
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+volumes:
+  mariadb_data:
