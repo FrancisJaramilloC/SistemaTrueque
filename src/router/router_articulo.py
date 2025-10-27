@@ -5,6 +5,8 @@ from src.model.articulo import articulos
 from fastapi import Depends, HTTPException
 from fastapi import Depends
 from sqlalchemy import select
+from src.auth.dependencies import get_current_user  # Autenticación JWT
+from src.model.cliente import clientes  # Para verificar propietario vía persona_id
 
 articulo_router = APIRouter()
 
@@ -54,6 +56,32 @@ def delete_articulo(articulo_id: int, usuario_actual: dict = Depends(get_usuario
 
     conn.execute(articulos.delete().where(articulos.c.id == articulo_id))
     return {"message": "Artículo eliminado correctamente"}
+
+
+# Ruta de ejemplo PROTEGIDA con JWT para eliminar si eres dueño
+# Mantiene los paths actuales para no romper el frontend
+# DELETE /api/articulo/secure-delete/{articulo_id}
+@articulo_router.delete("/api/articulo/secure-delete/{articulo_id}")
+def secure_delete_articulo(articulo_id: int, usuario_actual: dict = Depends(get_current_user)):
+    # Obtener cliente y su persona_id
+    q_cliente = select(clientes).where(clientes.c.id == usuario_actual["user_id"])
+    cliente_row = conn.execute(q_cliente).fetchone()
+    if not cliente_row:
+        raise HTTPException(status_code=404, detail="Cliente no encontrado")
+    persona_id_cliente = cliente_row.persona_id
+
+    # Buscar artículo
+    articulo_row = conn.execute(select(articulos).where(articulos.c.id == articulo_id)).fetchone()
+    if not articulo_row:
+        raise HTTPException(status_code=404, detail="Artículo no encontrado")
+
+    # Verificar propiedad a través de persona_id
+    if articulo_row.persona_id != persona_id_cliente:
+        raise HTTPException(status_code=403, detail="No puedes eliminar artículos de otra persona")
+
+    # Eliminar
+    conn.execute(articulos.delete().where(articulos.c.id == articulo_id))
+    return {"message": "Artículo eliminado correctamente (autenticado)", "articulo_id": articulo_id}
 
 
 
