@@ -22,17 +22,16 @@ app = FastAPI(
 
 # CONFIGURACIÓN DE CORS
 # Sin CORS, el navegador bloquearía las peticiones por seguridad.
+# Middleware para manejar CORS y permitir solicitudes desde el front-end
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,  # Orígenes permitidos (desde .env)
-    allow_credentials=True,          # Permitir cookies y headers de autenticación
-    allow_methods=["*"],             # Métodos HTTP permitidos (GET, POST, PUT, DELETE, etc.)
-    allow_headers=["*"],             # Headers permitidos (Authorization, Content-Type, etc.)
+    allow_origins=ALLOWED_ORIGINS,  
+    allow_credentials=True,          
+    allow_methods=["*"],             
+    allow_headers=["*"],             
 )
 
 # REGISTRO DE ROUTERS
-# Cada router agrupa las rutas de un módulo específico
-# Router de autenticación (login, registro, etc.)
 app.include_router(auth_router, prefix="/api/auth", tags=["Autenticación"])
 app.include_router(cliente_router, prefix="/api/clientes", tags=["Clientes"])
 app.include_router(trueque_router, prefix="/api/trueques", tags=["Trueques"])
