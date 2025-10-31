@@ -5,11 +5,24 @@ from typing import Optional
 from config.security import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 
 # CONFIGURACIÓN DE HASHEO DE CONTRASEÑAS
-# bcrypt es un algoritmo de hasheo muy seguro y lento 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Preferir argon2 (si está disponible). Como fallback usar bcrypt_sha256
+# (aplica SHA-256 antes de bcrypt y evita el límite de 72 bytes).
+pwd_context = CryptContext(schemes=["argon2", "bcrypt_sha256", "bcrypt"], deprecated="auto")
 
 def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
+    """
+    Intenta hashear con argon2 primero. Si falla (p.ej. no está instalado),
+    hace fallback a bcrypt_sha256. Si ambos fallan lanza ValueError.
+    """
+    # Intentar argon2 (recomendado)
+    try:
+        return pwd_context.hash(password, scheme="argon2")
+    except Exception:
+        # Fallback a bcrypt_sha256
+        try:
+            return pwd_context.hash(password, scheme="bcrypt_sha256")
+        except Exception as e:
+            raise ValueError(f"No fue posible hashear la contraseña: {e}") from e
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)

@@ -1,11 +1,14 @@
 from fastapi import APIRouter, HTTPException
 from src.schema.cliente_schema import ClienteSchema
 from src.model.cliente import clientes
+from src.model.persona import personas
 from config.db import engine
-from passlib.context import CryptContext
+from src.auth.auth_utils import hash_password
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+"""El hashing se centraliza en `src.auth.auth_utils.hash_password`.
+Se intentará argon2 y luego bcrypt_sha256 como fallback."""
 
 cliente_router = APIRouter()
 
@@ -31,10 +34,26 @@ def get_cliente(id: int):
 @cliente_router.post("/")
 def create_cliente(data_cliente: ClienteSchema):
     new_cliente = data_cliente.dict()
-    hashed_password = pwd_context.hash(new_cliente["contrasena"])
+    # Validar que la persona referenciada exista para evitar errores de FK
+    persona_id = new_cliente.get("persona_id")
+    with engine.connect() as db:
+        persona_existente = db.execute(personas.select().where(personas.c.id == persona_id)).fetchone()
+    if persona_existente is None:
+        raise HTTPException(status_code=400, detail=f"Persona con id {persona_id} no existe")
+
+    # Hashear contraseña y guardar. hash_password levanta ValueError si falla.
+    try:
+        hashed_password = hash_password(new_cliente["contrasena"])
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+
     new_cliente["contrasena"] = hashed_password
-    with engine.begin() as db:
-        db.execute(clientes.insert().values(new_cliente))
+    try:
+        with engine.begin() as db:
+            db.execute(clientes.insert().values(new_cliente))
+    except IntegrityError as e:
+        # Devuelve error legible en vez de 500
+        raise HTTPException(status_code=400, detail=f"Error de integridad al crear cliente: {str(e.orig)}") from e
     return {"message": "Cliente creado correctamente"}
 
 
