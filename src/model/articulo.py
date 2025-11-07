@@ -1,13 +1,15 @@
-from sqlalchemy import Table, Column, ForeignKey
-from sqlalchemy.sql.sqltypes import Integer, String, Boolean, Date
-from config.db import engine, meta_data
+from sqlalchemy import Table, Column
+from sqlalchemy.sql.sqltypes import Integer, String, DateTime
+from config.db import meta_data
 
 articulos = Table("articulos", meta_data,
-                Column("id", Integer, primary_key=True),
-                Column("descripcion", String(255), nullable=False),
-                Column("estado", Boolean, nullable=False),
-                Column("fecha", Date, nullable=False),
-                Column("persona_id", Integer, ForeignKey("personas.id"), nullable=False),
-                Column("categoria_id", Integer, ForeignKey("categorias.id"), nullable=False)
-                )
+    Column("id", Integer, primary_key=True),
+    Column("imagen_url", String(500), nullable=True),
+    Column("thumbnail_url", String(500), nullable=True),
+    Column("descripcion", String(500), nullable=False),
+    Column("categoria", String(100), nullable=False),
+    Column("estado", String(50), nullable=False),
+    Column("fecha", DateTime, nullable=False),
+    Column("id_usuario", Integer, nullable=False)
+)
 

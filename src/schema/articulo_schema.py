@@ -1,10 +1,16 @@
 from pydantic import BaseModel
+from datetime import datetime
+from typing import Optional
 
 class ArticuloSchema(BaseModel):
     id: int | None = None
-    nombre: str
     descripcion: str
-    estado: bool
-    fecha: str
-    persona_id: int  # Llave foranea
-    categoria_id: int  # Llave foranea
+    categoria: str
+    estado: str
+    fecha: datetime | None = None
+    id_usuario: int
+    imagen_url: Optional[str] = None
+    thumbnail_url: Optional[str] = None
+    
+    class Config:
+        from_attributes = True

@@ -1,12 +1,13 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy import select
 from src.schema.persona_schema import PersonaSchema
-from config.db import conn
+from config.db import conn, engine
 from src.model.persona import personas
-from config.db import engine
-from fastapi import Depends, HTTPException
-from fastapi import Depends
 
 persona_router = APIRouter()
+
+def get_usuario_actual():
+    return {"id": 1}
 
 @persona_router.get("/api/personas")
 def get_personas():
@@ -31,7 +32,7 @@ def create_persona(data_persona: PersonaSchema):
 def update_persona(id: int, data_persona: PersonaSchema):
     data = data_persona.dict()
     if "id" in data:
-        data.pop("id")  # Evitamos conflictos con el id en el cuerpo
+        data.pop("id")
     with engine.begin() as conn:
         result = conn.execute(personas.update().where(personas.c.id == id).values(data))
     if result.rowcount == 0:
@@ -39,29 +40,16 @@ def update_persona(id: int, data_persona: PersonaSchema):
     return {"message": "Persona actualizada correctamente"}
 
 @persona_router.delete("/api/persona/delete/{persona_id}")
-def delete_persona(persona_id: int):
-
-    existing_persona = conn.execute(select(personas).where(personas.c.id == persona_id)).fetchone()
-    if existing_persona is None:
-        raise HTTPException(status_code=404, detail="persona no encontrado")
-
-    conn.execute(personas.delete().where(personas.c.id == persona_id))
-    return {"message": "persona eliminado correctamente"}
-
-# Seguridad mejorada: solo el propietario puede eliminar su persona
-def get_usuario_actual():
-    return {"id": 1}
-
-@persona_router.delete("/api/persona/delete/{persona_id}")
 def delete_persona(persona_id: int, usuario_actual: dict = Depends(get_usuario_actual)):
-
+    """Eliminar una persona"""
     persona = conn.execute(select(personas).where(personas.c.id == persona_id)).fetchone()
 
     if not persona:
-        raise HTTPException(status_code=404, detail="persona no encontrado")
+        raise HTTPException(status_code=404, detail="Persona no encontrada")
 
-    if persona.id_usuario != usuario_actual["id"]:
-        raise HTTPException(status_code=403, detail="Acción no permitida. No eres el propietario de este persona.")
+    # Si quieres validar propietario, descomentar:
+    # if persona.id_usuario != usuario_actual["id"]:
+    #     raise HTTPException(status_code=403, detail="No eres el propietario")
 
     conn.execute(personas.delete().where(personas.c.id == persona_id))
-    return {"message": "persona eliminado correctamente"}
+    return {"message": "Persona eliminada correctamente"}

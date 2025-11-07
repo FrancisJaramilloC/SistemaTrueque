@@ -7,5 +7,6 @@ from .articulo import articulos
 from .oferta import ofertas
 from .trueque import trueques
 from .cliente import clientes
+from .trueque_detalle import trueques_detalle  # NUEVO
 
 meta_data.create_all(engine)
