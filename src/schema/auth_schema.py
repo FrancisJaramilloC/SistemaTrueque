@@ -1,5 +1,6 @@
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, field_validator
 from typing import Optional
+import re
 
 # ESQUEMA PARA REGISTRO DE USUARIO
 class UsuarioRegistro(BaseModel):
@@ -15,6 +16,35 @@ class UsuarioRegistro(BaseModel):
         min_length=8,  # Contraseña debe tener al menos 8 caracteres (seguridad básica)
         description="Contraseña del usuario (será hasheada antes de guardarse)"
     )
+    
+    @field_validator('contrasena')
+    @classmethod
+    def validar_contrasena_fuerte(cls, v: str) -> str:
+        """
+        Valida que la contraseña sea fuerte:
+        - Al menos 8 caracteres
+        - Al menos una mayúscula
+        - Al menos una minúscula
+        - Al menos un número
+        - Al menos un carácter especial (!@#$%^&*)
+        """
+        if len(v) < 8:
+            raise ValueError('Contraseña debe tener al menos 8 caracteres')
+        
+        if not re.search(r'[A-Z]', v):
+            raise ValueError('Contraseña debe contener al menos una mayúscula')
+        
+        if not re.search(r'[a-z]', v):
+            raise ValueError('Contraseña debe contener al menos una minúscula')
+        
+        if not re.search(r'\d', v):
+            raise ValueError('Contraseña debe contener al menos un número')
+        
+        if not re.search(r'[!@#$%^&*(),.?":{}|<>]', v):
+            raise ValueError('Contraseña debe contener al menos un carácter especial (!@#$%^&*)')
+        
+        return v
+    
     persona_id: int = Field(
         ...,
         gt=0,  # persona_id debe ser un entero positivo
@@ -36,12 +66,27 @@ class UsuarioRegistro(BaseModel):
     }
 
 
+# ESQUEMA PARA RESPUESTA DE REGISTRO (sin exponer token de verificación)
+class RegistroRespuesta(BaseModel):
+    id: int
+    email: str
+    username: str
+    estado: bool
+    persona_id: int
+    role: str
+    is_verified: bool
+    
+    model_config = {
+        "from_attributes": True  # Permite crear desde objetos de BD
+    }
+
+
 # ESQUEMA PARA LOGIN
 class UsuarioLogin(BaseModel):
-    email: EmailStr = Field(
+    username: str = Field(
         ...,
         min_length=1,
-        description="Email del usuario"
+        description="Nombre de usuario"
     )
     contrasena: str = Field(
         ...,
@@ -86,6 +131,8 @@ class UsuarioRespuesta(BaseModel):
     username: str
     estado: bool
     persona_id: int
+    role: str
+    is_verified: bool
     
     model_config = {
         "from_attributes": True  # Permite crear desde objetos de BD

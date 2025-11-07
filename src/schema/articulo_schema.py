@@ -6,5 +6,5 @@ class ArticuloSchema(BaseModel):
     descripcion: str
     estado: bool
     fecha: str
-    persona_id: int  # Llave foranea
+    cliente_id: int  # Llave foranea
     categoria_id: int  # Llave foranea
