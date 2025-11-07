@@ -21,7 +21,7 @@ class TruequeManager:
             raise HTTPException(status_code=404, detail=f"Artículo {articulo_id} no encontrado")
         
         # Comparar en minúsculas para evitar problemas de mayúsculas/minúsculas
-        if articulo.estado.lower() != "disponible":
+        if (articulo.estado or "").lower() != "disponible":
             raise HTTPException(
                 status_code=400, 
                 detail=f"Artículo {articulo_id} no está disponible (estado: {articulo.estado})"
@@ -86,18 +86,17 @@ class TruequeManager:
         trueque_id = result_trueque.inserted_primary_key[0]
         
         # Crear detalle del trueque
-        conn.execute(
-            trueques_detalle.insert().values({
-                "trueque_id": trueque_id,
-                "oferta_id": oferta_id,
-                "articulo1_id": oferta.articulo_ofrecido_id,
-                "articulo2_id": oferta.articulo_solicitado_id,
-                "usuario1_id": oferta.usuario_ofertante_id,
-                "usuario2_id": oferta.usuario_receptor_id,
-                "notas": "Trueque completado exitosamente",
-                "estado_final": "completado"
-            })
-        )
+        conn.execute(trueques_detalle.insert().values({
+            "trueque_id": trueque_id,
+            "oferta_id": oferta_id,
+            "articulo1_id": oferta.articulo_ofrecido_id,
+            "articulo2_id": oferta.articulo_solicitado_id,
+            "usuario1_id": oferta.usuario_ofertante_id,
+            "usuario2_id": oferta.usuario_receptor_id,
+            "fecha_trueque": datetime.utcnow(),
+            "notas": "Trueque completado exitosamente",
+            "estado_final": "completado"
+        }))
         
         # Actualizar estado de ambos artículos
         TruequeManager.cambiar_estado_articulo(
