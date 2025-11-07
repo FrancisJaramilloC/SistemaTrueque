@@ -8,6 +8,7 @@ from src.router.router_categoria import categoria_router
 from src.router.router_articulo import articulo_router
 from src.router.router_oferta import oferta_router
 from src.router.router_auth import auth_router  # ← Nuevo router de autenticación
+from src.router.router_transaccion import transaccion_router
 from src.model import *
 from config.db import engine, meta_data
 from config.security import ALLOWED_ORIGINS
@@ -40,6 +41,7 @@ app.include_router(persona_router, prefix="/api/personas", tags=["Personas"])
 app.include_router(categoria_router, prefix="/api/categorias", tags=["Categorias"])
 app.include_router(articulo_router, prefix="/api/articulos", tags=["Articulos"])
 app.include_router(oferta_router, prefix="/api/ofertas", tags=["Ofertas"])
+app.include_router(transaccion_router, prefix="/api/transactions", tags=["Transacciones"])
 
 @app.get("/", tags=["Root"])
 def root():
