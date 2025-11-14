@@ -14,8 +14,10 @@ Diagrama de Contexto
 
 <img width="630" height="491" alt="image" src="https://github.com/user-attachments/assets/2f2603b5-59ed-44e1-92bd-60c0abe6e139" />
 
+
 Módelo C4 NIVEL 2
 Diagrama de Contenedor
+
 <img width="645" height="515" alt="image" src="https://github.com/user-attachments/assets/df4c815b-7263-42e5-a8b5-78213ea5cb63" />
 
 Módelo C4 NIVEL 3
