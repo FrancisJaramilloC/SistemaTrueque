@@ -12,21 +12,20 @@ Requisitos No funcionales
 Módelo C4 NIVEL 1
 Diagrama de Contexto
 
-<img width="873" height="815" alt="image" src="https://github.com/user-attachments/assets/69e91081-ddb1-48bb-b380-217452a36dc6" />
+<img width="630" height="491" alt="image" src="https://github.com/user-attachments/assets/2f2603b5-59ed-44e1-92bd-60c0abe6e139" />
 
 Módelo C4 NIVEL 2
 Diagrama de Contenedor
-
-<img width="3070" height="995" alt="structurizr-Container-001" src="https://github.com/user-attachments/assets/f873d4f2-2dd1-4810-bd71-25b73cba7aeb" />
+<img width="645" height="515" alt="image" src="https://github.com/user-attachments/assets/df4c815b-7263-42e5-a8b5-78213ea5cb63" />
 
 Módelo C4 NIVEL 3
 Diagrama de Componentes
 
-![Imagen de WhatsApp 2025-10-26 a las 22 05 00_1c2eb407](https://github.com/user-attachments/assets/3c2eccf1-b01d-40f7-855a-1a5df9620c11)
+<img width="1134" height="947" alt="image" src="https://github.com/user-attachments/assets/f96b11a8-a792-4c49-beed-f3adf0a054eb" />
 
 Módelo C4 NIVEL 
 Diagrama de Codigo 
-<img width="954" height="482" alt="image" src="https://github.com/user-attachments/assets/38e52c7c-f0d4-44d9-b9c5-5615f2d61916" />
+<img width="1232" height="568" alt="image" src="https://github.com/user-attachments/assets/a6d1076e-d661-46b1-8804-9904927f97c9" />
 
 
 ## Cómo ejecutar el backend (FastAPI)
