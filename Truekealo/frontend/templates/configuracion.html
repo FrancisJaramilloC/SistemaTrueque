@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Truekealo - Configuración</title>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link rel="preload" href="/assets/css/app.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="/assets/css/app.css" rel="stylesheet"></noscript>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#e84c30",
+            "background-light": "#FAF8F5",
+            "background-dark": "#211311",
+            "card-light": "#fcf9f8",
+            "card-dark": "#2a1a18",
+            "text-light": "#1b100e",
+            "text-dark": "#f8f6f6",
+            "text-muted-light": "#97594e",
+            "text-muted-dark": "#a88e89",
+            "active-light": "#f3e9e7",
+            "active-dark": "rgba(232, 76, 48, 0.2)"
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem",
+            "xl": "1rem",
+            "full": "9999px"
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+  <a href="#mainContent" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:bg-primary focus:text-white px-3 py-2 rounded">Saltar al contenido</a>
+  <a href="#mainContent" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:bg-primary focus:text-white px-3 py-2 rounded">Saltar al contenido</a>
+  <div class="relative flex min-h-screen w-full">
+    <!-- Sidebar -->
+    <aside class="sticky top-0 flex h-screen w-64 flex-col bg-card-light dark:bg-card-dark p-4">
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3 py-2">
+            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style="background-image: url('https://cdn-icons-png.flaticon.com/512/2917/2917995.png');"></div>
+            <h1 class="text-text-light dark:text-text-dark text-lg font-bold">Truekealo</h1>
+          </div>
+          <button id="darkModeToggle" class="flex items-center justify-center w-10 h-10 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" title="Cambiar tema" aria-label="Cambiar a modo oscuro o claro">
+            <span class="material-symbols-outlined" aria-hidden="true">light_mode</span>
+          </button>
+        </div>
+
+        <nav class="flex flex-col gap-2 mt-4" aria-label="Menú de navegación">
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="dashboard.html">
+            <span class="material-symbols-outlined" aria-hidden="true">home</span>
+            <p class="text-sm font-medium">Inicio</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="mis-articulos.html">
+            <span class="material-symbols-outlined" aria-hidden="true">package_2</span>
+            <p class="text-sm font-medium">Mis Artículos</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="explorar.html">
+            <span class="material-symbols-outlined" aria-hidden="true">search</span>
+            <p class="text-sm font-medium">Explorar</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="mensajes.html">
+            <span class="material-symbols-outlined" aria-hidden="true">mark_email_unread</span>
+            <p class="text-sm font-medium">Mensajes</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="perfil.html">
+            <span class="material-symbols-outlined" aria-hidden="true">person</span>
+            <p class="text-sm font-medium">Perfil</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-active-light dark:bg-active-dark text-primary focus:outline-none focus:ring-2 focus:ring-primary" href="configuracion.html" aria-current="page">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">settings</span>
+            <p class="text-sm font-medium">Configuración</p>
+          </a>
+        </nav>
+      </div>
+
+      <a href="publicar.html" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold mt-auto hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" aria-label="Subir nuevo artículo o ítem">
+        <span class="truncate">Subir Ítem</span>
+      </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="mainContent" class="flex-1 overflow-y-auto" role="main">
+      <div class="p-8 max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-text-light dark:text-text-dark mb-8">Configuración</h1>
+        
+        <div class="bg-card-light dark:bg-card-dark rounded-xl p-6 shadow-sm mb-6">
+          <h2 class="text-xl font-bold text-text-light dark:text-text-dark mb-4">Cuenta</h2>
+          <form id="accountForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-text-muted-light dark:text-text-muted-dark mb-2">Nombre Completo</label>
+              <input id="fullName" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark px-4 py-2" type="text" placeholder="Tu nombre completo" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-text-muted-light dark:text-text-muted-dark mb-2">Correo (No editable)</label>
+              <input id="email" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark px-4 py-2 opacity-60" type="email" disabled />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-text-muted-light dark:text-text-muted-dark mb-2">Teléfono (Opcional)</label>
+              <input id="phone" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark px-4 py-2" type="tel" placeholder="Tu teléfono" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-text-muted-light dark:text-text-muted-dark mb-2">Ubicación (Opcional)</label>
+              <input id="location" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark px-4 py-2" type="text" placeholder="Tu ciudad o dirección" />
+            </div>
+          </form>
+        </div>
+
+        <div class="bg-card-light dark:bg-card-dark rounded-xl p-6 shadow-sm mb-6">
+          <h2 class="text-xl font-bold text-text-light dark:text-text-dark mb-4">Foto de Perfil</h2>
+          <div class="flex flex-col sm:flex-row gap-6">
+            <div class="flex-shrink-0">
+              <div class="w-32 h-32 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center" aria-hidden="true">
+                <span class="material-symbols-outlined text-5xl text-text-muted-light dark:text-text-muted-dark" aria-hidden="true">account_circle</span>
+              </div>
+            </div>
+            <div class="flex-1">
+              <p class="text-sm text-text-muted-light dark:text-text-muted-dark mb-4">Sube una foto de perfil para personalizar tu cuenta. Formatos soportados: JPG, PNG (máximo 5MB)</p>
+              <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center cursor-pointer hover:bg-active-light dark:hover:bg-active-dark transition-colors">
+                <input id="profilePhoto" class="hidden" type="file" accept="image/jpeg,image/png" />
+                <label for="profilePhoto" class="flex flex-col items-center gap-2 cursor-pointer">
+                  <span class="material-symbols-outlined text-3xl text-text-muted-light dark:text-text-muted-dark" aria-hidden="true">cloud_upload</span>
+                  <p class="text-sm font-medium text-text-light dark:text-text-dark">Selecciona una foto o arrastra aquí</p>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-card-light dark:bg-card-dark rounded-xl p-6 shadow-sm mb-6">
+          <h2 class="text-xl font-bold text-text-light dark:text-text-dark mb-4">Seguridad</h2>
+          <div class="space-y-4">
+            <button id="btnChangePassword" class="flex items-center justify-between w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-active-light dark:hover:bg-active-dark transition-colors">
+              <div class="text-left">
+                <h3 class="font-medium text-text-light dark:text-text-dark">Cambiar Contraseña</h3>
+                <p class="text-sm !text-text-muted-light dark:!text-text-muted-dark">Actualiza tu contraseña regularmente</p>
+              </div>
+              <span class="text-primary">→</span>
+            </button>
+            <button id="btn2FA" class="flex items-center justify-between w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-active-light dark:hover:bg-active-dark transition-colors">
+              <div class="text-left">
+                <h3 class="font-medium text-text-light dark:text-text-dark" id="twoFactorTitle">Habilitar Autenticación de Dos Factores</h3>
+                <p class="text-sm !text-text-muted-light dark:!text-text-muted-dark" id="twoFactorDesc">Añade seguridad extra a tu cuenta</p>
+              </div>
+              <span class="text-primary">→</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-card-light dark:bg-card-dark rounded-xl p-6 shadow-sm mb-6">
+          <button id="btnCerrarSesion" class="w-full flex items-center justify-between px-4 py-3 border border-red-300 dark:border-red-900 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+            <div class="text-left">
+              <h3 class="font-medium text-red-600 dark:text-red-400">Cerrar Sesión</h3>
+              <p class="text-sm text-text-muted-light dark:text-text-muted-dark">Cierra tu sesión en este dispositivo</p>
+            </div>
+            <span class="material-symbols-outlined text-red-600 dark:text-red-400" aria-hidden="true">logout</span>
+          </button>
+        </div>
+
+        <div class="flex justify-end gap-3">
+          <button id="cancelBtn" class="px-6 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-text-light dark:text-text-dark font-medium hover:opacity-80 transition-opacity">
+            Cancelar
+          </button>
+          <button id="saveBtn" class="px-6 py-2 rounded-lg bg-primary text-white font-medium hover:opacity-90 transition-opacity">
+            Guardar Cambios
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal para cambiar contraseña -->
+  <div id="passwordModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-card-light dark:bg-card-dark rounded-xl p-6 max-w-md w-full mx-4">
+      <h2 class="text-2xl font-bold text-text-light dark:text-text-dark mb-4">Cambiar Contraseña</h2>
+      <form id="passwordForm" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-text-muted-light dark:text-text-muted-dark mb-2">Contraseña Actual</label>
+          <input id="currentPassword" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark px-4 py-2" type="password" required />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-text-muted-light dark:text-text-muted-dark mb-2">Nueva Contraseña</label>
+          <input id="newPassword" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark px-4 py-2" type="password" required minlength="8" />
+          <p class="text-xs text-text-muted-light dark:text-text-muted-dark mt-1">Mínimo 8 caracteres</p>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-text-muted-light dark:text-text-muted-dark mb-2">Confirmar Contraseña</label>
+          <input id="confirmPassword" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark px-4 py-2" type="password" required />
+        </div>
+        <div class="flex gap-3 pt-4">
+          <button type="button" id="cancelPasswordBtn" class="flex-1 px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-text-light dark:text-text-dark font-medium hover:opacity-80 transition-opacity">
+            Cancelar
+          </button>
+          <button type="submit" id="submitPasswordBtn" class="flex-1 px-4 py-2 rounded-lg bg-primary text-white font-medium hover:opacity-90 transition-opacity">
+            Cambiar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal para 2FA -->
+  <div id="twoFactorModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-card-light dark:bg-card-dark rounded-xl p-6 max-w-md w-full mx-4">
+      <h2 class="text-2xl font-bold text-text-light dark:text-text-dark mb-4" id="twoFactorModalTitle">Habilitar Autenticación de Dos Factores</h2>
+      <div id="twoFactorContent" class="space-y-4">
+        <p class="text-text-light dark:text-text-dark">Descarga una aplicación de autenticación como Google Authenticator o Microsoft Authenticator, luego escanea el código QR.</p>
+        <div id="qrCodeContainer" class="bg-white p-4 rounded-lg text-center">
+          <p class="text-sm text-gray-600">Código QR aquí</p>
+        </div>
+        <input id="twoFactorCode" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark px-4 py-2" type="text" placeholder="Código de 6 dígitos" maxlength="6" pattern="\d{6}" />
+        <div class="flex gap-3 pt-4">
+          <button type="button" id="cancelTwoFactorBtn" class="flex-1 px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-text-light dark:text-text-dark font-medium hover:opacity-80 transition-opacity">
+            Cancelar
+          </button>
+          <button type="button" id="submitTwoFactorBtn" class="flex-1 px-4 py-2 rounded-lg bg-primary text-white font-medium hover:opacity-90 transition-opacity">
+            Verificar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/js/include-components.js" defer></script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/api-client.js?v=2.2" defer></script>
+  <script src="/assets/js/app.js?v=2.2" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('✅ Configuración cargando...');
+      
+      const token = localStorage.getItem('access_token');
+      if (!token) {
+        window.location.href = '/templates/login.html';
+        return;
+      }
+      
+      try {
+        const userDataStr = localStorage.getItem('user_data');
+        const userData = userDataStr ? JSON.parse(userDataStr) : null;
+        
+        console.log('👤 Datos del usuario:', userData);
+        
+        // Llenar formulario con datos del usuario
+        if (userData) {
+          document.getElementById('email').value = userData.email || '';
+          document.getElementById('fullName').value = userData.nombre_completo || '';
+          document.getElementById('phone').value = userData.telefono || '';
+          document.getElementById('location').value = userData.ubicacion || '';
+        }
+        
+        // Evento guardar cambios
+        document.getElementById('saveBtn').addEventListener('click', async (e) => {
+          e.preventDefault();
+          console.log('💾 Guardando cambios...');
+          // TODO: Implementar actualización de perfil en el backend
+          if (typeof Toast !== 'undefined') {
+            Toast.success('Cambios guardados correctamente');
+          }
+        });
+        
+        // Evento cancelar
+        document.getElementById('cancelBtn').addEventListener('click', () => {
+          window.location.href = '/templates/dashboard.html';
+        });
+        
+        // Modal de cambiar contraseña
+        const passwordModal = document.getElementById('passwordModal');
+        document.getElementById('btnChangePassword').addEventListener('click', () => {
+          passwordModal.classList.remove('hidden');
+        });
+        
+        document.getElementById('cancelPasswordBtn').addEventListener('click', () => {
+          passwordModal.classList.add('hidden');
+          document.getElementById('passwordForm').reset();
+        });
+        
+        document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+          e.preventDefault();
+          
+          const currentPassword = document.getElementById('currentPassword').value;
+          const newPassword = document.getElementById('newPassword').value;
+          const confirmPassword = document.getElementById('confirmPassword').value;
+          
+          if (newPassword !== confirmPassword) {
+            if (typeof Toast !== 'undefined') {
+              Toast.error('Las contraseñas no coinciden');
+            }
+            return;
+          }
+          
+          try {
+            const response = await fetch('http://localhost:8000/api/v1/auth/change-password', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                current_password: currentPassword,
+                new_password: newPassword
+              })
+            });
+            
+            if (response.ok) {
+              if (typeof Toast !== 'undefined') {
+                Toast.success('Contraseña cambiad correctamente');
+              }
+              passwordModal.classList.add('hidden');
+              document.getElementById('passwordForm').reset();
+            } else {
+              const error = await response.json();
+              if (typeof Toast !== 'undefined') {
+                Toast.error(error.detail || 'Error al cambiar contraseña');
+              }
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            if (typeof Toast !== 'undefined') {
+              Toast.error('Error de conexión');
+            }
+          }
+        });
+        
+        // Modal de 2FA
+        const twoFactorModal = document.getElementById('twoFactorModal');
+        const twoFactorEnabled = userData?.two_factor_enabled || false;
+        
+        document.getElementById('btn2FA').addEventListener('click', () => {
+          twoFactorModal.classList.remove('hidden');
+          if (!twoFactorEnabled) {
+            // Mostrar formulario para habilitar 2FA
+            document.getElementById('twoFactorModalTitle').textContent = 'Habilitar Autenticación de Dos Factores';
+          }
+        });
+        
+        document.getElementById('cancelTwoFactorBtn').addEventListener('click', () => {
+          twoFactorModal.classList.add('hidden');
+          document.getElementById('twoFactorCode').value = '';
+        });
+        
+        document.getElementById('submitTwoFactorBtn').addEventListener('click', async () => {
+          const code = document.getElementById('twoFactorCode').value;
+          
+          if (!code || code.length !== 6 || isNaN(code)) {
+            if (typeof Toast !== 'undefined') {
+              Toast.error('Ingresa un código válido de 6 dígitos');
+            }
+            return;
+          }
+          
+          try {
+            const response = await fetch('http://localhost:8000/api/v1/auth/enable-2fa', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+              }
+            });
+            
+            if (response.ok) {
+              if (typeof Toast !== 'undefined') {
+                Toast.success('2FA habilitado correctamente');
+              }
+              twoFactorModal.classList.add('hidden');
+              userData.two_factor_enabled = true;
+              localStorage.setItem('user_data', JSON.stringify(userData));
+            } else {
+              if (typeof Toast !== 'undefined') {
+                Toast.error('Error al habilitar 2FA');
+              }
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            if (typeof Toast !== 'undefined') {
+              Toast.error('Error de conexión');
+            }
+          }
+        });
+        
+        // Manejar logout
+        const btnCerrarSesion = document.getElementById('btnCerrarSesion');
+        if (btnCerrarSesion) {
+          btnCerrarSesion.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('🚪 Cerrando sesión...');
+            
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('user_data');
+            localStorage.removeItem('token_expires');
+            
+            console.log('✅ Sesión cerrada');
+            window.location.href = '/templates/login.html';
+          });
+        }
+      } catch (error) {
+        console.error('❌ Error al cargar configuración:', error);
+      }
+    });
+  </script>
+</body>
+</html>
+

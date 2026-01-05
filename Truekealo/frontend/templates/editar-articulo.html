@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Truekealo - Editar Artículo</title>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link rel="preload" href="/assets/css/app.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="/assets/css/app.css" rel="stylesheet"></noscript>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#e84c30",
+            "background-light": "#FAF8F5",
+            "background-dark": "#211311",
+            "card-light": "#fcf9f8",
+            "card-dark": "#2a1a18",
+            "text-light": "#1b100e",
+            "text-dark": "#f8f6f6",
+            "text-muted-light": "#97594e",
+            "text-muted-dark": "#a88e89",
+            "active-light": "#f3e9e7",
+            "active-dark": "rgba(232, 76, 48, 0.2)"
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem",
+            "xl": "1rem",
+            "full": "9999px"
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+  <a href="#mainContent" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:bg-primary focus:text-white px-3 py-2 rounded">Saltar al contenido</a>
+  <div class="relative flex min-h-screen w-full">
+    <!-- Sidebar -->
+    <aside class="sticky top-0 flex h-screen w-64 flex-col bg-card-light dark:bg-card-dark p-4">
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3 py-2">
+            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style="background-image: url('https://cdn-icons-png.flaticon.com/512/2917/2917995.png');"></div>
+            <h1 class="text-text-light dark:text-text-dark text-lg font-bold">Truekealo</h1>
+          </div>
+          <button id="darkModeToggle" class="flex items-center justify-center w-10 h-10 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" title="Cambiar tema" aria-label="Cambiar a modo oscuro o claro">
+            <span class="material-symbols-outlined" aria-hidden="true">light_mode</span>
+          </button>
+        </div>
+
+        <nav class="flex flex-col gap-2 mt-4" aria-label="Menú de navegación">
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="dashboard.html">
+            <span class="material-symbols-outlined" aria-hidden="true">home</span>
+            <p class="text-sm font-medium">Inicio</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-active-light dark:bg-active-dark text-primary focus:outline-none focus:ring-2 focus:ring-primary" href="mis-articulos.html" aria-current="page">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">package_2</span>
+            <p class="text-sm font-medium">Mis Artículos</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="explorar.html">
+            <span class="material-symbols-outlined" aria-hidden="true">search</span>
+            <p class="text-sm font-medium">Explorar</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="mensajes.html">
+            <span class="material-symbols-outlined" aria-hidden="true">mark_email_unread</span>
+            <p class="text-sm font-medium">Mensajes</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="perfil.html">
+            <span class="material-symbols-outlined" aria-hidden="true">person</span>
+            <p class="text-sm font-medium">Perfil</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="configuracion.html">
+            <span class="material-symbols-outlined" aria-hidden="true">settings</span>
+            <p class="text-sm font-medium">Configuración</p>
+          </a>
+        </nav>
+      </div>
+
+      <a href="publicar.html" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold mt-auto hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" aria-label="Subir nuevo artículo o ítem">
+        <span class="truncate">Subir Ítem</span>
+      </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="mainContent" class="flex-1 overflow-y-auto" role="main">
+      <div class="p-8 max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold text-text-light dark:text-text-dark mb-8">Editar Artículo</h1>
+
+        <form id="editForm" class="bg-card-light dark:bg-card-dark rounded-xl p-6 shadow-sm space-y-6">
+          <!-- Título -->
+          <div>
+            <label for="editTitle" class="block text-sm font-medium text-text-light dark:text-text-dark mb-2">
+              Título *
+            </label>
+            <input type="text" id="editTitle" name="titulo" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Nombre del artículo" required/>
+          </div>
+
+          <!-- Descripción -->
+          <div>
+            <label for="editDescription" class="block text-sm font-medium text-text-light dark:text-text-dark mb-2">
+              Descripción *
+            </label>
+            <textarea id="editDescription" name="descripcion" rows="4" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Describe tu artículo" required></textarea>
+          </div>
+
+          <!-- Categoría -->
+          <div>
+            <label for="editCategory" class="block text-sm font-medium text-text-light dark:text-text-dark mb-2">
+              Categoría *
+            </label>
+            <select id="editCategory" name="categoria" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary" required>
+              <option value="">Seleccionar categoría</option>
+              <option value="electronica">Electrónica</option>
+              <option value="ropa">Ropa</option>
+              <option value="libros">Libros</option>
+              <option value="deportes">Deportes</option>
+              <option value="hogar">Hogar</option>
+              <option value="juguetes">Juguetes</option>
+              <option value="otros">Otros</option>
+            </select>
+          </div>
+
+          <!-- Condición -->
+          <div>
+            <label for="editCondition" class="block text-sm font-medium text-text-light dark:text-text-dark mb-2">
+              Condición *
+            </label>
+            <select id="editCondition" name="condicion" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary" required>
+              <option value="">Seleccionar condición</option>
+              <option value="Como nuevo">Como nuevo</option>
+              <option value="Excelente">Excelente</option>
+              <option value="Bueno">Bueno</option>
+              <option value="Aceptable">Aceptable</option>
+              <option value="Para reparar">Para reparar</option>
+            </select>
+          </div>
+
+          <!-- Valor Estimado -->
+          <div>
+            <label for="editValue" class="block text-sm font-medium text-text-light dark:text-text-dark mb-2">
+              Valor Estimado ($)
+            </label>
+            <input type="number" id="editValue" name="valor_estimado" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0" min="0" step="0.01"/>
+          </div>
+
+          <!-- Estado -->
+          <div>
+            <label for="editState" class="block text-sm font-medium text-text-light dark:text-text-dark mb-2">
+              Estado del Artículo
+            </label>
+            <select id="editState" name="estado_articulo" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary">
+              <option value="disponible">Disponible</option>
+              <option value="en_negociacion">En negociación</option>
+              <option value="intercambiado">Canjeado</option>
+              <option value="no_disponible">No disponible</option>
+            </select>
+          </div>
+
+          <!-- Botones -->
+          <div class="flex justify-end gap-3 pt-4">
+            <button class="px-6 py-2 rounded-lg bg-gray-300 dark:bg-gray-700 text-text-light dark:text-text-dark font-medium hover:opacity-80 transition-opacity" type="button">
+              Cancelar
+            </button>
+            <button class="px-6 py-2 rounded-lg bg-primary text-white font-bold hover:opacity-90 transition-opacity" type="submit">
+              Guardar Cambios
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script src="/assets/js/include-components.js" defer></script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/api-client.js" defer></script>
+  <script src="/assets/js/app.js?v=2.2" defer></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      console.log('✅ Página de editar artículo cargada');
+      
+      // Esperar a que config esté disponible
+      let maxTries = 50;
+      while (!window.apiBase && maxTries > 0) {
+        await new Promise(r => setTimeout(r, 100));
+        maxTries--;
+      }
+      
+      if (!window.apiBase) {
+        console.error('❌ Config no cargada');
+        window.apiBase = 'http://localhost:8000/api/v1';
+      }
+      
+      console.log('✅ apiBase:', window.apiBase);
+      
+      const token = localStorage.getItem('access_token');
+      if (!token) {
+        window.location.href = '/templates/login.html';
+        return;
+      }
+      
+      // Obtener ID del artículo de sessionStorage
+      const articuloId = sessionStorage.getItem('articuloEditarId');
+      if (!articuloId) {
+        window.location.href = '/templates/mis-articulos.html';
+        return;
+      }
+      
+      const editForm = document.getElementById('editForm');
+      const cancelButton = editForm.querySelector('button[type="button"]');
+      const apiBase = window.apiBase || 'http://localhost:8000/api/v1';
+      
+      // Cargar datos del artículo
+      async function cargarArticulo() {
+        try {
+          console.log('📦 Cargando artículo:', articuloId);
+          
+          const response = await fetch(`${apiBase}/articulos/${articuloId}`, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+          });
+          
+          if (!response.ok) {
+            throw new Error(`Error ${response.status}`);
+          }
+          
+          const articulo = await response.json();
+          console.log('✅ Artículo cargado:', articulo);
+          
+          // Llenar el formulario
+          document.getElementById('editTitle').value = articulo.titulo || '';
+          document.getElementById('editDescription').value = articulo.descripcion || '';
+          document.getElementById('editCategory').value = articulo.categoria || '';
+          document.getElementById('editCondition').value = articulo.condicion || '';
+          document.getElementById('editValue').value = articulo.valor_estimado || '';
+          document.getElementById('editState').value = articulo.estado_articulo || 'disponible';
+        } catch (error) {
+          console.error('❌ Error:', error);
+          alert('Error al cargar el artículo');
+          window.location.href = '/templates/mis-articulos.html';
+        }
+      }
+      
+      // Botón cancelar
+      cancelButton.addEventListener('click', () => {
+        window.location.href = '/templates/mis-articulos.html';
+      });
+      
+      // Enviar formulario
+      editForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const titulo = document.getElementById('editTitle').value;
+        const descripcion = document.getElementById('editDescription').value;
+        const categoria = document.getElementById('editCategory').value;
+        const condicion = document.getElementById('editCondition').value;
+        const valor = document.getElementById('editValue').value;
+        const estado = document.getElementById('editState').value;
+        
+        console.log('📝 Actualizando artículo:', { titulo, descripcion, categoria, condicion, valor, estado });
+        
+        if (!titulo || !descripcion || !categoria || !condicion) {
+          alert('Completa todos los campos requeridos');
+          return;
+        }
+        
+        const submitButton = editForm.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<span class="truncate">Guardando...</span>';
+        
+        try {
+          const articuloData = {
+            titulo: titulo,
+            descripcion: descripcion,
+            categoria: categoria,
+            condicion: condicion,
+            valor_estimado: parseFloat(valor) || 0,
+            estado_articulo: estado
+          };
+          
+          const response = await fetch(`${apiBase}/articulos/${articuloId}`, {
+            method: 'PUT',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(articuloData)
+          });
+          
+          if (response.ok) {
+            console.log('✅ Artículo actualizado');
+            alert('Artículo actualizado correctamente');
+            window.location.href = '/templates/mis-articulos.html';
+          } else {
+            const error = await response.json();
+            console.error('❌ Error:', error);
+            alert(error.detail || 'Error al actualizar el artículo');
+          }
+        } catch (error) {
+          console.error('❌ Error de conexión:', error);
+          alert('Error de conexión con el servidor');
+        } finally {
+          submitButton.disabled = false;
+          submitButton.innerHTML = '<span class="truncate">Guardar Cambios</span>';
+        }
+      });
+      
+      await cargarArticulo();
+    });
+  </script>
+</body>
+</html>

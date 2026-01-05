@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Truekealo - Explorar</title>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link rel="preload" href="/assets/css/app.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="/assets/css/app.css" rel="stylesheet"></noscript>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#e84c30",
+            "background-light": "#FAF8F5",
+            "background-dark": "#211311",
+            "card-light": "#fcf9f8",
+            "card-dark": "#2a1a18",
+            "text-light": "#1b100e",
+            "text-dark": "#f8f6f6",
+            "text-muted-light": "#97594e",
+            "text-muted-dark": "#a88e89",
+            "active-light": "#f3e9e7",
+            "active-dark": "rgba(232, 76, 48, 0.2)"
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem",
+            "xl": "1rem",
+            "full": "9999px"
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+  <a href="#mainContent" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:bg-primary focus:text-white px-3 py-2 rounded">Saltar al contenido</a>
+  <div class="relative flex min-h-screen w-full">
+    <!-- Sidebar -->
+    <aside class="sticky top-0 flex h-screen w-64 flex-col bg-card-light dark:bg-card-dark p-4">
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3 py-2">
+            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style="background-image: url('https://cdn-icons-png.flaticon.com/512/2917/2917995.png');"></div>
+            <h1 class="text-text-light dark:text-text-dark text-lg font-bold">Truekealo</h1>
+          </div>
+          <button id="darkModeToggle" class="flex items-center justify-center w-10 h-10 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" title="Cambiar tema" aria-label="Cambiar a modo oscuro o claro">
+            <span class="material-symbols-outlined" aria-hidden="true">light_mode</span>
+          </button>
+        </div>
+
+        <nav class="flex flex-col gap-2 mt-4" aria-label="Menú de navegación">
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="dashboard.html">
+            <span class="material-symbols-outlined" aria-hidden="true">home</span>
+            <p class="text-sm font-medium">Inicio</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="mis-articulos.html">
+            <span class="material-symbols-outlined" aria-hidden="true">package_2</span>
+            <p class="text-sm font-medium">Mis Artículos</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-active-light dark:bg-active-dark text-primary focus:outline-none focus:ring-2 focus:ring-primary" href="explorar.html" aria-current="page">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">search</span>
+            <p class="text-sm font-medium">Explorar</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="mensajes.html">
+            <span class="material-symbols-outlined" aria-hidden="true">mark_email_unread</span>
+            <p class="text-sm font-medium">Mensajes</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="perfil.html">
+            <span class="material-symbols-outlined" aria-hidden="true">person</span>
+            <p class="text-sm font-medium">Perfil</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="configuracion.html">
+            <span class="material-symbols-outlined" aria-hidden="true">settings</span>
+            <p class="text-sm font-medium">Configuración</p>
+          </a>
+        </nav>
+      </div>
+
+      <a href="publicar.html" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold mt-auto hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" aria-label="Subir nuevo artículo o ítem">
+        <span class="truncate">Subir Ítem</span>
+      </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="mainContent" class="flex-1 overflow-y-auto" role="main">
+      <div class="p-8">
+        <div class="mb-8">
+          <h1 class="text-3xl font-bold text-text-light dark:text-text-dark mb-4">Explorar Artículos</h1>
+          <div class="flex gap-4">
+            <input id="busquedaInput" class="flex-1 rounded-lg border border-gray-300 dark:border-gray-600 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark px-4 py-2" placeholder="Buscar artículos por título o descripción..." type="text"/>
+            <button id="buscarBtn" class="px-6 py-2 rounded-lg bg-primary text-white font-medium hover:opacity-90 transition-opacity">
+              Buscar
+            </button>
+            <button id="limpiarBtn" class="px-6 py-2 rounded-lg bg-gray-300 dark:bg-gray-600 text-text-light dark:text-text-dark font-medium hover:opacity-90 transition-opacity">
+              Limpiar
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="articulosContainer">
+          <div class="col-span-full text-center py-16">
+            <span class="material-symbols-outlined text-5xl text-text-muted-light dark:text-text-muted-dark mx-auto mb-4">inbox</span>
+            <p class="text-text-muted-light dark:text-text-muted-dark text-lg">Cargando artículos...</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal de Detalles del Artículo -->
+  <div id="articuloModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-card-light dark:bg-card-dark rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+      <div class="p-6">
+        <!-- Encabezado con botón cerrar -->
+        <div class="flex justify-between items-start mb-6">
+          <h2 class="text-2xl font-bold text-text-light dark:text-text-dark" id="modalTitulo">Detalles del Artículo</h2>
+          <button onclick="cerrarModal()" class="text-text-muted-light dark:text-text-muted-dark hover:text-text-light dark:hover:text-text-dark transition-colors">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        
+        <!-- Contenido del modal -->
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Imagen -->
+          <div>
+            <div id="modalImagen" class="w-full h-80 bg-cover bg-center rounded-xl"></div>
+          </div>
+          
+          <!-- Información -->
+          <div class="flex flex-col gap-4">
+            <div>
+              <h3 class="text-sm font-medium text-text-muted-light dark:text-text-muted-dark mb-1">Descripción</h3>
+              <p id="modalDescripcion" class="text-text-light dark:text-text-dark"></p>
+            </div>
+            
+            <div class="flex gap-4">
+              <div>
+                <h3 class="text-sm font-medium text-text-muted-light dark:text-text-muted-dark mb-1">Categoría</h3>
+                <span id="modalCategoria" class="inline-block px-3 py-1 bg-primary/20 text-primary rounded-full text-sm font-medium"></span>
+              </div>
+              <div>
+                <h3 class="text-sm font-medium text-text-muted-light dark:text-text-muted-dark mb-1">Condición</h3>
+                <span id="modalCondicion" class="inline-block px-3 py-1 bg-gray-200 dark:bg-gray-700 text-text-light dark:text-text-dark rounded-full text-sm font-medium"></span>
+              </div>
+            </div>
+            
+            <div>
+              <h3 class="text-sm font-medium text-text-muted-light dark:text-text-muted-dark mb-1">Valor Estimado</h3>
+              <p id="modalValor" class="text-2xl font-bold text-primary"></p>
+            </div>
+            
+            <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+              <h3 class="text-sm font-medium text-text-muted-light dark:text-text-muted-dark mb-2">Propietario</h3>
+              <div class="flex items-center gap-3">
+                <div class="bg-primary/20 rounded-full w-12 h-12 flex items-center justify-center">
+                  <span class="material-symbols-outlined text-primary">person</span>
+                </div>
+                <div>
+                  <p id="modalPropietario" class="font-medium text-text-light dark:text-text-dark"></p>
+                  <p id="modalUbicacion" class="text-sm text-text-muted-light dark:text-text-muted-dark"></p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Botones de Acción -->
+            <div class="flex gap-3 mt-4" id="botonesAccion">
+              <button onclick="contactarPropietario()" class="flex-1 px-4 py-3 rounded-lg bg-primary text-white font-bold hover:opacity-90 transition-opacity">
+                <span class="material-symbols-outlined inline-block mr-2 align-middle">mail</span>
+                Contactar Propietario
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/js/include-components.js" defer></script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/api-client.js" defer></script>
+  <script src="/assets/js/app.js?v=2.2" defer></script>
+  
+  <script>
+    // Variables globales
+    let articuloSeleccionado = null;
+    let todosLosArticulos = [];
+    
+    // Función para abrir el modal
+    function abrirModal(articuloId) {
+      const articulo = todosLosArticulos.find(a => a.id === articuloId);
+      if (!articulo) {
+        console.error('Artículo no encontrado:', articuloId);
+        return;
+      }
+      
+      articuloSeleccionado = articulo;
+      const modal = document.getElementById('articuloModal');
+      
+      // Construir URL de imagen
+      let imagenUrl = 'https://via.placeholder.com/400x300?text=Sin+Imagen';
+      if (articulo.imagen_url) {
+        if (articulo.imagen_url.startsWith('http')) {
+          imagenUrl = articulo.imagen_url;
+        } else {
+          const apiBase = window.apiBase || 'http://localhost:8000/api/v1';
+          const baseUrl = apiBase.replace('/api/v1', '');
+          imagenUrl = `${baseUrl}${articulo.imagen_url}`;
+        }
+      }
+      
+      // Llenar modal con datos
+      document.getElementById('modalTitulo').textContent = articulo.titulo;
+      document.getElementById('modalImagen').style.backgroundImage = `url('${imagenUrl}')`;
+      document.getElementById('modalDescripcion').textContent = articulo.descripcion || 'Sin descripción disponible';
+      document.getElementById('modalCategoria').textContent = articulo.categoria || 'General';
+      document.getElementById('modalCondicion').textContent = articulo.condicion || 'Usado';
+      document.getElementById('modalValor').textContent = `$${parseFloat(articulo.valor_estimado || 0).toFixed(2)}`;
+      document.getElementById('modalPropietario').textContent = articulo.propietario?.nombre_completo || 'Usuario';
+      document.getElementById('modalUbicacion').textContent = articulo.propietario?.ubicacion || 'Ubicación no especificada';
+      
+      // Ocultar botón de contactar si es el propietario
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        try {
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          const currentUserId = payload.sub;
+          
+          const botonesAccion = document.getElementById('botonesAccion');
+          if (articulo.propietario_id === parseInt(currentUserId)) {
+            botonesAccion.innerHTML = `
+              <div class="flex-1 px-4 py-3 rounded-lg bg-gray-200 dark:bg-gray-700 text-text-light dark:text-text-dark text-center">
+                Este es tu artículo
+              </div>
+            `;
+          } else {
+            botonesAccion.innerHTML = `
+              <button onclick="contactarPropietario()" class="flex-1 px-4 py-3 rounded-lg bg-primary text-white font-bold hover:opacity-90 transition-opacity">
+                <span class="material-symbols-outlined inline-block mr-2 align-middle">mail</span>
+                Contactar Propietario
+              </button>
+            `;
+          }
+        } catch (error) {
+          console.error('Error decodificando token:', error);
+        }
+      }
+      
+      modal.classList.remove('hidden');
+    }
+    
+    // Función para cerrar el modal
+    function cerrarModal() {
+      document.getElementById('articuloModal').classList.add('hidden');
+      articuloSeleccionado = null;
+    }
+    
+    // Función para contactar al propietario
+    function contactarPropietario() {
+      if (!articuloSeleccionado || !articuloSeleccionado.propietario_id) {
+        if (typeof Toast !== 'undefined') {
+          Toast.error('No se puede contactar al propietario');
+        }
+        return;
+      }
+      
+      // Guardar información para la página de mensajes
+      localStorage.setItem('nuevoMensaje', JSON.stringify({
+        destinatario_id: articuloSeleccionado.propietario_id,
+        destinatario_nombre: articuloSeleccionado.propietario?.nombre_completo || 'Usuario',
+        articulo_titulo: articuloSeleccionado.titulo
+      }));
+      
+      // Redirigir a mensajes
+      window.location.href = 'mensajes.html';
+    }
+    
+    document.addEventListener('DOMContentLoaded', async () => {
+      console.log('✅ Página Explorar cargada');
+      
+      // Cerrar modal al hacer clic fuera
+      const modalElement = document.getElementById('articuloModal');
+      if (modalElement) {
+        modalElement.addEventListener('click', (e) => {
+          if (e.target.id === 'articuloModal') {
+            cerrarModal();
+          }
+        });
+      }
+      
+      const token = localStorage.getItem('access_token');
+      if (!token) {
+        window.location.href = '/templates/login.html';
+        return;
+      }
+      
+      const contenedor = document.getElementById('articulosContainer');
+      if (!contenedor) {
+        console.error('❌ No se encontró contenedor de artículos');
+        return;
+      }
+      
+      async function cargarArticulos(busqueda = '') {
+        try {
+          console.log('📦 Cargando artículos...', busqueda ? `Búsqueda: ${busqueda}` : '');
+          
+          // Construir URL con parámetro de búsqueda
+          let url = 'http://localhost:8000/api/v1/articulos/?limit=50';
+          if (busqueda) {
+            url += `&busqueda=${encodeURIComponent(busqueda)}`;
+          }
+          
+          const response = await fetch(url, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+          });
+          
+          if (!response.ok) {
+            throw new Error(`Error ${response.status}`);
+          }
+          
+          const articulos = await response.json();
+          console.log('✅ Artículos obtenidos:', articulos.length);
+          
+          // Guardar artículos en variable global
+          todosLosArticulos = articulos;
+          
+          if (!articulos || articulos.length === 0) {
+            const inputElement = document.getElementById('busquedaInput');
+            const busquedaActual = inputElement ? inputElement.value : '';
+            contenedor.innerHTML = `
+              <div class="col-span-full text-center py-12">
+                <span class="material-symbols-outlined text-5xl text-text-muted-light dark:text-text-muted-dark mb-4">search_off</span>
+                <p class="text-text-muted-light dark:text-text-muted-dark text-lg mb-2">
+                  ${busquedaActual ? 'No se encontraron artículos con esa búsqueda' : 'No hay artículos disponibles aún'}
+                </p>
+                ${busquedaActual ? '<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Intenta con otros términos de búsqueda</p>' : '<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Sé el primero en publicar un artículo</p>'}
+              </div>
+            `;
+            return;
+          }
+          
+          contenedor.innerHTML = articulos.map(art => {
+            // Construir URL completa de la imagen
+            let imagenUrl = null;
+            if (art.imagen_url) {
+              if (art.imagen_url.startsWith('http')) {
+                imagenUrl = art.imagen_url;
+              } else {
+                // Extraer el host de apiBase y construir URL completa
+                const apiBase = window.apiBase || 'http://localhost:8000/api/v1';
+                const baseUrl = apiBase.replace('/api/v1', '');
+                imagenUrl = `${baseUrl}${art.imagen_url}`;
+              }
+            }
+            
+            return `
+            <div class="bg-card-light dark:bg-card-dark rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+              <!-- Imagen Principal -->
+              ${imagenUrl 
+                ? `<div class="w-full h-64 bg-cover bg-center group-hover:scale-105 transition-transform" style="background-image: url('${imagenUrl}')"></div>` 
+                : '<div class="w-full h-64 bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center"><span class="material-symbols-outlined text-6xl text-gray-500">image</span></div>'}
+              
+              <!-- Contenido -->
+              <div class="p-5">
+                <!-- Título -->
+                <h3 class="font-bold text-xl text-text-light dark:text-text-dark mb-2 line-clamp-2">${art.titulo}</h3>
+                
+                <!-- Propietario -->
+                <p class="text-xs text-text-muted-light dark:text-text-muted-dark mb-2">${art.propietario?.nombre_completo || 'Usuario'}</p>
+                
+                <!-- Descripción -->
+                <p class="text-text-muted-light dark:text-text-muted-dark text-sm mb-4 line-clamp-2">${art.descripcion?.substring(0, 80) || 'Sin descripción'}...</p>
+                
+                <!-- Badges: Categoría y Condición -->
+                <div class="flex gap-2 mb-3">
+                  <span class="text-xs px-3 py-1 bg-primary/20 text-primary rounded-full font-medium">${art.categoria || 'General'}</span>
+                  <span class="text-xs px-3 py-1 bg-gray-200 dark:bg-gray-700 text-text-light dark:text-text-dark rounded-full font-medium">${art.condicion || 'Usado'}</span>
+                </div>
+                
+                <!-- Valor -->
+                <div class="text-lg font-bold text-primary mb-4">$${parseFloat(art.valor_estimado || 0).toFixed(2)}</div>
+                
+                <!-- Botón Ver Detalles -->
+                <button onclick="abrirModal(${art.id})" class="w-full px-4 py-3 rounded-lg bg-primary text-white text-sm font-bold hover:opacity-90 transition-opacity">
+                  Ver Detalles
+                </button>
+              </div>
+            </div>
+          `;
+          }).join('');
+          
+        } catch (error) {
+          console.error('❌ Error cargando artículos:', error);
+          contenedor.innerHTML = `
+            <div class="col-span-full text-center py-12">
+              <p class="text-red-500">Error al cargar artículos</p>
+            </div>
+          `;
+        }
+      }
+      
+      // Event listeners para búsqueda
+      const buscarBtn = document.getElementById('buscarBtn');
+      const limpiarBtn = document.getElementById('limpiarBtn');
+      const busquedaInput = document.getElementById('busquedaInput');
+      
+      if (buscarBtn) {
+        buscarBtn.addEventListener('click', () => {
+          const busqueda = busquedaInput.value.trim();
+          cargarArticulos(busqueda);
+        });
+      }
+      
+      if (limpiarBtn) {
+        limpiarBtn.addEventListener('click', () => {
+          busquedaInput.value = '';
+          cargarArticulos();
+        });
+      }
+      
+      if (busquedaInput) {
+        busquedaInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            const busqueda = busquedaInput.value.trim();
+            cargarArticulos(busqueda);
+          }
+        });
+      }
+      
+      // Cargar artículos al inicio
+      await cargarArticulos();
+    });
+  </script>
+</body>
+</html>

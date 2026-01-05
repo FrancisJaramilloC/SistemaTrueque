@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Truekealo - Mis Artículos</title>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link rel="preload" href="/assets/css/app.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="/assets/css/app.css" rel="stylesheet"></noscript>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#e84c30",
+            "background-light": "#FAF8F5",
+            "background-dark": "#211311",
+            "card-light": "#fcf9f8",
+            "card-dark": "#2a1a18",
+            "text-light": "#1b100e",
+            "text-dark": "#f8f6f6",
+            "text-muted-light": "#97594e",
+            "text-muted-dark": "#a88e89",
+            "active-light": "#f3e9e7",
+            "active-dark": "rgba(232, 76, 48, 0.2)"
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem",
+            "xl": "1rem",
+            "full": "9999px"
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+  <a href="#mainContent" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:bg-primary focus:text-white px-3 py-2 rounded">Saltar al contenido</a>
+  <div class="relative flex min-h-screen w-full">
+    <!-- Sidebar -->
+    <aside class="sticky top-0 flex h-screen w-64 flex-col bg-card-light dark:bg-card-dark p-4">
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3 py-2">
+            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style="background-image: url('https://cdn-icons-png.flaticon.com/512/2917/2917995.png');"></div>
+            <h1 class="text-text-light dark:text-text-dark text-lg font-bold">Truekealo</h1>
+          </div>
+          <button id="darkModeToggle" class="flex items-center justify-center w-10 h-10 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" title="Cambiar tema" aria-label="Cambiar a modo oscuro o claro">
+            <span class="material-symbols-outlined" aria-hidden="true">light_mode</span>
+          </button>
+        </div>
+
+        <nav class="flex flex-col gap-2 mt-4" aria-label="Menú de navegación">
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="dashboard.html">
+            <span class="material-symbols-outlined" aria-hidden="true">home</span>
+            <p class="text-sm font-medium">Inicio</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-active-light dark:bg-active-dark text-primary focus:outline-none focus:ring-2 focus:ring-primary" href="mis-articulos.html" aria-current="page">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">package_2</span>
+            <p class="text-sm font-medium">Mis Articulos</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="explorar.html">
+            <span class="material-symbols-outlined" aria-hidden="true">search</span>
+            <p class="text-sm font-medium">Explorar</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="mensajes.html">
+            <span class="material-symbols-outlined" aria-hidden="true">mark_email_unread</span>
+            <p class="text-sm font-medium">Mensajes</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="perfil.html">
+            <span class="material-symbols-outlined" aria-hidden="true">person</span>
+            <p class="text-sm font-medium">Perfil</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="configuracion.html">
+            <span class="material-symbols-outlined" aria-hidden="true">settings</span>
+            <p class="text-sm font-medium">Configuracion</p>
+          </a>
+        </nav>
+      </div>
+
+      <a href="publicar.html" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold mt-auto hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" aria-label="Subir nuevo artículo o ítem">
+        <span class="truncate">Subir Ítem</span>
+      </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="mainContent" class="flex-1 overflow-y-auto" role="main">
+      <div class="p-8">
+        <div class="flex justify-between items-center mb-8">
+          <h1 class="text-3xl font-bold text-text-light dark:text-text-dark">Mis Artículos</h1>
+          <a href="publicar.html" class="px-6 py-2 rounded-lg bg-primary text-white font-bold hover:opacity-90 transition-opacity">
+            Nuevo Artículo
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Placeholder de carga (será reemplazado por articulos reales) -->
+          <div class="bg-card-light dark:bg-card-dark rounded-2xl overflow-hidden shadow-lg animate-pulse">
+            <div class="w-full h-64 bg-gray-300 dark:bg-gray-700"></div>
+            <div class="p-5">
+              <div class="h-6 bg-gray-300 dark:bg-gray-700 rounded mb-2"></div>
+              <div class="h-4 bg-gray-300 dark:bg-gray-700 rounded mb-4 w-3/4"></div>
+              <div class="flex gap-2 mb-3">
+                <div class="h-6 bg-gray-300 dark:bg-gray-700 rounded-full w-24"></div>
+                <div class="h-6 bg-gray-300 dark:bg-gray-700 rounded-full w-24"></div>
+              </div>
+              <div class="h-8 bg-gray-300 dark:bg-gray-700 rounded mb-4 w-20"></div>
+              <div class="flex gap-2">
+                <div class="flex-1 h-12 bg-gray-300 dark:bg-gray-700 rounded-lg"></div>
+                <div class="flex-1 h-12 bg-gray-300 dark:bg-gray-700 rounded-lg"></div>
+                <div class="flex-1 h-12 bg-gray-300 dark:bg-gray-700 rounded-lg"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/assets/js/include-components.js" defer></script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/api-client.js" defer></script>
+  <script src="/assets/js/app.js?v=2.2" defer></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      console.log('✅ Mis Artículos cargando...');
+      
+      // Esperar a que config esté disponible
+      let maxTries = 50;
+      while (!window.apiBase && maxTries > 0) {
+        await new Promise(r => setTimeout(r, 100));
+        maxTries--;
+      }
+      
+      if (!window.apiBase) {
+        console.error('❌ Config no cargada');
+        window.apiBase = 'http://localhost:8000/api/v1';
+      }
+      
+      console.log('✅ apiBase:', window.apiBase);
+      
+      const token = localStorage.getItem('access_token');
+      if (!token) {
+        window.location.href = '/templates/login.html';
+        return;
+      }
+      
+      const contenedor = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3');
+      
+      async function cargarArticulos() {
+        try {
+          console.log('📦 Cargando artículos del usuario...');
+          
+          // Usar configuración de API base
+          const apiBase = window.apiBase || 'http://localhost:8000/api/v1';
+          
+          const response = await fetch(`${apiBase}/articulos/mis-articulos`, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+          });
+          
+          if (!response.ok) {
+            throw new Error(`Error ${response.status}`);
+          }
+          
+          const articulos = await response.json();
+          console.log('✅ Artículos cargados:', articulos.length);
+          
+          if (!articulos || articulos.length === 0) {
+            contenedor.innerHTML = `
+              <div class="col-span-full text-center py-12">
+                <p class="text-text-muted-light dark:text-text-muted-dark text-lg mb-4">
+                  No tienes artículos publicados
+                </p>
+                <a href="/templates/publicar.html" class="inline-block px-6 py-3 bg-primary text-white rounded-lg hover:opacity-90">
+                  Publicar tu primer artículo
+                </a>
+              </div>
+            `;
+            return;
+          }
+          
+          contenedor.innerHTML = articulos.map(art => {
+            // Construir URL completa de la imagen
+            let imagenUrl = null;
+            if (art.imagen_url) {
+              if (art.imagen_url.startsWith('http')) {
+                imagenUrl = art.imagen_url;
+              } else {
+                // Extraer el host de apiBase y construir URL completa
+                const apiBase = window.apiBase || 'http://localhost:8000/api/v1';
+                const baseUrl = apiBase.replace('/api/v1', '');
+                imagenUrl = `${baseUrl}${art.imagen_url}`;
+              }
+            }
+            
+            return `
+            <div class="bg-card-light dark:bg-card-dark rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow" data-articulo-id="${art.id}">
+              <!-- Imagen Principal -->
+              ${imagenUrl 
+                ? `<div class="w-full h-64 bg-cover bg-center" style="background-image: url('${imagenUrl}')"></div>` 
+                : '<div class="w-full h-64 bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center"><span class="material-symbols-outlined text-6xl text-gray-500">image</span></div>'}
+              
+              <!-- Contenido -->
+              <div class="p-5">
+                <!-- Título -->
+                <h3 class="font-bold text-xl text-text-light dark:text-text-dark mb-2 line-clamp-2">${art.titulo || 'Sin título'}</h3>
+                
+                <!-- Descripción -->
+                <p class="text-text-muted-light dark:text-text-muted-dark text-sm mb-4 line-clamp-2">${art.descripcion?.substring(0, 80) || 'Sin descripción'}...</p>
+                
+                <!-- Badges: Categoría y Estado -->
+                <div class="flex gap-2 mb-3">
+                  <span class="text-xs px-3 py-1 bg-primary/20 text-primary rounded-full font-medium">${art.categoria || 'General'}</span>
+                  <span class="text-xs px-3 py-1 ${art.estado_articulo === 'disponible' ? 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-200' : 'bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200'} rounded-full font-medium flex items-center gap-1">
+                    ${art.estado_articulo === 'disponible' ? '✅ Disponible' : '❌ Canjeado'}
+                  </span>
+                </div>
+                
+                <!-- Valor -->
+                <div class="text-lg font-bold text-primary mb-4">$${parseFloat(art.valor_estimado || 0).toFixed(2)}</div>
+                
+                <!-- Botones -->
+                <div class="flex gap-2">
+                  <button onclick="editarArticulo(${art.id})" class="flex-1 px-4 py-3 bg-primary text-white rounded-lg hover:opacity-90 transition-opacity font-bold text-sm">
+                    Editar
+                  </button>
+                  <button onclick="cambiarEstado(${art.id}, '${art.estado_articulo}', '${art.titulo}')" class="flex-1 px-4 py-3 bg-blue-500 text-white rounded-lg hover:opacity-90 transition-opacity font-bold text-sm">
+                    ${art.estado_articulo === 'disponible' ? 'Marcar canjeado' : 'Disponible'}
+                  </button>
+                  <button onclick="eliminarArticulo(${art.id})" class="flex-1 px-4 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-bold text-sm">
+                    Eliminar
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+          }).join('');
+        } catch (error) {
+          console.error('❌ Error:', error);
+        }
+      }
+      
+      window.eliminarArticulo = async function(id) {
+        if (!confirm('¿Estás seguro que deseas eliminar este artículo?')) return;
+        
+        try {
+          console.log('🗑️ Eliminando artículo:', id);
+          
+          // Usar configuración de API base
+          const apiBase = window.apiBase || 'http://localhost:8000/api/v1';
+          
+          const response = await fetch(`${apiBase}/articulos/${id}`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+          });
+          
+          if (response.ok) {
+            console.log('✅ Artículo eliminado');
+            document.querySelector(`[data-articulo-id="${id}"]`)?.remove();
+            
+            // Mostrar mensaje de éxito
+            if (typeof Toast !== 'undefined') {
+              Toast.success('Artículo eliminado correctamente');
+            }
+            
+            // Recargar si no hay más artículos
+            if (contenedor.children.length === 0) {
+              await cargarArticulos();
+            }
+          } else {
+            if (typeof Toast !== 'undefined') {
+              Toast.error('Error al eliminar el artículo');
+            } else {
+              alert('Error al eliminar el artículo');
+            }
+            console.error('Error al eliminar');
+          }
+        } catch (error) {
+          console.error('❌ Error:', error);
+          if (typeof Toast !== 'undefined') {
+            Toast.error('Error al eliminar el artículo');
+          } else {
+            alert('Error al eliminar el artículo');
+          }
+        }
+      };
+      
+      window.editarArticulo = function(id) {
+        // Guardar ID del artículo a editar en sessionStorage
+        sessionStorage.setItem('articuloEditarId', id);
+        window.location.href = '/templates/editar-articulo.html';
+      };
+      
+      window.cambiarEstado = async function(id, estadoActual, titulo) {
+        const nuevoEstado = estadoActual === 'disponible' ? 'intercambiado' : 'disponible';
+        const confirmMsg = nuevoEstado === 'intercambiado' 
+          ? `¿Marcar "${titulo}" como canjeado?`
+          : `¿Marcar "${titulo}" como disponible?`;
+        
+        if (!confirm(confirmMsg)) return;
+        
+        try {
+          console.log('🔄 Cambiando estado a:', nuevoEstado);
+          
+          // Usar configuración de API base
+          const apiBase = window.apiBase || 'http://localhost:8000/api/v1';
+          
+          const response = await fetch(`${apiBase}/articulos/${id}`, {
+            method: 'PUT',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              estado_articulo: nuevoEstado
+            })
+          });
+          
+          if (response.ok) {
+            console.log('✅ Estado actualizado');
+            if (typeof Toast !== 'undefined') {
+              Toast.success('Estado actualizado correctamente');
+            }
+            await cargarArticulos();
+          } else {
+            if (typeof Toast !== 'undefined') {
+              Toast.error('Error al cambiar el estado');
+            } else {
+              alert('Error al cambiar el estado');
+            }
+            console.error('Error al cambiar estado');
+          }
+        } catch (error) {
+          console.error('❌ Error:', error);
+          if (typeof Toast !== 'undefined') {
+            Toast.error('Error al cambiar el estado');
+          } else {
+            alert('Error al cambiar el estado');
+          }
+        }
+      };
+      
+      
+      await cargarArticulos();
+    });
+  </script>
+</body>
+</html>

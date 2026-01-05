@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Truekealo - Dashboard</title>
+  <!-- Meta Tags and Resources -->
+  <script>window.location.pathname.includes('includes') || document.write('<meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"><\/script><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link rel="preload" href="/assets/css/app.css" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"><noscript><link href="/assets/css/app.css" rel="stylesheet"></noscript>')</script>
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#e84c30",
+            "background-light": "#FAF8F5",
+            "background-dark": "#211311",
+            "card-light": "#fcf9f8",
+            "card-dark": "#2a1a18",
+            "text-light": "#1b100e",
+            "text-dark": "#f8f6f6",
+            "text-muted-light": "#97594e",
+            "text-muted-dark": "#a88e89",
+            "active-light": "#f3e9e7",
+            "active-dark": "rgba(232, 76, 48, 0.2)"
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem",
+            "xl": "1rem",
+            "full": "9999px"
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+  <a href="#mainContent" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:bg-primary focus:text-white px-3 py-2 rounded">Saltar al contenido</a>
+  <div class="relative flex min-h-screen w-full">
+    <!-- Sidebar Navigation -->
+    <aside class="sticky top-0 flex h-screen w-64 flex-col bg-card-light dark:bg-card-dark p-4" aria-label="Navegación principal">
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3 py-2">
+            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style="background-image: url('https://cdn-icons-png.flaticon.com/512/2917/2917995.png');" alt="Logo de Truekealo"></div>
+            <h1 class="text-text-light dark:text-text-dark text-lg font-bold">Truekealo</h1>
+          </div>
+          <button id="darkModeToggle" class="flex items-center justify-center w-10 h-10 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" title="Cambiar tema" aria-label="Cambiar a modo oscuro o claro">
+            <span class="material-symbols-outlined" aria-hidden="true">light_mode</span>
+          </button>
+        </div>
+
+        <nav class="flex flex-col gap-2 mt-4" aria-label="Menú de navegación">
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-active-light dark:bg-active-dark text-primary focus:outline-none focus:ring-2 focus:ring-primary" href="dashboard.html" aria-current="page">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">home</span>
+            <p class="text-sm font-medium">Inicio</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="mis-articulos.html">
+            <span class="material-symbols-outlined" aria-hidden="true">package_2</span>
+            <p class="text-sm font-medium">Mis Artículos</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="explorar.html">
+            <span class="material-symbols-outlined" aria-hidden="true">search</span>
+            <p class="text-sm font-medium">Explorar</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="mensajes.html">
+            <span class="material-symbols-outlined" aria-hidden="true">mark_email_unread</span>
+            <p class="text-sm font-medium">Mensajes</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="perfil.html">
+            <span class="material-symbols-outlined" aria-hidden="true">person</span>
+            <p class="text-sm font-medium">Perfil</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="configuracion.html">
+            <span class="material-symbols-outlined" aria-hidden="true">settings</span>
+            <p class="text-sm font-medium">Configuración</p>
+          </a>
+        </nav>
+      </div>
+
+      <a href="publicar.html" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold mt-auto hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" aria-label="Subir nuevo artículo o ítem">
+        <span class="truncate">Subir Ítem</span>
+      </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="mainContent" class="flex-1 overflow-y-auto" role="main">
+      <div class="p-8 max-w-6xl mx-auto">
+        <h1 id="dashboardWelcome" class="text-4xl font-bold text-text-light dark:text-text-dark mb-8">Cargando...</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div class="bg-card-light dark:bg-card-dark rounded-xl p-6 shadow-sm">
+            <div class="text-text-muted-light dark:text-text-muted-dark text-sm font-medium mb-2">Mis Artículos</div>
+            <div class="text-3xl font-bold text-text-light dark:text-text-dark">12</div>
+          </div>
+          <div class="bg-card-light dark:bg-card-dark rounded-xl p-6 shadow-sm">
+            <div class="text-text-muted-light dark:text-text-muted-dark text-sm font-medium mb-2">Intercambios Pendientes</div>
+            <div class="text-3xl font-bold text-text-light dark:text-text-dark">3</div>
+          </div>
+          <div class="bg-card-light dark:bg-card-dark rounded-xl p-6 shadow-sm">
+            <div class="text-text-muted-light dark:text-text-muted-dark text-sm font-medium mb-2">Mensajes Nuevos</div>
+            <div class="text-3xl font-bold text-text-light dark:text-text-dark">5</div>
+          </div>
+          <div class="bg-card-light dark:bg-card-dark rounded-xl p-6 shadow-sm">
+            <div class="text-text-muted-light dark:text-text-muted-dark text-sm font-medium mb-2">Calificación</div>
+            <div class="text-3xl font-bold text-primary">4.8 ⭐</div>
+          </div>
+        </div>
+
+        <div class="bg-card-light dark:bg-card-dark rounded-xl p-6 shadow-sm">
+          <h2 class="text-2xl font-bold text-text-light dark:text-text-dark mb-4">Actividad Reciente</h2>
+          <p class="text-text-muted-light dark:text-text-muted-dark">Tu actividad reciente aparecerá aquí</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/assets/js/include-components.js" defer></script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/api-client.js" defer></script>
+  <script src="/assets/js/app.js?v=2.2" defer></script>
+  
+  <script>
+    // Verificar autenticación inmediatamente
+    const token = localStorage.getItem('access_token');
+    const userDataStr = localStorage.getItem('user_data');
+    const userData = userDataStr ? JSON.parse(userDataStr) : null;
+    
+    if (!token) {
+      console.log('❌ No autenticado, redirigiendo a login');
+      window.location.href = '/templates/login.html';
+    } else {
+      console.log('✅ Dashboard cargando...');
+      console.log('👤 Datos del usuario desde localStorage:', userData);
+    }
+    
+    document.addEventListener('DOMContentLoaded', async () => {
+      console.log('📄 DOM cargado completamente');
+      
+      try {
+        // Actualizar título con nombre del usuario
+        const h1Element = document.getElementById('dashboardWelcome');
+        console.log('H1 elemento encontrado por ID:', h1Element, 'Texto actual:', h1Element?.textContent);
+        
+        if (h1Element && userData && userData.nombre_completo) {
+          h1Element.textContent = `Bienvenido, ${userData.nombre_completo}`;
+          console.log('✅ Nombre del usuario actualizado a:', userData.nombre_completo);
+        } else if (h1Element) {
+          h1Element.textContent = 'Bienvenido a Truekealo';
+          console.log('⚠️ No se pudo obtener nombre de usuario, usando texto por defecto. userData:', userData);
+        }
+        
+        // Cargar artículos del usuario
+        console.log('📦 Cargando artículos...');
+        const response = await fetch('http://localhost:8000/api/v1/articulos/mis-articulos', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (response.ok) {
+          const articulos = await response.json();
+          console.log('✅ Artículos cargados:', articulos.length);
+          
+          // Actualizar estadísticas - Mis Artículos
+          const statDivs = document.querySelectorAll('.grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-4 > div');
+          console.log('Stats divs encontrados:', statDivs.length);
+          
+          if (statDivs.length > 0) {
+            const stat1 = statDivs[0].querySelector('.text-3xl');
+            if (stat1) {
+              stat1.textContent = articulos.length;
+              console.log('✅ Contador de artículos actualizado a:', articulos.length);
+            }
+          }
+        } else {
+          console.log('⚠️ Error en respuesta de artículos:', response.status);
+        }
+      } catch (error) {
+        console.error('❌ Error al cargar dashboard:', error);
+      }
+    });
+  </script>
+</body>
+</html>

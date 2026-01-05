@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Truekealo - Perfil</title>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link rel="preload" href="/assets/css/app.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="/assets/css/app.css" rel="stylesheet"></noscript>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#e84c30",
+            "background-light": "#FAF8F5",
+            "background-dark": "#211311",
+            "card-light": "#fcf9f8",
+            "card-dark": "#2a1a18",
+            "text-light": "#1b100e",
+            "text-dark": "#f8f6f6",
+            "text-muted-light": "#97594e",
+            "text-muted-dark": "#a88e89",
+            "active-light": "#f3e9e7",
+            "active-dark": "rgba(232, 76, 48, 0.2)"
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem",
+            "xl": "1rem",
+            "full": "9999px"
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+  <a href="#mainContent" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:bg-primary focus:text-white px-3 py-2 rounded">Saltar al contenido</a>
+  <div class="relative flex min-h-screen w-full">
+    <!-- Sidebar -->
+    <aside class="sticky top-0 flex h-screen w-64 flex-col bg-card-light dark:bg-card-dark p-4">
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3 py-2">
+            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style="background-image: url('https://cdn-icons-png.flaticon.com/512/2917/2917995.png');"></div>
+            <h1 class="text-text-light dark:text-text-dark text-lg font-bold">Truekealo</h1>
+          </div>
+          <button id="darkModeToggle" class="flex items-center justify-center w-10 h-10 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" title="Cambiar tema" aria-label="Cambiar a modo oscuro o claro">
+            <span class="material-symbols-outlined" aria-hidden="true">light_mode</span>
+          </button>
+        </div>
+
+        <nav class="flex flex-col gap-2 mt-4" aria-label="Menú de navegación">
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="dashboard.html">
+            <span class="material-symbols-outlined" aria-hidden="true">home</span>
+            <p class="text-sm font-medium">Inicio</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="mis-articulos.html">
+            <span class="material-symbols-outlined" aria-hidden="true">package_2</span>
+            <p class="text-sm font-medium">Mis Artículos</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="explorar.html">
+            <span class="material-symbols-outlined" aria-hidden="true">search</span>
+            <p class="text-sm font-medium">Explorar</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="mensajes.html">
+            <span class="material-symbols-outlined" aria-hidden="true">mark_email_unread</span>
+            <p class="text-sm font-medium">Mensajes</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-active-light dark:bg-active-dark text-primary focus:outline-none focus:ring-2 focus:ring-primary" href="perfil.html" aria-current="page">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">person</span>
+            <p class="text-sm font-medium">Perfil</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="configuracion.html">
+            <span class="material-symbols-outlined" aria-hidden="true">settings</span>
+            <p class="text-sm font-medium">Configuración</p>
+          </a>
+        </nav>
+      </div>
+
+      <a href="publicar.html" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold mt-auto hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" aria-label="Subir nuevo artículo o ítem">
+        <span class="truncate">Subir Ítem</span>
+      </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="mainContent" class="flex-1 overflow-y-auto" role="main">
+      <div class="p-8 max-w-4xl mx-auto">
+        <div class="bg-card-light dark:bg-card-dark rounded-xl p-8 shadow-sm mb-8">
+          <div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
+            <div class="w-32 h-32 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-700 dark:to-gray-800 flex-shrink-0 flex items-center justify-center">
+              <span class="material-symbols-outlined text-5xl text-gray-500">account_circle</span>
+            </div>
+            <div class="flex-1 text-center md:text-left">
+              <h1 id="profileUserName" class="text-3xl font-bold text-text-light dark:text-text-dark">Cargando perfil...</h1>
+              <p class="text-text-muted-light dark:text-text-muted-dark mb-4" id="userMemberSince">Miembro desde...</p>
+              <div class="grid grid-cols-3 gap-4 mb-6">
+                <div>
+                  <div class="text-2xl font-bold text-primary" id="userArticlesCount">0</div>
+                  <p class="text-sm text-text-muted-light dark:text-text-muted-dark">Artículos</p>
+                </div>
+                <div>
+                  <div class="text-2xl font-bold text-primary" id="userTradesCount">0</div>
+                  <p class="text-sm text-text-muted-light dark:text-text-muted-dark">Intercambios</p>
+                </div>
+                <div>
+                  <div class="text-2xl font-bold text-primary" id="userRating">4.8⭐</div>
+                  <p class="text-sm text-text-muted-light dark:text-text-muted-dark">Calificación</p>
+                </div>
+              </div>
+              <p class="text-text-light dark:text-text-dark" id="userBio">Tu biografía aparecerá aquí</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-card-light dark:bg-card-dark rounded-xl p-6 shadow-sm">
+          <h2 class="text-2xl font-bold text-text-light dark:text-text-dark mb-4">Mis Artículos Activos</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="userArticlesContainer">
+            <div class="col-span-full text-center py-12">
+              <span class="material-symbols-outlined text-4xl text-text-muted-light dark:text-text-muted-dark">inbox</span>
+              <p class="text-text-muted-light dark:text-text-muted-dark mt-4">Cargando artículos...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/assets/js/include-components.js" defer></script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/api-client.js" defer></script>
+  <script src="/assets/js/app.js?v=2.2" defer></script>
+  
+  <script>
+    // Verificar autenticación inmediatamente
+    const token = localStorage.getItem('access_token');
+    const userDataStr = localStorage.getItem('user_data');
+    const userData = userDataStr ? JSON.parse(userDataStr) : null;
+    
+    if (!token) {
+      window.location.href = '/templates/login.html';
+    } else {
+      console.log('✅ Perfil cargando...');
+      console.log('👤 Datos del usuario desde localStorage:', userData);
+    }
+    
+    document.addEventListener('DOMContentLoaded', async () => {
+      console.log('📄 DOM cargado completamente');
+      
+      // Actualizar nombre del usuario en el h1 del perfil
+      try {
+        const h1 = document.getElementById('profileUserName');
+        console.log('H1 elemento encontrado por ID:', h1, 'Texto actual:', h1?.textContent);
+        
+        if (h1 && userData && userData.nombre_completo) {
+          h1.textContent = userData.nombre_completo;
+          console.log('✅ Nombre actualizado a:', userData.nombre_completo);
+        } else if (h1) {
+          h1.textContent = 'Perfil de Usuario';
+          console.log('⚠️ No se pudo obtener nombre de usuario, usando texto por defecto. userData:', userData);
+        }
+        
+        
+        // Actualizar "Miembro desde"
+        const memberSince = document.getElementById('userMemberSince');
+        if (memberSince && userData && userData.created_at) {
+          const date = new Date(userData.created_at);
+          const months = Math.floor((new Date() - date) / (1000 * 60 * 60 * 24 * 30));
+          memberSince.textContent = `Miembro desde hace ${months > 0 ? months : 1} ${months === 1 ? 'mes' : 'meses'}`;
+          console.log('✅ Fecha de miembro actualizada');
+        }
+        
+        // Actualizar biografía
+        const bio = document.getElementById('userBio');
+        if (bio && userData) {
+          bio.textContent = userData.bio || userData.ubicacion || 'Usuario de Truekealo';
+          console.log('✅ Biografía actualizada');
+        }
+        
+        // Cargar artículos del usuario
+        console.log('📦 Cargando artículos del usuario...');
+        const response = await fetch('http://localhost:8000/api/v1/articulos/mis-articulos', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Error ${response.status}`);
+        }
+        
+        const articulos = await response.json();
+        console.log('✅ Artículos obtenidos:', articulos.length);
+        
+        // Actualizar contador de artículos
+        const articlesCount = document.getElementById('userArticlesCount');
+        if (articlesCount) {
+          articlesCount.textContent = articulos.length || 0;
+        }
+        
+        // Actualizar contenedor de artículos
+        const contenedor = document.getElementById('userArticlesContainer');
+        
+        if (!articulos || articulos.length === 0) {
+          contenedor.innerHTML = `
+            <div class="col-span-full text-center py-12">
+              <span class="material-symbols-outlined text-4xl text-text-muted-light dark:text-text-muted-dark">inbox</span>
+              <p class="text-text-muted-light dark:text-text-muted-dark mt-4">No tienes artículos publicados</p>
+              <a href="/templates/publicar.html" class="text-primary mt-4 inline-block font-medium hover:underline">Publica tu primer artículo</a>
+            </div>
+          `;
+          return;
+        }
+        
+        // Mostrar artículos en el grid
+        contenedor.innerHTML = articulos.map(art => `
+          <div class="bg-background-light dark:bg-background-dark border border-gray-300 dark:border-gray-700 rounded-lg overflow-hidden hover:shadow-md transition-shadow cursor-pointer">
+            <div class="aspect-video bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center">
+              ${art.imagen_url ? `<img src="${art.imagen_url}" alt="${art.titulo}" class="w-full h-full object-cover" />` : '<span class="material-symbols-outlined text-4xl text-gray-400">image</span>'}
+            </div>
+            <div class="p-4">
+              <h3 class="font-bold text-text-light dark:text-text-dark mb-2">${art.titulo || 'Sin título'}</h3>
+              <p class="text-sm text-text-muted-light dark:text-text-muted-dark mb-2 line-clamp-2">${art.descripcion?.substring(0, 80) || 'Sin descripción'}</p>
+              <div class="flex gap-2 mb-3">
+                <span class="text-xs px-2 py-1 bg-primary/10 text-primary rounded">${art.categoria || 'General'}</span>
+                <span class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-700 text-text-light dark:text-text-dark rounded">${art.condicion || 'Usado'}</span>
+              </div>
+              ${art.valor_estimado ? `<div class="text-sm font-bold text-primary">$${art.valor_estimado.toFixed(2)}</div>` : ''}
+            </div>
+          </div>
+        `).join('');
+        
+      } catch (error) {
+        console.error('❌ Error al cargar perfil:', error);
+        const contenedor = document.getElementById('userArticlesContainer');
+        if (contenedor) {
+          contenedor.innerHTML = `
+            <div class="col-span-full text-center py-12">
+              <p class="text-red-500">Error al cargar tus artículos</p>
+            </div>
+          `;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
