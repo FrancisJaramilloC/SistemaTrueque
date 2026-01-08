@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pruebas de Accesibilidad - Truekealo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #e84c30;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-left: 4px solid #e84c30;
+            background-color: #fafafa;
+        }
+
+        .test-section h2 {
+            color: #e84c30;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .test-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+        }
+
+        .test-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .test-description {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .status.pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status.pass {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status.fail {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+
+        .checklist input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .instructions {
+            background-color: #e8f4f8;
+            border-left: 4px solid #0066cc;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .instructions strong {
+            color: #0066cc;
+        }
+
+        .result-box {
+            background-color: #f0f0f0;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 13px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        a {
+            color: #e84c30;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .button-test {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #e84c30;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px 5px 5px 0;
+            font-size: 14px;
+        }
+
+        .button-test:hover {
+            background-color: #d63d1f;
+        }
+
+        .button-test:focus {
+            outline: 3px solid #0066cc;
+            outline-offset: 2px;
+        }
+    </style>
+    <link href="/assets/css/accessibility-menu.css" rel="stylesheet">
+</head>
+<body>
+    <div data-include="accessibility-menu"></div>
+
+    <div class="container">
+        <h1>🧪 Pruebas de Accesibilidad - Truekealo</h1>
+
+        <div class="instructions">
+            <strong>Instrucciones:</strong> Esta página contiene una suite de pruebas para validar que todas las características del menú de accesibilidad funcionan correctamente. Marca cada prueba como completada cuando la verifiques.
+        </div>
+
+        <!-- PRUEBAS DE MENÚ -->
+        <div class="test-section">
+            <h2>1. Acceso y Visualización del Menú</h2>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Botón flotante visible
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ El botón flotante (♿) debe ser visible en la esquina inferior derecha
+                </div>
+                <label>
+                    <input type="checkbox"> Botón visible correctamente
+                </label>
+            </div>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Menú se abre al hacer clic
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ Hacer clic en el botón debe abrir el panel de accesibilidad
+                </div>
+                <label>
+                    <input type="checkbox"> Panel se abre correctamente
+                </label>
+            </div>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Menú se cierra con botón X
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ El botón de cierre (X) debe cerrar el panel
+                </div>
+                <label>
+                    <input type="checkbox"> Panel se cierra correctamente
+                </label>
+            </div>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Menú se cierra con tecla ESC
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ Presionar ESC debe cerrar el panel
+                </div>
+                <label>
+                    <input type="checkbox"> ESC cierra el panel
+                </label>
+            </div>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Navegación por teclado
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ Usar TAB para navegar entre botones, ENTER para activar
+                </div>
+                <label>
+                    <input type="checkbox"> Teclado funciona correctamente
+                </label>
+            </div>
+        </div>
+
+        <!-- PRUEBAS DE TAMAÑO DE TEXTO -->
+        <div class="test-section">
+            <h2>2. Tamaño de Texto</h2>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Aumentar texto
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ Hacer clic en "Aumentar texto" debe incrementar el tamaño en 25%
+                </div>
+                <label>
+                    <input type="checkbox"> El texto se agranda correctamente
+                </label>
+            </div>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Disminuir texto
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ Hacer clic en "Disminuir texto" debe reducir el tamaño en 25%
+                </div>
+                <label>
+                    <input type="checkbox"> El texto se reduce correctamente
+                </label>
+            </div>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Indicador de tamaño
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ El porcentaje debe mostrarse y actualizarse correctamente
+                </div>
+                <label>
+                    <input type="checkbox"> El indicador se actualiza correctamente
+                </label>
+            </div>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Límites de tamaño
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ Mínimo: 75%, Máximo: 200%
+                </div>
+                <label>
+                    <input type="checkbox"> Los límites se respetan
+                </label>
+            </div>
+        </div>
+
+        <!-- PRUEBAS DE CONTRASTE Y COLORES -->
+        <div class="test-section">
+            <h2>3. Contraste y Colores</h2>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Escala de grises
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ Activar debe desaturar todos los colores de la página
+                </div>
+                <label>
+                    <input type="checkbox"> Escala de grises funciona
+                </label>
+            </div>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Alto contraste
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ Activar debe aumentar el contraste entre elementos
+                </div>
+                <label>
+                    <input type="checkbox"> Alto contraste funciona
+                </label>
+            </div>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Contraste negativo
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ Activar debe invertir colores (fondo oscuro, texto claro)
+                </div>
+                <label>
+                    <input type="checkbox"> Contraste negativo funciona
+                </label>
+            </div>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Estados de activación
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ Los botones deben mostrar marca (✓) cuando están activados
+                </div>
+                <label>
+                    <input type="checkbox"> Estados visuales son claros
+                </label>
+            </div>
+        </div>
+
+        <!-- PRUEBAS DE FONDO Y ENLACES -->
+        <div class="test-section">
+            <h2>4. Fondo y Enlaces</h2>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Fondo claro
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ Activar debe establecer un fondo blanco consistente
+                </div>
+                <label>
+                    <input type="checkbox"> Fondo claro funciona
+                </label>
+            </div>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Enlaces subrayados
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ Todos los <a href="#">enlaces deben subrayarse</a> cuando se activa
+                </div>
+                <label>
+                    <input type="checkbox"> Enlaces se subrayan correctamente
+                </label>
+            </div>
+        </div>
+
+        <!-- PRUEBAS DE FUENTE -->
+        <div class="test-section">
+            <h2>5. Fuente Legible</h2>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Fuente legible
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ Activar debe cambiar la fuente a Arial/Helvetica con espaciado aumentado
+                </div>
+                <label>
+                    <input type="checkbox"> Fuente legible funciona
+                </label>
+            </div>
+        </div>
+
+        <!-- PRUEBAS DE LECTURA EN VOZ ALTA -->
+        <div class="test-section">
+            <h2>6. Lectura en Voz Alta</h2>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Leer página
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ El botón "Leer página" debe iniciar la síntesis de voz
+                </div>
+                <button class="button-test" onclick="testSpeech()">Probar Lectura</button>
+                <div id="speechResult" class="result-box" style="display:none;"></div>
+                <label>
+                    <input type="checkbox"> Síntesis de voz funciona
+                </label>
+            </div>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Detener lectura
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ El botón "Detener lectura" debe pausar la síntesis de voz
+                </div>
+                <label>
+                    <input type="checkbox"> Botón detener funciona
+                </label>
+            </div>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Control de velocidad
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ El slider de velocidad debe funcionar desde 0.5x a 2.0x
+                </div>
+                <label>
+                    <input type="checkbox"> Control de velocidad funciona
+                </label>
+            </div>
+        </div>
+
+        <!-- PRUEBAS DE PERSISTENCIA -->
+        <div class="test-section">
+            <h2>7. Persistencia de Configuración</h2>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Guardado en localStorage
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ Las preferencias deben guardarse en localStorage
+                </div>
+                <button class="button-test" onclick="checkLocalStorage()">Verificar localStorage</button>
+                <div id="storageResult" class="result-box" style="display:none;"></div>
+                <label>
+                    <input type="checkbox"> localStorage se usa correctamente
+                </label>
+            </div>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Persistencia entre sesiones
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ Las preferencias deben mantenerse después de recargar la página
+                </div>
+                <button class="button-test" onclick="testPersistence()">Hacer cambio y recargar</button>
+                <label>
+                    <input type="checkbox"> Las preferencias persisten
+                </label>
+            </div>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Restablecer cambios
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ El botón "Restablecer cambios" debe volver todo a valores predeterminados
+                </div>
+                <label>
+                    <input type="checkbox"> Restablecer funciona correctamente
+                </label>
+            </div>
+        </div>
+
+        <!-- PRUEBAS DE COMPATIBILIDAD -->
+        <div class="test-section">
+            <h2>8. Compatibilidad y Accesibilidad</h2>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Responsive en móvil
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ El menú debe ser usable en pantallas pequeñas
+                </div>
+                <label>
+                    <input type="checkbox"> Funciona en móvil
+                </label>
+            </div>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Etiquetas ARIA
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ Todos los elementos deben tener etiquetas ARIA apropiadas
+                </div>
+                <button class="button-test" onclick="checkAria()">Verificar ARIA</button>
+                <div id="ariaResult" class="result-box" style="display:none;"></div>
+                <label>
+                    <input type="checkbox"> ARIA está implementado
+                </label>
+            </div>
+
+            <div class="test-item">
+                <div class="test-label">
+                    Modo oscuro del sistema
+                    <span class="status pending">A PROBAR</span>
+                </div>
+                <div class="test-description">
+                    ✓ El menú debe respetar las preferencias de modo oscuro del sistema
+                </div>
+                <label>
+                    <input type="checkbox"> Modo oscuro funciona
+                </label>
+            </div>
+        </div>
+
+        <!-- RESUMEN -->
+        <div class="test-section" style="background-color: #e8f4f8; border-left-color: #0066cc;">
+            <h2>📊 Resumen de Pruebas</h2>
+            <p>Total de elementos a probar: <strong>25</strong></p>
+            <p>Elementos marcados: <strong id="completedCount">0</strong></p>
+            <p>Progreso: <strong id="progressPercent">0%</strong></p>
+            <button class="button-test" onclick="updateProgress()">Actualizar Progreso</button>
+            <button class="button-test" onclick="resetChecklist()">Limpiar Todo</button>
+        </div>
+    </div>
+
+    <script src="/assets/js/include-components.js"></script>
+    <script src="/assets/js/accessibility.js"></script>
+
+    <script>
+        // Funciones de prueba
+        function testSpeech() {
+            const result = document.getElementById('speechResult');
+            result.style.display = 'block';
+            
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance('Esta es una prueba de síntesis de voz. La página de accesibilidad funciona correctamente.');
+                utterance.lang = 'es-ES';
+                
+                utterance.onstart = () => {
+                    result.innerHTML += '[INICIO] Iniciando síntesis de voz...\n';
+                };
+                
+                utterance.onend = () => {
+                    result.innerHTML += '[FIN] Síntesis completada\n';
+                };
+                
+                utterance.onerror = (e) => {
+                    result.innerHTML += '[ERROR] ' + e.error + '\n';
+                };
+                
+                speechSynthesis.cancel();
+                speechSynthesis.speak(utterance);
+            } else {
+                result.innerHTML = '[ERROR] Web Speech API no está disponible en este navegador';
+            }
+        }
+
+        function checkLocalStorage() {
+            const result = document.getElementById('storageResult');
+            result.style.display = 'block';
+            result.innerHTML = '';
+            
+            try {
+                const settings = localStorage.getItem('a11y-settings');
+                if (settings) {
+                    const parsed = JSON.parse(settings);
+                    result.innerHTML = '[✓] localStorage disponible\n\n';
+                    result.innerHTML += 'Configuración guardada:\n';
+                    result.innerHTML += JSON.stringify(parsed, null, 2);
+                } else {
+                    result.innerHTML = '[⚠] localStorage disponible pero sin configuración guardada aún';
+                }
+            } catch (e) {
+                result.innerHTML = '[✗] Error al acceder a localStorage: ' + e.message;
+            }
+        }
+
+        function checkAria() {
+            const result = document.getElementById('ariaResult');
+            result.style.display = 'block';
+            result.innerHTML = '';
+            
+            const menu = document.getElementById('accessibility-menu');
+            if (!menu) {
+                result.innerHTML = '[✗] Menú de accesibilidad no encontrado';
+                return;
+            }
+            
+            const toggle = document.getElementById('accessibility-toggle');
+            const buttons = document.querySelectorAll('[id^="a11y-"] [aria-label], .accessibility-btn');
+            
+            result.innerHTML = '[✓] Menú encontrado\n\n';
+            result.innerHTML += 'Elementos con etiquetas ARIA:\n';
+            result.innerHTML += `- Botón toggle: ${toggle ? 'aria-label: "' + toggle.getAttribute('aria-label') + '"' : '✗ Sin etiqueta'}\n`;
+            result.innerHTML += `- Botones accesibilidad: ${buttons.length} elementos con aria-label\n\n`;
+            result.innerHTML += 'Roles ARIA detectados:\n';
+            
+            const roles = document.querySelectorAll('[role]');
+            roles.forEach(el => {
+                if (el.closest('#accessibility-menu')) {
+                    result.innerHTML += `- role="${el.getAttribute('role')}"\n`;
+                }
+            });
+        }
+
+        function testPersistence() {
+            alert('1. Se ha hecho un cambio en las preferencias de accesibilidad\n2. Recarga la página (F5)\n3. Verifica si los cambios persisten\n4. Marca esta prueba como completada');
+        }
+
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const checked = document.querySelectorAll('input[type="checkbox"]:checked');
+            
+            const completedCount = document.getElementById('completedCount');
+            const progressPercent = document.getElementById('progressPercent');
+            
+            completedCount.textContent = checked.length;
+            const percent = Math.round((checked.length / checkboxes.length) * 100);
+            progressPercent.textContent = percent + '%';
+        }
+
+        function resetChecklist() {
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+            updateProgress();
+            alert('Checklist limpiado');
+        }
+
+        // Actualizar progreso cuando se marca un checkbox
+        document.addEventListener('change', (e) => {
+            if (e.target.type === 'checkbox') {
+                updateProgress();
+            }
+        });
+
+        // Información inicial
+        window.addEventListener('load', () => {
+            console.log('Página de pruebas cargada');
+            console.log('AccessibilityManager disponible:', !!window.accessibilityManager);
+        });
+    </script>
+</body>
+</html>
