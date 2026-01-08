@@ -11,6 +11,31 @@ const API_CONFIG = {
     RETRY_ATTEMPTS: 3
 };
 
+// ==================== Utilidades ====================
+const safeToast = {
+    success: (message) => {
+        if (typeof Toast !== 'undefined' && Toast.success) {
+            Toast.success(message);
+        } else {
+            console.log('✅', message);
+        }
+    },
+    error: (message) => {
+        if (typeof Toast !== 'undefined' && Toast.error) {
+            Toast.error(message);
+        } else {
+            console.error('❌', message);
+        }
+    },
+    warning: (message) => {
+        if (typeof Toast !== 'undefined' && Toast.warning) {
+            Toast.warning(message);
+        } else {
+            console.warn('⚠️', message);
+        }
+    }
+};
+
 // ==================== Gestión de Tokens ====================
 class TokenManager {
     static getToken() {
@@ -76,6 +101,16 @@ class HTTPClient {
 
         try {
             const response = await fetch(url, finalOptions);
+            
+            // Manejar 401 (Unauthorized) - token expirado o inválido
+            // Pero NO redirigir si es el endpoint de login
+            if (response.status === 401 && !endpoint.includes('/auth/login')) {
+                console.warn('Token expirado o inválido, cerrando sesión...');
+                TokenManager.removeToken();
+                window.location.href = '/templates/login.html';
+                throw new APIError('Sesión expirada', 401, {});
+            }
+
             const data = await response.json();
 
             if (!response.ok) {
@@ -149,10 +184,10 @@ class AuthAPI {
     static async register(userData) {
         try {
             const response = await HTTPClient.post('/auth/register', userData);
-            Toast.success('Cuenta creada exitosamente');
+            safeToast.success('Cuenta creada exitosamente');
             return response;
         } catch (error) {
-            Toast.error(error.message || 'Error al crear la cuenta');
+            safeToast.error(error.message || 'Error al crear la cuenta');
             throw error;
         }
     }
@@ -174,10 +209,10 @@ class AuthAPI {
             TokenManager.setToken(response.access_token);
             TokenManager.setUserData(response.user);
 
-            Toast.success('Sesión iniciada correctamente');
+            // Login silencioso: sin toast
             return response;
         } catch (error) {
-            Toast.error(error.message || 'Credenciales incorrectas');
+            safeToast.error(error.message || 'Usuario o contraseña incorrecta');
             throw error;
         }
     }
@@ -187,7 +222,7 @@ class AuthAPI {
      */
     static logout() {
         TokenManager.removeToken();
-        Toast.success('Sesión cerrada');
+        safeToast.success('Sesión cerrada');
         window.location.href = '/templates/login.html';
     }
 
@@ -220,7 +255,7 @@ class ArticulosAPI {
         try {
             return await HTTPClient.get('/articulos/', params);
         } catch (error) {
-            Toast.error('Error al cargar artículos');
+            safeToast.error('Error al cargar artículos');
             throw error;
         }
     }
@@ -234,7 +269,7 @@ class ArticulosAPI {
         try {
             return await HTTPClient.get(`/articulos/${id}`);
         } catch (error) {
-            Toast.error('Artículo no encontrado');
+            safeToast.error('Artículo no encontrado');
             throw error;
         }
     }
@@ -247,7 +282,7 @@ class ArticulosAPI {
         try {
             return await HTTPClient.get('/articulos/mis-articulos');
         } catch (error) {
-            Toast.error('Error al cargar tus artículos');
+            safeToast.error('Error al cargar tus artículos');
             throw error;
         }
     }
@@ -260,10 +295,10 @@ class ArticulosAPI {
     static async create(articuloData) {
         try {
             const response = await HTTPClient.post('/articulos/', articuloData);
-            Toast.success('Artículo publicado exitosamente');
+            safeToast.success('Artículo publicado exitosamente');
             return response;
         } catch (error) {
-            Toast.error(error.message || 'Error al publicar artículo');
+            safeToast.error(error.message || 'Error al publicar artículo');
             throw error;
         }
     }
@@ -277,10 +312,10 @@ class ArticulosAPI {
     static async update(id, articuloData) {
         try {
             const response = await HTTPClient.put(`/articulos/${id}`, articuloData);
-            Toast.success('Artículo actualizado');
+            safeToast.success('Artículo actualizado');
             return response;
         } catch (error) {
-            Toast.error('Error al actualizar artículo');
+            safeToast.error('Error al actualizar artículo');
             throw error;
         }
     }
@@ -293,9 +328,9 @@ class ArticulosAPI {
     static async delete(id) {
         try {
             await HTTPClient.delete(`/articulos/${id}`);
-            Toast.success('Artículo eliminado');
+            safeToast.success('Artículo eliminado');
         } catch (error) {
-            Toast.error('Error al eliminar artículo');
+            safeToast.error('Error al eliminar artículo');
             throw error;
         }
     }
@@ -311,10 +346,10 @@ class PropuestasAPI {
     static async create(propuestaData) {
         try {
             const response = await HTTPClient.post('/propuestas/', propuestaData);
-            Toast.success('Propuesta enviada');
+            safeToast.success('Propuesta enviada');
             return response;
         } catch (error) {
-            Toast.error(error.message || 'Error al enviar propuesta');
+            safeToast.error(error.message || 'Error al enviar propuesta');
             throw error;
         }
     }
@@ -327,7 +362,7 @@ class PropuestasAPI {
         try {
             return await HTTPClient.get('/propuestas/recibidas');
         } catch (error) {
-            Toast.error('Error al cargar propuestas recibidas');
+            safeToast.error('Error al cargar propuestas recibidas');
             throw error;
         }
     }
@@ -340,7 +375,7 @@ class PropuestasAPI {
         try {
             return await HTTPClient.get('/propuestas/enviadas');
         } catch (error) {
-            Toast.error('Error al cargar propuestas enviadas');
+            safeToast.error('Error al cargar propuestas enviadas');
             throw error;
         }
     }
@@ -354,7 +389,7 @@ class PropuestasAPI {
         try {
             return await HTTPClient.get(`/propuestas/${id}`);
         } catch (error) {
-            Toast.error('Propuesta no encontrada');
+            safeToast.error('Propuesta no encontrada');
             throw error;
         }
     }
@@ -368,10 +403,101 @@ class PropuestasAPI {
     static async updateEstado(id, estado) {
         try {
             const response = await HTTPClient.patch(`/propuestas/${id}`, { estado });
-            Toast.success('Propuesta actualizada');
+            safeToast.success('Propuesta actualizada');
             return response;
         } catch (error) {
-            Toast.error('Error al actualizar propuesta');
+            safeToast.error('Error al actualizar propuesta');
+            throw error;
+        }
+    }
+
+    /**
+     * Obtiene un resumen de propuestas para el usuario actual
+     * @returns {Promise<{pendientes:number,total:number}>}
+     */
+    static async getResumen() {
+        try {
+            return await HTTPClient.get('/propuestas/resumen');
+        } catch (error) {
+            safeToast.error('Error al calcular intercambios pendientes');
+            throw error;
+        }
+    }
+}
+
+// ==================== API de Actividades ====================
+class ActividadesAPI {
+    /**
+     * Obtiene las actividades recientes del usuario
+     */
+    static async getRecientes(limite = 10) {
+        try {
+            return await HTTPClient.get('/actividades/recientes', { limite });
+        } catch (error) {
+            safeToast.error('Error al cargar actividades');
+            throw error;
+        }
+    }
+
+    /**
+     * Obtiene el conteo de intercambios activos (con conversación)
+     */
+    static async getIntercambiosActivos() {
+        try {
+            return await HTTPClient.get('/actividades/intercambios-activos');
+        } catch (error) {
+            safeToast.error('Error al cargar intercambios activos');
+            throw error;
+        }
+    }
+}
+
+// ==================== API de Mensajes ====================
+class MensajesAPI {
+    /**
+     * Lista las conversaciones del usuario con el último mensaje y no leídos
+     */
+    static async getConversaciones() {
+        try {
+            return await HTTPClient.get('/mensajes/conversaciones');
+        } catch (error) {
+            safeToast.error('Error al cargar conversaciones');
+            throw error;
+        }
+    }
+
+    /**
+     * Obtiene una conversación completa con otro usuario (marca mensajes como leídos)
+     */
+    static async getConversacion(usuarioId) {
+        try {
+            return await HTTPClient.get(`/mensajes/conversacion/${usuarioId}`);
+        } catch (error) {
+            safeToast.error(error.message || 'Error al cargar conversación');
+            throw error;
+        }
+    }
+
+    /**
+     * Envía un mensaje a otro usuario
+     */
+    static async enviar(destinatario_id, contenido) {
+        try {
+            return await HTTPClient.post('/mensajes/', { destinatario_id, contenido });
+        } catch (error) {
+            safeToast.error(error.message || 'Error al enviar mensaje');
+            throw error;
+        }
+    }
+
+    /**
+     * Devuelve el conteo de mensajes no leídos para el usuario actual
+     */
+    static async getUnreadCount() {
+        try {
+            return await HTTPClient.get('/mensajes/unread-count');
+        } catch (error) {
+            safeToast.error('Error al actualizar contador de mensajes');
             throw error;
         }
     }
@@ -385,7 +511,7 @@ class AuthMiddleware {
      */
     static requireAuth() {
         if (!TokenManager.isAuthenticated()) {
-            Toast.warning('Debes iniciar sesión para acceder');
+            safeToast.warning('Debes iniciar sesión para acceder');
             window.location.href = '/templates/login.html';
             return false;
         }
@@ -412,6 +538,8 @@ window.TruekealoAPI = {
     Auth: AuthAPI,
     Articulos: ArticulosAPI,
     Propuestas: PropuestasAPI,
+    Mensajes: MensajesAPI,
+    Actividades: ActividadesAPI,
     TokenManager,
     AuthMiddleware,
     APIError

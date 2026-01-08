@@ -10,7 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
   <link rel="preload" href="/assets/css/app.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link href="/assets/css/app.css" rel="stylesheet"></noscript>
+  <link href="/assets/css/accessibility-menu.css" rel="stylesheet">
+  <noscript><link href="/assets/css/app.css" rel="stylesheet"><link href="/assets/css/accessibility-menu.css" rel="stylesheet"></noscript>
   <script>
     tailwind.config = {
       darkMode: "class",
@@ -44,6 +45,9 @@
   </script>
 </head>
 <body class="font-display bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark flex items-center justify-center min-h-screen p-4">
+  <!-- Menú de Herramientas de Accesibilidad -->
+  <div id="accessibility-menu" class="accessibility-menu" role="region" aria-label="Herramientas de accesibilidad"><button id="accessibility-toggle" class="accessibility-toggle" aria-label="Abrir herramientas de accesibilidad" aria-expanded="false" aria-controls="accessibility-panel"><span class="accessibility-icon">♿</span></button><div id="accessibility-panel" class="accessibility-panel" hidden><div class="accessibility-header"><h2>Herramientas de accesibilidad</h2><button id="accessibility-close" class="accessibility-close" aria-label="Cerrar menú de accesibilidad"><span aria-hidden="true">&times;</span></button></div><div class="accessibility-content"><div class="accessibility-section"><h3>Tamaño de texto</h3><div class="accessibility-group"><button id="text-increase" class="accessibility-btn" aria-label="Aumentar tamaño de texto"><span class="btn-icon">A+</span><span class="btn-label">Aumentar texto</span></button><button id="text-decrease" class="accessibility-btn" aria-label="Disminuir tamaño de texto"><span class="btn-icon">A-</span><span class="btn-label">Disminuir texto</span></button><div class="text-size-display"><span>Tamaño: <span id="current-text-size">100%</span></span></div></div></div><div class="accessibility-section"><h3>Contraste y colores</h3><div class="accessibility-group"><button id="grayscale-toggle" class="accessibility-btn" aria-label="Activar modo escala de grises" aria-pressed="false"><span class="btn-icon">⚫⚪</span><span class="btn-label">Escala de grises</span></button><button id="high-contrast-toggle" class="accessibility-btn" aria-label="Activar alto contraste" aria-pressed="false"><span class="btn-icon">◆</span><span class="btn-label">Alto contraste</span></button><button id="negative-contrast-toggle" class="accessibility-btn" aria-label="Activar contraste negativo" aria-pressed="false"><span class="btn-icon">⬜⬛</span><span class="btn-label">Contraste negativo</span></button></div></div><div class="accessibility-section"><h3>Fondo</h3><div class="accessibility-group"><button id="light-background-toggle" class="accessibility-btn" aria-label="Activar fondo claro" aria-pressed="false"><span class="btn-icon">☀️</span><span class="btn-label">Fondo claro</span></button></div></div><div class="accessibility-section"><h3>Enlaces</h3><div class="accessibility-group"><button id="underline-links-toggle" class="accessibility-btn" aria-label="Subrayar enlaces" aria-pressed="false"><span class="btn-icon">U̲</span><span class="btn-label">Enlaces subrayados</span></button></div></div><div class="accessibility-section"><h3>Fuente</h3><div class="accessibility-group"><button id="readable-font-toggle" class="accessibility-btn" aria-label="Usar fuente legible" aria-pressed="false"><span class="btn-icon">ㄱ</span><span class="btn-label">Fuente legible</span></button></div></div><div class="accessibility-section"><h3>Lectura en voz alta</h3><div class="accessibility-group"><button id="read-page-btn" class="accessibility-btn" aria-label="Leer página en voz alta"><span class="btn-icon">🔊</span><span class="btn-label">Leer página</span></button><button id="stop-reading-btn" class="accessibility-btn" aria-label="Detener lectura en voz alta" disabled><span class="btn-icon">⏹️</span><span class="btn-label">Detener lectura</span></button></div><div class="speech-controls"><label for="speech-rate">Velocidad de lectura:</label><input type="range" id="speech-rate" class="speech-rate-slider" min="0.5" max="2" step="0.1" value="1" aria-label="Controlar velocidad de lectura"><span id="speech-rate-display">1.0x</span></div></div><div class="accessibility-section"><h3>Preferencias</h3><div class="accessibility-group"><button id="reset-settings" class="accessibility-btn accessibility-btn-danger" aria-label="Restablecer todos los cambios de accesibilidad"><span class="btn-icon">🔄</span><span class="btn-label">Restablecer cambios</span></button></div></div></div><div class="accessibility-footer"><small>Tus preferencias se guardan automáticamente</small></div></div></div>
+  
   <a href="#mainContent" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:bg-primary focus:text-white px-3 py-2 rounded">Saltar al contenido</a>
   <div class="absolute top-4 right-4">
     <button id="darkModeToggle" class="flex items-center justify-center w-10 h-10 rounded-lg text-text-light dark:text-text-dark hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary" title="Cambiar tema" aria-label="Cambiar a modo oscuro o claro">
@@ -55,7 +59,7 @@
     <div class="bg-card-light dark:bg-card-dark rounded-xl shadow-sm p-8 sm:p-12">
       <div class="flex flex-col items-center text-center mb-8">
         <h2 id="recoveryTitle" class="text-3xl font-bold text-text-light dark:text-text-dark">Recuperar Contraseña</h2>
-        <p class="text-sm text-text-muted-light dark:text-text-muted-dark mt-2">Ingresa tu correo electrónico y te enviaremos un enlace para recuperar tu contraseña</p>
+        <p class="text-sm text-text-muted-light dark:text-text-muted-dark mt-2">Ingresa tu correo electrónico y te enviaremos un código de recuperación</p>
       </div>
 
       <form id="recoveryForm" class="flex flex-col gap-5" aria-labelledby="recoveryTitle">
@@ -65,7 +69,7 @@
         </div>
 
         <button class="w-full flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-primary text-white text-base font-bold leading-normal tracking-wide hover:bg-opacity-90 transition-opacity" type="submit">
-          <span class="truncate">Enviar Enlace</span>
+          <span class="truncate">Enviar Código</span>
         </button>
       </form>
 
@@ -111,16 +115,19 @@
           });
           
           if (response.ok) {
+            const data = await response.json();
+            
             if (typeof Toast !== 'undefined') {
-              Toast.success('Se ha enviado un enlace de recuperación a tu correo (si la cuenta existe)');
+              Toast.success('Se ha enviado un código de recuperación a tu correo');
             }
             
+            // Mostrar formulario para ingresar el token
             setTimeout(() => {
-              window.location.href = '/templates/login.html';
-            }, 2000);
+              showTokenForm();
+            }, 1500);
           } else {
             if (typeof Toast !== 'undefined') {
-              Toast.error('Error al enviar el enlace de recuperación');
+              Toast.error('Error al solicitar el código de recuperación');
             }
           }
         } catch (error) {
@@ -130,9 +137,77 @@
           }
         } finally {
           submitButton.disabled = false;
-          submitButton.innerHTML = '<span class="truncate">Enviar Enlace</span>';
+          submitButton.innerHTML = '<span class="truncate">Enviar Código</span>';
         }
       });
+      
+      function showTokenForm() {
+        console.log('🔐 Pidiendo token de recuperación');
+        
+        const title = document.getElementById('recoveryTitle');
+        const form = document.getElementById('recoveryForm');
+        
+        title.textContent = 'Ingresar Código de Recuperación';
+        
+        form.innerHTML = `
+          <div>
+            <label class="block text-sm font-medium text-text-light dark:text-text-dark mb-2 block" for="recoveryToken">Código de Recuperación</label>
+            <p class="text-xs text-text-muted-light dark:text-text-muted-dark mb-3">Se ha enviado un código a tu correo electrónico</p>
+            <input class="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark focus:ring-2 focus:ring-primary focus:border-primary" id="recoveryToken" name="recoveryToken" type="text" required placeholder="Ingresa el código recibido" aria-required="true"/>
+          </div>
+          <button class="w-full flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-primary text-white text-base font-bold leading-normal tracking-wide hover:bg-opacity-90 transition-opacity mt-4" type="submit">
+            <span class="truncate">Verificar Código</span>
+          </button>
+        `;
+        
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          
+          const token = document.getElementById('recoveryToken').value.trim();
+          
+          if (!token) {
+            if (typeof Toast !== 'undefined') {
+              Toast.error('Ingresa el código recibido');
+            }
+            return;
+          }
+          
+          const submitButton = form.querySelector('button[type="submit"]');
+          submitButton.disabled = true;
+          submitButton.innerHTML = '<span class="truncate">Verificando...</span>';
+          
+          try {
+            // Verificar que el token sea válido haciendo un GET
+            const response = await fetch(`http://localhost:8000/api/v1/auth/verify-token/${token}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+            
+            if (response.ok) {
+              // Token válido, mostrar formulario de reset
+              showResetForm(token);
+            } else {
+              const error = await response.json();
+              const errorMsg = typeof error.detail === 'string' 
+                ? error.detail 
+                : 'Código inválido o expirado';
+              if (typeof Toast !== 'undefined') {
+                Toast.error(errorMsg);
+              }
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            if (typeof Toast !== 'undefined') {
+              Toast.error('Error de conexión');
+            }
+          } finally {
+            submitButton.disabled = false;
+            submitButton.innerHTML = '<span class="truncate">Verificar Código</span>';
+          }
+        });
+      }
       
       function showResetForm(token) {
         console.log('🔐 Token de recuperación detectado');
@@ -212,5 +287,6 @@
       }
     });
   </script>
+  <script src="/assets/js/accessibility.js"></script>
 </body>
 </html>

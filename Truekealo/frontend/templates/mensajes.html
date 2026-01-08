@@ -10,7 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
   <link rel="preload" href="/assets/css/app.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link href="/assets/css/app.css" rel="stylesheet"></noscript>
+  <link href="/assets/css/accessibility-menu.css" rel="stylesheet">
+  <noscript><link href="/assets/css/app.css" rel="stylesheet"><link href="/assets/css/accessibility-menu.css" rel="stylesheet"></noscript>
   <script>
     tailwind.config = {
       darkMode: "class",
@@ -44,6 +45,9 @@
   </script>
 </head>
 <body class="font-display bg-background-light dark:bg-background-dark">
+  <!-- Menú de Herramientas de Accesibilidad -->
+  <div id="accessibility-menu" class="accessibility-menu" role="region" aria-label="Herramientas de accesibilidad"><button id="accessibility-toggle" class="accessibility-toggle" aria-label="Abrir herramientas de accesibilidad" aria-expanded="false" aria-controls="accessibility-panel"><span class="accessibility-icon">♿</span></button><div id="accessibility-panel" class="accessibility-panel" hidden><div class="accessibility-header"><h2>Herramientas de accesibilidad</h2><button id="accessibility-close" class="accessibility-close" aria-label="Cerrar menú de accesibilidad"><span aria-hidden="true">&times;</span></button></div><div class="accessibility-content"><div class="accessibility-section"><h3>Tamaño de texto</h3><div class="accessibility-group"><button id="text-increase" class="accessibility-btn" aria-label="Aumentar tamaño de texto"><span class="btn-icon">A+</span><span class="btn-label">Aumentar texto</span></button><button id="text-decrease" class="accessibility-btn" aria-label="Disminuir tamaño de texto"><span class="btn-icon">A-</span><span class="btn-label">Disminuir texto</span></button><div class="text-size-display"><span>Tamaño: <span id="current-text-size">100%</span></span></div></div></div><div class="accessibility-section"><h3>Contraste y colores</h3><div class="accessibility-group"><button id="grayscale-toggle" class="accessibility-btn" aria-label="Activar modo escala de grises" aria-pressed="false"><span class="btn-icon">⚫⚪</span><span class="btn-label">Escala de grises</span></button><button id="high-contrast-toggle" class="accessibility-btn" aria-label="Activar alto contraste" aria-pressed="false"><span class="btn-icon">◆</span><span class="btn-label">Alto contraste</span></button><button id="negative-contrast-toggle" class="accessibility-btn" aria-label="Activar contraste negativo" aria-pressed="false"><span class="btn-icon">⬜⬛</span><span class="btn-label">Contraste negativo</span></button></div></div><div class="accessibility-section"><h3>Fondo</h3><div class="accessibility-group"><button id="light-background-toggle" class="accessibility-btn" aria-label="Activar fondo claro" aria-pressed="false"><span class="btn-icon">☀️</span><span class="btn-label">Fondo claro</span></button></div></div><div class="accessibility-section"><h3>Enlaces</h3><div class="accessibility-group"><button id="underline-links-toggle" class="accessibility-btn" aria-label="Subrayar enlaces" aria-pressed="false"><span class="btn-icon">U̲</span><span class="btn-label">Enlaces subrayados</span></button></div></div><div class="accessibility-section"><h3>Fuente</h3><div class="accessibility-group"><button id="readable-font-toggle" class="accessibility-btn" aria-label="Usar fuente legible" aria-pressed="false"><span class="btn-icon">ㄱ</span><span class="btn-label">Fuente legible</span></button></div></div><div class="accessibility-section"><h3>Lectura en voz alta</h3><div class="accessibility-group"><button id="read-page-btn" class="accessibility-btn" aria-label="Leer página en voz alta"><span class="btn-icon">🔊</span><span class="btn-label">Leer página</span></button><button id="stop-reading-btn" class="accessibility-btn" aria-label="Detener lectura en voz alta" disabled><span class="btn-icon">⏹️</span><span class="btn-label">Detener lectura</span></button></div><div class="speech-controls"><label for="speech-rate">Velocidad de lectura:</label><input type="range" id="speech-rate" class="speech-rate-slider" min="0.5" max="2" step="0.1" value="1" aria-label="Controlar velocidad de lectura"><span id="speech-rate-display">1.0x</span></div></div><div class="accessibility-section"><h3>Preferencias</h3><div class="accessibility-group"><button id="reset-settings" class="accessibility-btn accessibility-btn-danger" aria-label="Restablecer todos los cambios de accesibilidad"><span class="btn-icon">🔄</span><span class="btn-label">Restablecer cambios</span></button></div></div></div><div class="accessibility-footer"><small>Tus preferencias se guardan automáticamente</small></div></div></div>
+  
   <a href="#mainContent" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:bg-primary focus:text-white px-3 py-2 rounded">Saltar al contenido</a>
   <div class="relative flex min-h-screen w-full">
     <!-- Sidebar -->
@@ -86,10 +90,6 @@
           </a>
         </nav>
       </div>
-
-      <a href="publicar.html" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold mt-auto hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" aria-label="Subir nuevo artículo o ítem">
-        <span class="truncate">Subir Ítem</span>
-      </a>
     </aside>
 
     <!-- Main Content -->
@@ -138,29 +138,58 @@
     </main>
   </div>
 
-  <script src="/assets/js/include-components.js" defer></script>
-  <script src="/assets/js/config.js" defer></script>
-  <script src="/assets/js/app.js?v=2.2" defer></script>
+  <script src="/assets/js/include-components.js"></script>
+  <script src="/assets/js/config.js"></script>
+  <script src="/assets/js/api-client.js"></script>
+  <script src="/assets/js/app.js?v=2.2"></script>
   
   <script>
     let conversacionActual = null;
     let usuarioActualId = null;
+
+    const notify = {
+      error: (msg) => {
+        if (window.safeToast) return safeToast.error(msg);
+        if (window.Toast?.error) return Toast.error(msg);
+        console.error(msg);
+      },
+      success: (msg) => {
+        if (window.safeToast) return safeToast.success(msg);
+        if (window.Toast?.success) return Toast.success(msg);
+        console.log(msg);
+      }
+    };
     
     document.addEventListener('DOMContentLoaded', async () => {
-      const token = localStorage.getItem('access_token');
-      if (!token) {
-        window.location.href = '/templates/login.html';
+      // Esperar a que TruekealoAPI y Mensajes estén disponibles (máximo 5 segundos)
+      let attempts = 0;
+      while ((!window.TruekealoAPI || !window.TruekealoAPI.Mensajes) && attempts < 50) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+        attempts++;
+      }
+
+      if (!window.TruekealoAPI || !window.TruekealoAPI.Mensajes) {
+        console.error('TruekealoAPI.Mensajes no se cargó correctamente');
+        return;
+      }
+
+      if (!TruekealoAPI.AuthMiddleware.requireAuth()) {
         return;
       }
       
-      // Obtener ID del usuario actual
-      try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        usuarioActualId = parseInt(payload.sub);
-      } catch (error) {
-        console.error('Error decodificando token:', error);
-        Toast.error('Error de autenticación');
-        return;
+      const userData = TruekealoAPI.TokenManager.getUserData();
+      usuarioActualId = userData?.id || null;
+      
+      if (!usuarioActualId) {
+        try {
+          const token = TruekealoAPI.TokenManager.getToken();
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          usuarioActualId = parseInt(payload.sub);
+        } catch (error) {
+          console.error('Error decodificando token:', error);
+          Toast.error('Error de autenticación');
+          return;
+        }
       }
       
       // Verificar si hay un mensaje pendiente desde explorar
@@ -183,25 +212,18 @@
       }
       
       await cargarConversaciones();
+      await syncUnreadCount();
     });
     
     async function cargarConversaciones() {
-      const token = localStorage.getItem('access_token');
       const container = document.getElementById('conversacionesContainer');
       
       try {
-        const response = await fetch('http://localhost:8000/api/v1/mensajes/conversaciones', {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        });
-        
-        if (!response.ok) {
-          throw new Error(`Error ${response.status}`);
+        if (!TruekealoAPI?.Mensajes?.getConversaciones) {
+          throw new Error('Mensajes API no disponible');
         }
-        
-        const conversaciones = await response.json();
+
+        const conversaciones = await TruekealoAPI.Mensajes.getConversaciones();
         
         if (!conversaciones || conversaciones.length === 0) {
           container.innerHTML = `
@@ -244,7 +266,6 @@
     
     async function abrirConversacion(usuarioId, usuarioNombre) {
       conversacionActual = { id: usuarioId, nombre: usuarioNombre };
-      const token = localStorage.getItem('access_token');
       
       // Actualizar header
       document.getElementById('chatHeader').innerHTML = `
@@ -263,20 +284,11 @@
       
       // Cargar mensajes
       try {
-        const response = await fetch(`http://localhost:8000/api/v1/mensajes/conversacion/${usuarioId}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        });
-        
-        if (!response.ok) {
-          console.error(`Error ${response.status}:`, response.statusText);
-          const errorData = await response.json().catch(() => ({}));
-          throw new Error(errorData.detail || `Error ${response.status} al cargar mensajes`);
+        if (!TruekealoAPI?.Mensajes?.getConversacion) {
+          throw new Error('Mensajes API no disponible');
         }
-        
-        const mensajes = await response.json();
+
+        const mensajes = await TruekealoAPI.Mensajes.getConversacion(usuarioId);
         const container = document.getElementById('mensajesContainer');
         
         if (!mensajes || mensajes.length === 0) {
@@ -306,6 +318,7 @@
         
         // Recargar conversaciones para actualizar contadores
         await cargarConversaciones();
+        await syncUnreadCount();
         
       } catch (error) {
         console.error('Error cargando mensajes:', error);
@@ -317,17 +330,13 @@
             <p class="text-sm text-text-muted-light dark:text-text-muted-dark mt-2">Intenta recargar la conversación</p>
           </div>
         `;
-        if (typeof Toast !== 'undefined') {
-          Toast.error(error.message || 'Error al cargar mensajes');
-        }
+        notify.error(error.message || 'Error al cargar mensajes');
       }
     }
     
     async function enviarMensaje() {
       if (!conversacionActual) {
-        if (typeof Toast !== 'undefined') {
-          Toast.error('No hay conversación activa');
-        }
+        notify.error('No hay conversación activa');
         return;
       }
       
@@ -335,47 +344,53 @@
       const contenido = input.value.trim();
       
       if (!contenido) {
-        if (typeof Toast !== 'undefined') {
-          Toast.error('Escribe un mensaje');
-        }
+        notify.error('Escribe un mensaje');
         return;
       }
       
-      const token = localStorage.getItem('access_token');
-      
       try {
-        const response = await fetch('http://localhost:8000/api/v1/mensajes/', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            destinatario_id: conversacionActual.id,
-            contenido: contenido
-          })
-        });
-        
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => ({}));
-          throw new Error(errorData.detail || `Error ${response.status} al enviar mensaje`);
-        }
-        
+        await TruekealoAPI.Mensajes.enviar(conversacionActual.id, contenido);
         // Limpiar input
         input.value = '';
         
         // Recargar mensajes
         await abrirConversacion(conversacionActual.id, conversacionActual.nombre);
+        await syncUnreadCount();
         
-        if (typeof Toast !== 'undefined') {
-          Toast.success('Mensaje enviado');
-        }
+        notify.success('Mensaje enviado');
         
       } catch (error) {
         console.error('Error enviando mensaje:', error);
-        if (typeof Toast !== 'undefined') {
-          Toast.error(error.message || 'Error al enviar mensaje');
+        notify.error(error.message || 'Error al enviar mensaje');
+      }
+    }
+    
+    async function syncUnreadCount() {
+      try {
+        if (!TruekealoAPI?.Mensajes?.getUnreadCount) {
+          console.debug('Mensajes API no disponible para sync');
+          return;
         }
+
+        const { unread } = await TruekealoAPI.Mensajes.getUnreadCount();
+        localStorage.setItem('unread_messages_count', unread ?? 0);
+        window.dispatchEvent(new CustomEvent('unreadMessagesUpdated', { detail: { count: unread ?? 0 } }));
+        
+        // También actualizar contadores de intercambios si están disponibles
+        if (window.TruekealoAPI?.Actividades?.getIntercambiosActivos) {
+          try {
+            const intercambios = await TruekealoAPI.Actividades.getIntercambiosActivos();
+            // Disparar evento para que dashboard actualice si está abierto
+            window.dispatchEvent(new CustomEvent('intercambiosActualizados', { 
+              detail: { count: intercambios?.activos ?? 0 } 
+            }));
+          } catch (error) {
+            console.debug('No se pudieron actualizar intercambios activos');
+          }
+        }
+      } catch (error) {
+        console.error('Error sincronizando contador de mensajes:', error);
+        // No hacer nada más para evitar loops infinitos
       }
     }
     
@@ -386,5 +401,6 @@
       }
     });
   </script>
+  <script src="/assets/js/accessibility.js"></script>
 </body>
 </html>

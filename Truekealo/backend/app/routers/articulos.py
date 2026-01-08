@@ -347,3 +347,54 @@ async def upload_articulo_image(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Error al guardar la imagen: {str(e)}"
         )
+
+
+@router.post("/admin/sincronizar-imagenes")
+async def sincronizar_imagenes(db: Session = Depends(get_db)):
+    """
+    Sincroniza las imágenes guardadas en el filesystem con la base de datos
+    Busca archivos de imagen en uploads/articulos y los asocia con artículos sin imagen
+    
+    Returns:
+        dict: Resumen de sincronización
+    """
+    import re
+    
+    if not os.path.exists(UPLOAD_DIR):
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Directorio de uploads no existe: {UPLOAD_DIR}"
+        )
+    
+    image_files = os.listdir(UPLOAD_DIR)
+    pattern = r"articulo_(\d+)_"
+    
+    updated_count = 0
+    already_has_image = 0
+    not_found = 0
+    
+    for filename in image_files:
+        match = re.match(pattern, filename)
+        if match:
+            articulo_id = int(match.group(1))
+            image_url = f"/uploads/articulos/{filename}"
+            
+            articulo = db.query(Articulo).filter(Articulo.id == articulo_id).first()
+            
+            if articulo:
+                if articulo.imagen_url is None:
+                    articulo.imagen_url = image_url
+                    db.commit()
+                    updated_count += 1
+                else:
+                    already_has_image += 1
+            else:
+                not_found += 1
+    
+    return {
+        "message": "Sincronización completada",
+        "updated": updated_count,
+        "already_has_image": already_has_image,
+        "not_found": not_found,
+        "total_images": len(image_files)
+    }

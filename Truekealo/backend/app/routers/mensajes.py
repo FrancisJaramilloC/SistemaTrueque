@@ -193,3 +193,22 @@ async def marcar_leido(
     db.refresh(mensaje)
     
     return mensaje
+
+@router.get("/unread-count", response_model=dict)
+async def get_unread_count(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Devuelve la cantidad de mensajes no leídos para el usuario actual.
+
+    El conteo se recalcula en cada solicitud y no depende de procesos
+    automatizados. Se utiliza para actualizar el contador de mensajes pendientes
+    en el dashboard y en la vista de mensajería.
+    """
+    unread = db.query(Mensaje).filter(
+        Mensaje.destinatario_id == current_user.id,
+        Mensaje.leido == False
+    ).count()
+
+    return {"unread": unread}

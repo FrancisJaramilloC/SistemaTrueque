@@ -5,7 +5,9 @@ Endpoints para registro, login y gestión de autenticación
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from datetime import timedelta
+from datetime import timedelta, datetime
+from pydantic import BaseModel
+import secrets
 
 from app.database import get_db
 from app.schemas.user import UserCreate, UserResponse, Token, UserLogin
@@ -16,7 +18,9 @@ from app.core.security import (
     get_current_user
 )
 from app.core.config import settings
+from app.core.email import email_service
 from app.models.user import User
+from app.models.password_reset import PasswordResetToken
 
 router = APIRouter(prefix="/auth", tags=["Autenticación"])
 
@@ -82,7 +86,7 @@ async def login(user_credentials: UserLogin, db: Session = Depends(get_db)):
     if not user or not verify_password(user_credentials.password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Credenciales incorrectas",
+            detail="Usuario o contraseña incorrecta",
             headers={"WWW-Authenticate": "Bearer"},
         )
     
@@ -120,7 +124,7 @@ async def login_form(
     if not user or not verify_password(form_data.password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Credenciales incorrectas",
+            detail="Usuario o contraseña incorrecta",
             headers={"WWW-Authenticate": "Bearer"},
         )
     
@@ -151,10 +155,13 @@ async def get_current_user_info(current_user: User = Depends(get_current_user)):
     return current_user
 
 
+class ChangePasswordRequest(BaseModel):
+    current_password: str
+    new_password: str
+
 @router.post("/change-password")
 async def change_password(
-    current_password: str,
-    new_password: str,
+    request: ChangePasswordRequest,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
@@ -162,8 +169,7 @@ async def change_password(
     Cambia la contraseña del usuario actual
     
     Args:
-        current_password: Contraseña actual del usuario
-        new_password: Nueva contraseña
+        request: Datos con contraseña actual y nueva
         db: Sesión de base de datos
         current_user: Usuario autenticado
         
@@ -174,21 +180,21 @@ async def change_password(
         HTTPException: Si la contraseña actual es incorrecta
     """
     # Verificar contraseña actual
-    if not verify_password(current_password, current_user.hashed_password):
+    if not verify_password(request.current_password, current_user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Contraseña actual incorrecta"
         )
     
     # Validar nueva contraseña
-    if len(new_password) < 8:
+    if len(request.new_password) < 8:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="La nueva contraseña debe tener al menos 8 caracteres"
         )
     
     # Actualizar contraseña
-    current_user.hashed_password = get_password_hash(new_password)
+    current_user.hashed_password = get_password_hash(request.new_password)
     db.add(current_user)
     db.commit()
     
@@ -263,51 +269,122 @@ async def disable_2fa(
     return {"message": "2FA deshabilitado correctamente"}
 
 
+class PasswordResetRequest(BaseModel):
+    email: str
+
+class ResetPasswordRequest(BaseModel):
+    token: str
+    new_password: str
+
+
 @router.post("/request-password-reset")
 async def request_password_reset(
-    email: str,
+    request: PasswordResetRequest,
     db: Session = Depends(get_db)
 ):
     """
     Solicita un token para recuperación de contraseña
+    El token se envía al correo del usuario
     
     Args:
-        email: Email del usuario
+        request: Datos con email del usuario
         db: Sesión de base de datos
         
     Returns:
-        dict: Mensaje indicando que se enviará un email (por seguridad)
-        
-    Nota: En producción, implementar envío real de email con boto3/SendGrid
+        dict: Mensaje de confirmación
     """
-    user = db.query(User).filter(User.email == email).first()
+    user = db.query(User).filter(User.email == request.email).first()
     
     if user:
-        # Generar token de recuperación (en producción guardarlo en BD con TTL)
-        import secrets
+        # Limpiar tokens anteriores
+        db.query(PasswordResetToken).filter(
+            PasswordResetToken.user_id == user.id
+        ).delete()
+        db.commit()
+        
+        # Generar token de recuperación
         reset_token = secrets.token_urlsafe(32)
         
-        # TODO: Guardar token en tabla de recuperación de contraseña
-        # TODO: Enviar email con link: /recuperar-contrasena?token={reset_token}
+        # Guardar token con expiración de 1 hora
+        expires_at = datetime.utcnow() + timedelta(hours=1)
+        token_record = PasswordResetToken(
+            user_id=user.id,
+            token=reset_token,
+            expires_at=expires_at
+        )
+        db.add(token_record)
+        db.commit()
         
-        print(f"[DEBUG] Reset token for {email}: {reset_token}")
+        # Enviar email con token
+        email_service.send_password_reset_email(
+            user_email=user.email,
+            reset_token=reset_token,
+            user_name=user.nombre_completo or user.email.split('@')[0]
+        )
+        
+        return {
+            "message": "Si el email existe, recibirás un código de recuperación en tu correo"
+        }
     
-    # Por seguridad, siempre devolver el mismo mensaje
-    return {"message": "Si el email existe, recibirás un enlace para recuperar tu contraseña"}
+    # Por seguridad, devolver el mismo mensaje aunque el email no exista
+    return {
+        "message": "Si el email existe, recibirás un código de recuperación en tu correo"
+    }
+
+
+@router.get("/verify-token/{token}")
+async def verify_token(
+    token: str,
+    db: Session = Depends(get_db)
+):
+    """
+    Verifica que un token de recuperación sea válido
+    
+    Args:
+        token: Token de recuperación
+        db: Sesión de base de datos
+        
+    Returns:
+        dict: Mensaje indicando si el token es válido
+        
+    Raises:
+        HTTPException: Si el token es inválido o ha expirado
+    """
+    token_record = db.query(PasswordResetToken).filter(
+        PasswordResetToken.token == token
+    ).first()
+    
+    if not token_record:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Código de recuperación inválido"
+        )
+    
+    # Verificar expiración
+    if datetime.utcnow() > token_record.expires_at:
+        db.delete(token_record)
+        db.commit()
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="El código ha expirado. Solicita uno nuevo."
+        )
+    
+    return {
+        "message": "Código válido",
+        "valid": True
+    }
 
 
 @router.post("/reset-password")
 async def reset_password(
-    token: str,
-    new_password: str,
+    request: ResetPasswordRequest,
     db: Session = Depends(get_db)
 ):
     """
     Restablece la contraseña usando un token de recuperación
     
     Args:
-        token: Token de recuperación de contraseña
-        new_password: Nueva contraseña
+        request: Datos con token y nueva contraseña
         db: Sesión de base de datos
         
     Returns:
@@ -316,13 +393,44 @@ async def reset_password(
     Raises:
         HTTPException: Si el token es inválido o ha expirado
     """
-    # TODO: Validar token contra tabla de recuperación
-    # TODO: Verificar que el token no haya expirado
+    # Buscar el token
+    token_record = db.query(PasswordResetToken).filter(
+        PasswordResetToken.token == request.token
+    ).first()
     
-    # Por ahora, retornar error indicando que la funcionalidad no está completamente implementada
-    raise HTTPException(
-        status_code=status.HTTP_501_NOT_IMPLEMENTED,
-        detail="Funcionalidad en desarrollo. Por favor usa 'Cambiar contraseña' en tu perfil."
-    )
+    if not token_record:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Token de recuperación inválido"
+        )
+    
+    # Verificar expiración
+    if datetime.utcnow() > token_record.expires_at:
+        db.delete(token_record)
+        db.commit()
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="El token de recuperación ha expirado. Solicita uno nuevo."
+        )
+    
+    # Validar nueva contraseña
+    if len(request.new_password) < 8:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="La contraseña debe tener al menos 8 caracteres"
+        )
+    
+    # Actualizar contraseña
+    user = token_record.user
+    user.hashed_password = get_password_hash(request.new_password)
+    db.add(user)
+    
+    # Eliminar token usado
+    db.delete(token_record)
+    db.commit()
+    
+    return {"message": "Contraseña restablecida correctamente"}
+
+
 
     return current_user

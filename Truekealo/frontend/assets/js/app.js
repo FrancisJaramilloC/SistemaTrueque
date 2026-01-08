@@ -369,8 +369,13 @@ class FormSubmissionHandler {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
     const form = event.target;
+    // Dejar que formularios con lógica propia manejen el submit (p.ej., login, recuperación)
+    if (form.id === 'loginForm' || form.id === 'recoveryForm') {
+      return;
+    }
+
+    event.preventDefault();
     const isValid = this.validateForm(form);
     if (!isValid) {
       Toast.error('Por favor, corrige los errores del formulario');

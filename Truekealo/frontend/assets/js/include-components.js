@@ -12,11 +12,26 @@ class ComponentIncluder {
       'sidebar': `${base}sidebar.html`,
       'head-meta': `${base}head-meta.html`,
       'tailwind-config': `${base}tailwind-config.html`,
-      'footer-scripts': `${base}footer-scripts.html`
+      'footer-scripts': `${base}footer-scripts.html`,
+      'accessibility-menu': `${base}accessibility-menu.html`
     };
   }
 
   async init() {
+    // Cargar el menú de accesibilidad primero (sin data-include)
+    try {
+      const response = await fetch('../includes/accessibility-menu.html');
+      if (response.ok) {
+        const html = await response.text();
+        const placeholder = document.querySelector('[data-include="accessibility-menu"]');
+        if (placeholder) {
+          placeholder.innerHTML = html;
+        }
+      }
+    } catch (error) {
+      console.error('Error loading accessibility menu:', error);
+    }
+
     const elements = document.querySelectorAll('[data-include]');
     
     for (const element of elements) {

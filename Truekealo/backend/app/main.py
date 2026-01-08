@@ -11,7 +11,7 @@ import os
 from pathlib import Path
 
 from app.core.config import settings
-from app.routers import auth, articulos, propuestas, mensajes
+from app.routers import auth, articulos, propuestas, mensajes, actividades
 
 
 # ==================== Ciclo de Vida de la Aplicación ====================
@@ -120,6 +120,7 @@ app.include_router(auth.router, prefix="/api/v1")
 app.include_router(articulos.router, prefix="/api/v1")
 app.include_router(propuestas.router, prefix="/api/v1")
 app.include_router(mensajes.router, prefix="/api/v1")
+app.include_router(actividades.router, prefix="/api/v1")
 
 
 # ==================== Información de Debug ====================

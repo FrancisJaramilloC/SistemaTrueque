@@ -16,10 +16,6 @@ pydantic
 pydantic-settings
 email-validator
 
-# ==================== Environment Variables ====================
-python-dotenv
+# ==================== Email ====================
+python-email
 
-# ==================== Development & Testing ====================
-pytest
-pytest-asyncio
-httpx

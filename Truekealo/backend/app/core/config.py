@@ -52,6 +52,13 @@ class Settings(BaseSettings):
     CORS_ALLOW_CREDENTIALS: bool = True
     CORS_ALLOW_METHODS: Union[str, List[str]] = ["*"]
     CORS_ALLOW_HEADERS: Union[str, List[str]] = ["*"]
+
+    # ==================== Configuración de Email ====================
+    SMTP_SERVER: str = ""
+    SMTP_PORT: int = 587
+    SENDER_EMAIL: str = ""
+    SENDER_PASSWORD: str = ""
+    SHOW_RECOVERY_TOKEN_DEV: bool = False
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

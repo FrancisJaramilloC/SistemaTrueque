@@ -3,6 +3,7 @@ Router de Propuestas
 Endpoints para gestión de propuestas de intercambio
 """
 from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 from typing import List
 
@@ -244,4 +245,38 @@ def _serialize_propuesta(propuesta: Propuesta) -> dict:
             "nombre_completo": propuesta.usuario_receptor.nombre_completo,
             "email": propuesta.usuario_receptor.email
         }
+    }
+
+
+@router.get("/resumen", response_model=dict)
+async def get_resumen_pendientes(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Devuelve un resumen de propuestas pendientes para el usuario actual.
+
+    Se consideran pendientes todas las propuestas en estado "pendiente" donde el
+    usuario sea ofertante o receptor. Este valor se usa para el contador de
+    intercambios pendientes en el dashboard y se calcula al momento de la
+    consulta, sin procesos automáticos.
+    """
+    pendientes = db.query(Propuesta).filter(
+        Propuesta.estado == EstadoPropuesta.PENDIENTE,
+        or_(
+            Propuesta.usuario_ofertante_id == current_user.id,
+            Propuesta.usuario_receptor_id == current_user.id
+        )
+    ).count()
+
+    total_usuario = db.query(Propuesta).filter(
+        or_(
+            Propuesta.usuario_ofertante_id == current_user.id,
+            Propuesta.usuario_receptor_id == current_user.id
+        )
+    ).count()
+
+    return {
+        "pendientes": pendientes,
+        "total": total_usuario
     }
