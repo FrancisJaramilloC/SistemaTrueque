@@ -16,7 +16,7 @@ Truekealo es una plataforma web de **intercambio colaborativo de artículos** en
 -  **Propuestas de Intercambio** entre usuarios
 -  **Perfiles de Usuario** con información personal y historial
 -  **API REST** documentada con Swagger/OpenAPI
--  **Accesibilidad** WCAG 2.1 (AA)
+-  **Menú de Accesibilidad Completo** con múltiples herramientas (WCAG 2.1 AA)
 -  **Arquitectura Escalable** con separación de capas
 
 ### Frontend
@@ -153,6 +153,62 @@ Total:           40+ archivos, 12,000+ líneas
 ```
 
 Ver [CHECKLIST_VERIFICACION.md](docs/CHECKLIST_VERIFICACION.md) para detalle completo.
+
+---
+
+## ♿ Funcionalidades de Accesibilidad
+
+Truekealo incluye un **menú de accesibilidad completo** que cumple con los estándares WCAG 2.1 (AA) y proporciona múltiples herramientas para mejorar la experiencia de usuarios con diversas necesidades:
+
+### 🔧 Herramientas Disponibles
+
+#### 📝 Control de Texto
+- **Aumentar/Disminuir Tamaño**: Ajusta el tamaño del texto de 75% a 200%
+- **Fuente Legible**: Cambia a una fuente más fácil de leer (OpenDyslexic)
+- **Indicador Visual**: Muestra el porcentaje actual del tamaño de texto
+
+#### 🎨 Contraste y Colores
+- **Escala de Grises**: Convierte todos los colores a escala de grises
+- **Alto Contraste**: Mejora la diferenciación entre texto y fondo
+- **Contraste Negativo**: Invierte los colores para lectura en modo oscuro
+- **Fondo Claro**: Aplica un fondo blanco uniforme en todo el sitio
+
+#### 🔗 Mejoras de Navegación
+- **Enlaces Subrayados**: Subraya todos los enlaces para mejor identificación
+- **Teclado Accesible**: Navegación completa con teclado (Tab, Enter, Escape)
+- **ARIA Labels**: Etiquetas descriptivas para lectores de pantalla
+
+#### 🔊 Lectura en Voz Alta
+- **Leer Página**: Lectura automática del contenido de la página
+- **Control de Velocidad**: Ajusta la velocidad de lectura (0.5x a 2.0x)
+- **Stop/Pausa**: Control completo sobre la reproducción
+
+#### 💾 Persistencia
+- **Guardado Automático**: Todas las preferencias se guardan en localStorage
+- **Restauración Automática**: Las configuraciones se aplican automáticamente en cada visita
+- **Botón de Reset**: Restablece todas las configuraciones a valores predeterminados
+
+### 🎯 Acceso al Menú
+
+El menú de accesibilidad está disponible en todas las páginas del sitio:
+- **Botón flotante** con icono ♿ en la esquina inferior derecha
+- **Acceso por teclado**: Tab hasta el botón y presionar Enter
+- **Cerrar con Escape**: Presiona Esc para cerrar el menú
+- **Click fuera**: Cierra automáticamente al hacer click fuera del menú
+
+### 📱 Responsive y Compatible
+
+- Funciona en todos los dispositivos (desktop, tablet, móvil)
+- Compatible con lectores de pantalla principales
+- Sin dependencias externas (JavaScript vanilla)
+- Ligero y optimizado (CSS modular)
+
+### 📄 Archivos del Sistema
+
+- `frontend/assets/js/accessibility.js` - Lógica principal (561 líneas)
+- `frontend/assets/css/accessibility-menu.css` - Estilos del menú
+- `frontend/assets/css/accessibility.css` - Estilos de accesibilidad aplicados
+- `frontend/includes/accessibility-menu.html` - HTML del componente
 
 ---
 
