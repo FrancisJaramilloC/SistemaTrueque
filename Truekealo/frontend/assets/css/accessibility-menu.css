@@ -1,0 +1,1042 @@
+/* ============================================
+   MENÚ DE ACCESIBILIDAD - ESTILOS
+   ============================================ */
+
+:root {
+    --a11y-primary: #e84c30;
+    --a11y-primary-hover: #d43a1f;
+    --a11y-bg: #ffffff;
+    --a11y-border: #e0dcd8;
+    --a11y-text: #1b100e;
+    --a11y-secondary: #faf8f5;
+    --a11y-danger: #d32f2f;
+    --a11y-text-muted: #97594e;
+}
+
+/* Reset de estilos Tailwind para el menú */
+#accessibility-menu * {
+    all: revert !important;
+}
+
+/* Menú Base */
+#accessibility-menu {
+    position: fixed !important;
+    left: 20px !important;
+    bottom: 20px !important;
+    z-index: 9999 !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+}
+
+/* Botón de Toggle */
+#accessibility-toggle {
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 50% !important;
+    background-color: var(--a11y-primary) !important;
+    color: white !important;
+    border: none !important;
+    cursor: pointer !important;
+    font-size: 28px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 12px rgba(232, 76, 48, 0.25) !important;
+    transition: all 0.3s ease !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+}
+
+#accessibility-toggle:hover {
+    background-color: var(--a11y-primary-hover) !important;
+    transform: scale(1.1) !important;
+    box-shadow: 0 6px 20px rgba(232, 76, 48, 0.35) !important;
+}
+
+#accessibility-toggle:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(232, 76, 48, 0.2), 0 4px 12px rgba(232, 76, 48, 0.25) !important;
+}
+
+#accessibility-toggle:active {
+    transform: scale(0.95) !important;
+}
+
+.accessibility-icon {
+    display: block !important;
+    line-height: 1 !important;
+}
+
+/* Panel del Menú */
+#accessibility-panel {
+    position: absolute !important;
+    bottom: 70px !important;
+    left: 0 !important;
+    background-color: var(--a11y-bg) !important;
+    border: 1px solid var(--a11y-border) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1) !important;
+    width: 360px !important;
+    max-height: 600px !important;
+    overflow-y: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Panel oculto */
+#accessibility-panel[hidden] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(10px) !important;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header del Panel */
+.accessibility-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 16px 16px !important;
+    border-bottom: 1px solid var(--a11y-border) !important;
+    background-color: var(--a11y-secondary) !important;
+}
+
+.accessibility-header h2 {
+    margin: 0 !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: var(--a11y-text) !important;
+}
+
+.accessibility-close {
+    background: none !important;
+    border: none !important;
+    font-size: 24px !important;
+    cursor: pointer !important;
+    color: var(--a11y-text-muted) !important;
+    padding: 0 !important;
+    width: 28px !important;
+    height: 28px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 4px !important;
+    transition: all 0.2s !important;
+}
+
+.accessibility-close:hover {
+    background-color: var(--a11y-secondary) !important;
+    color: var(--a11y-text) !important;
+}
+
+.accessibility-close:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(232, 76, 48, 0.2) !important;
+}
+
+/* Contenido del Panel */
+.accessibility-content {
+    padding: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+}
+
+/* Secciones */
+.accessibility-section {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+}
+
+.accessibility-section h3 {
+    margin: 0 !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.6px !important;
+    color: var(--a11y-text-muted) !important;
+}
+
+/* Grupo de Botones */
+.accessibility-group {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+}
+
+/* Botones de Accesibilidad */
+.accessibility-btn {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 11px 12px !important;
+    background-color: var(--a11y-secondary) !important;
+    border: 1px solid var(--a11y-border) !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    color: var(--a11y-text) !important;
+    transition: all 0.2s ease !important;
+    text-align: left !important;
+    width: 100% !important;
+}
+
+.accessibility-btn:hover:not(:disabled) {
+    background-color: var(--a11y-primary) !important;
+    color: white !important;
+    border-color: var(--a11y-primary) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(232, 76, 48, 0.15) !important;
+}
+
+.accessibility-btn:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(232, 76, 48, 0.1), 0 4px 12px rgba(232, 76, 48, 0.15) !important;
+}
+
+.accessibility-btn:active:not(:disabled) {
+    transform: translateY(0) !important;
+}
+
+.accessibility-btn[aria-pressed="true"]:not(:disabled) {
+    background-color: var(--a11y-primary) !important;
+    color: white !important;
+    border-color: var(--a11y-primary) !important;
+    position: relative !important;
+}
+
+.accessibility-btn[aria-pressed="true"]:not(:disabled)::after {
+    content: "✓" !important;
+    position: absolute !important;
+    right: 12px !important;
+    font-weight: bold !important;
+}
+
+.accessibility-btn:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+}
+
+.accessibility-btn-danger {
+    background-color: rgba(211, 47, 47, 0.08) !important;
+    border-color: rgba(211, 47, 47, 0.3) !important;
+    color: var(--a11y-danger) !important;
+}
+
+.accessibility-btn-danger:hover:not(:disabled) {
+    background-color: var(--a11y-danger) !important;
+    color: white !important;
+    border-color: var(--a11y-danger) !important;
+    box-shadow: 0 4px 12px rgba(211, 47, 47, 0.15) !important;
+}
+
+.btn-icon {
+    display: inline-block !important;
+    font-size: 16px !important;
+    min-width: 20px !important;
+}
+
+.btn-label {
+    flex: 1 !important;
+}
+
+/* Display de Tamaño de Texto */
+.text-size-display {
+    padding: 8px 12px !important;
+    background-color: var(--a11y-secondary) !important;
+    border-radius: 4px !important;
+    font-size: 13px !important;
+    color: var(--a11y-text) !important;
+    text-align: center !important;
+    font-weight: 500 !important;
+}
+
+#current-text-size {
+    font-weight: 700 !important;
+    color: var(--a11y-primary) !important;
+}
+
+/* Controles de Lectura */
+.speech-controls {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    padding: 12px !important;
+    background-color: var(--a11y-secondary) !important;
+    border-radius: 8px !important;
+    border: 1px solid var(--a11y-border) !important;
+}
+
+.speech-controls label {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: var(--a11y-text-muted) !important;
+}
+
+.speech-rate-slider {
+    width: 100% !important;
+    height: 5px !important;
+    cursor: pointer !important;
+    accent-color: var(--a11y-primary) !important;
+    border-radius: 3px !important;
+}
+
+.speech-rate-slider:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(232, 76, 48, 0.1) !important;
+}
+
+#speech-rate-display {
+    font-size: 11px !important;
+    text-align: center !important;
+    font-weight: 600 !important;
+    color: var(--a11y-primary) !important;
+}
+
+/* Footer */
+.accessibility-footer {
+    padding: 12px 16px !important;
+    border-top: 1px solid var(--a11y-border) !important;
+    background-color: #ffffff !important;
+    text-align: center !important;
+    font-size: 10px !important;
+    color: var(--a11y-text-muted) !important;
+}
+
+/* ============================================
+   MODIFICADORES DE ACCESIBILIDAD APLICADOS AL DOCUMENTO
+   ============================================ */
+
+/* Escala de Grises */
+body.a11y-grayscale {
+    filter: grayscale(100%) !important;
+}
+
+/* Alto Contraste */
+body.a11y-high-contrast {
+    --a11y-primary: #000000 !important;
+    --a11y-primary-hover: #333333 !important;
+    --a11y-bg: #ffffff !important;
+    --a11y-border: #000000 !important;
+    --a11y-text: #000000 !important;
+    --a11y-secondary: #f0f0f0 !important;
+    --a11y-text-muted: #000000 !important;
+}
+
+body.a11y-high-contrast a {
+    color: #0066cc !important;
+    text-decoration: underline !important;
+}
+
+body.a11y-high-contrast button,
+body.a11y-high-contrast input {
+    border-width: 2px !important;
+}
+
+/* Contraste Negativo */
+body.a11y-negative-contrast {
+    --a11y-primary: #ffff00 !important;
+    --a11y-primary-hover: #cccc00 !important;
+    --a11y-bg: #000000 !important;
+    --a11y-border: #ffff00 !important;
+    --a11y-text: #ffff00 !important;
+    --a11y-secondary: #1a1a1a !important;
+    background-color: #000000 !important;
+    color: #ffff00 !important;
+}
+
+body.a11y-negative-contrast * {
+    background-color: #000000 !important;
+    color: #ffff00 !important;
+    border-color: #ffff00 !important;
+}
+
+body.a11y-negative-contrast a {
+    color: #ffff00 !important;
+    text-decoration: underline !important;
+}
+
+body.a11y-negative-contrast #accessibility-panel {
+    background-color: #000000 !important;
+}
+
+/* Fondo Claro */
+body.a11y-light-background {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+body.a11y-light-background * {
+    background-color: #ffffff !important;
+}
+
+/* Enlaces Subrayados */
+body.a11y-underline-links a {
+    text-decoration: underline !important;
+}
+
+/* Fuente Legible */
+body.a11y-readable-font {
+    font-family: Arial, Helvetica, sans-serif !important;
+    letter-spacing: 0.05em !important;
+    line-height: 1.6 !important;
+}
+
+body.a11y-readable-font * {
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+
+/* ============================================
+   ZOOM DE TEXTO
+   ============================================ */
+
+body.a11y-text-125 {
+    font-size: 125% !important;
+}
+
+body.a11y-text-150 {
+    font-size: 150% !important;
+}
+
+body.a11y-text-175 {
+    font-size: 175% !important;
+}
+
+body.a11y-text-200 {
+    font-size: 200% !important;
+}
+
+body.a11y-text-75 {
+    font-size: 75% !important;
+}
+
+/* ============================================
+   SCROLLBAR ACCESIBLE
+   ============================================ */
+
+#accessibility-panel::-webkit-scrollbar {
+    width: 8px !important;
+}
+
+#accessibility-panel::-webkit-scrollbar-track {
+    background: var(--a11y-secondary) !important;
+}
+
+#accessibility-panel::-webkit-scrollbar-thumb {
+    background: var(--a11y-primary) !important;
+    border-radius: 4px !important;
+}
+
+#accessibility-panel::-webkit-scrollbar-thumb:hover {
+    background: var(--a11y-primary-hover) !important;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 480px) {
+    #accessibility-menu {
+        bottom: 10px !important;
+        right: 10px !important;
+    }
+
+    #accessibility-toggle {
+        width: 52px !important;
+        height: 52px !important;
+        font-size: 24px !important;
+    }
+
+    #accessibility-panel {
+        width: calc(100vw - 20px) !important;
+        max-width: 360px !important;
+        bottom: 60px !important;
+    }
+
+    .accessibility-header h2 {
+        font-size: 15px !important;
+    }
+
+    .accessibility-btn {
+        font-size: 13px !important;
+        padding: 10px 12px !important;
+    }
+}
+
+@media (max-width: 360px) {
+    #accessibility-panel {
+        width: calc(100vw - 10px) !important;
+    }
+
+    .accessibility-content {
+        gap: 12px !important;
+    }
+
+    .accessibility-section h3 {
+        font-size: 10px !important;
+    }
+}
+
+/* ============================================
+   MODO DE ALTO CONTRASTE DEL SISTEMA
+   ============================================ */
+
+@media (prefers-contrast: more) {
+    #accessibility-toggle {
+        border: 2px solid currentColor !important;
+    }
+
+    .accessibility-btn {
+        border-width: 2px !important;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --a11y-bg: #ffffff !important;
+        --a11y-border: #e0dcd8 !important;
+        --a11y-text: #1b100e !important;
+        --a11y-secondary: #faf8f5 !important;
+        --a11y-text-muted: #97594e !important;
+    }
+
+    #accessibility-toggle {
+        background-color: var(--a11y-primary) !important;
+        box-shadow: 0 4px 12px rgba(232, 76, 48, 0.35) !important;
+    }
+
+    #accessibility-toggle:hover {
+        box-shadow: 0 6px 20px rgba(232, 76, 48, 0.45) !important;
+    }
+    
+    /* Asegurar que el panel tenga fondo blanco en modo oscuro */
+    #accessibility-panel {
+        background-color: #ffffff !important;
+        color: #1b100e !important;
+    }
+    
+    /* Asegurar que los botones tengan contraste en modo oscuro */
+    .accessibility-btn {
+        background-color: #faf8f5 !important;
+        color: #1b100e !important;
+        border-color: #e0dcd8 !important;
+    }
+    
+    .accessibility-btn:hover:not(:disabled) {
+        background-color: var(--a11y-primary) !important;
+        color: white !important;
+        border-color: var(--a11y-primary) !important;
+    }
+}
+
+/* Botón de Toggle */
+.accessibility-toggle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--a11y-primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.accessibility-toggle:hover {
+    background-color: var(--a11y-primary-hover);
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.accessibility-toggle:focus {
+    outline: 3px solid var(--a11y-primary);
+    outline-offset: 2px;
+}
+
+.accessibility-toggle:active {
+    transform: scale(0.95);
+}
+
+.accessibility-icon {
+    display: block !important;
+    line-height: 1 !important;
+}
+
+.accessibility-header h2 {
+    margin: 0 !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: var(--a11y-text) !important;
+}
+
+.accessibility-close {
+    background: none !important;
+    border: none !important;
+    font-size: 24px !important;
+    cursor: pointer !important;
+    color: var(--a11y-text) !important;
+    padding: 0 !important;
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 4px !important;
+    transition: background-color 0.2s !important;
+}
+
+.accessibility-close:hover {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+.accessibility-close:focus {
+    outline: 2px solid var(--a11y-primary) !important;
+    outline-offset: 2px !important;
+}
+
+/* Contenido del Panel */
+.accessibility-content {
+    padding: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+}
+
+/* Secciones */
+.accessibility-section {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+}
+
+.accessibility-section h3 {
+    margin: 0 !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    color: var(--a11y-primary) !important;
+}
+
+/* Grupo de Botones */
+.accessibility-group {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+}
+
+/* Botones de Accesibilidad */
+.accessibility-btn {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 10px 12px !important;
+    background-color: var(--a11y-secondary) !important;
+    border: 2px solid var(--a11y-border) !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: var(--a11y-text) !important;
+    transition: all 0.2s ease !important;
+    text-align: left !important;
+}
+
+.accessibility-btn:hover:not(:disabled) {
+    background-color: var(--a11y-primary) !important;
+    color: white !important;
+    border-color: var(--a11y-primary) !important;
+}
+
+.accessibility-btn:focus {
+    outline: 3px solid var(--a11y-primary) !important;
+    outline-offset: 2px !important;
+}
+
+.accessibility-btn:active:not(:disabled) {
+    transform: scale(0.98) !important;
+}
+
+.accessibility-btn[aria-pressed="true"]:not(:disabled) {
+    background-color: var(--a11y-primary) !important;
+    color: white !important;
+    border-color: var(--a11y-primary) !important;
+    position: relative !important;
+}
+
+.accessibility-btn[aria-pressed="true"]:not(:disabled)::after {
+    content: "✓" !important;
+    position: absolute !important;
+    right: 12px !important;
+    font-weight: bold !important;
+}
+
+.accessibility-btn:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+}
+
+.accessibility-btn-danger {
+    background-color: rgba(211, 47, 47, 0.1) !important;
+    border-color: var(--a11y-danger) !important;
+    color: var(--a11y-danger) !important;
+}
+
+.accessibility-btn-danger:hover:not(:disabled) {
+    background-color: var(--a11y-danger) !important;
+    color: white !important;
+    border-color: var(--a11y-danger) !important;
+}
+
+.btn-icon {
+    display: inline-block !important;
+    font-size: 16px !important;
+    min-width: 20px !important;
+}
+
+.btn-label {
+    flex: 1 !important;
+}
+
+/* Display de Tamaño de Texto */
+.text-size-display {
+    padding: 8px 12px !important;
+    background-color: var(--a11y-secondary) !important;
+    border-radius: 4px !important;
+    font-size: 13px !important;
+    color: var(--a11y-text) !important;
+    text-align: center !important;
+    font-weight: 500 !important;
+}
+
+#current-text-size {
+    font-weight: 700 !important;
+    color: var(--a11y-primary) !important;
+}
+
+/* Controles de Lectura */
+.speech-controls {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 8px !important;
+    background-color: var(--a11y-secondary) !important;
+    border-radius: 4px !important;
+}
+
+.speech-controls label {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    color: var(--a11y-text) !important;
+}
+
+.speech-rate-slider {
+    width: 100% !important;
+    height: 6px !important;
+    cursor: pointer !important;
+    accent-color: var(--a11y-primary) !important;
+}
+
+.speech-rate-slider:focus {
+    outline: 2px solid var(--a11y-primary) !important;
+    outline-offset: 2px !important;
+}
+
+#speech-rate-display {
+    font-size: 12px !important;
+    text-align: center !important;
+    font-weight: 600 !important;
+    color: var(--a11y-primary) !important;
+}
+
+/* Footer */
+.accessibility-footer {
+    padding: 12px 16px !important;
+    border-top: 2px solid var(--a11y-border) !important;
+    background-color: var(--a11y-secondary) !important;
+    text-align: center !important;
+    font-size: 11px !important;
+    color: #666 !important;
+}
+
+/* ============================================
+   MODIFICADORES DE ACCESIBILIDAD APLICADOS AL DOCUMENTO
+   ============================================ */
+
+/* Escala de Grises */
+body.a11y-grayscale {
+    filter: grayscale(100%) !important;
+}
+
+/* Alto Contraste */
+body.a11y-high-contrast {
+    --a11y-primary: #000000 !important;
+    --a11y-primary-hover: #333333 !important;
+    --a11y-bg: #ffffff !important;
+    --a11y-border: #000000 !important;
+    --a11y-text: #000000 !important;
+    --a11y-secondary: #f0f0f0 !important;
+}
+
+body.a11y-high-contrast a {
+    color: #0066cc !important;
+    text-decoration: underline !important;
+}
+
+body.a11y-high-contrast button,
+body.a11y-high-contrast input {
+    border-width: 2px !important;
+}
+
+/* Contraste Negativo */
+body.a11y-negative-contrast {
+    --a11y-primary: #ffff00 !important;
+    --a11y-primary-hover: #cccc00 !important;
+    --a11y-bg: #000000 !important;
+    --a11y-border: #ffff00 !important;
+    --a11y-text: #ffff00 !important;
+    --a11y-secondary: #1a1a1a !important;
+    background-color: #000000 !important;
+    color: #ffff00 !important;
+}
+
+body.a11y-negative-contrast * {
+    background-color: #000000 !important;
+    color: #ffff00 !important;
+    border-color: #ffff00 !important;
+}
+
+body.a11y-negative-contrast a {
+    color: #ffff00 !important;
+    text-decoration: underline !important;
+}
+
+body.a11y-negative-contrast #accessibility-panel {
+    background-color: #000000 !important;
+}
+
+/* Fondo Claro */
+body.a11y-light-background {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+body.a11y-light-background * {
+    background-color: #ffffff !important;
+}
+
+/* Enlaces Subrayados */
+body.a11y-underline-links a {
+    text-decoration: underline !important;
+}
+
+/* Fuente Legible */
+body.a11y-readable-font {
+    font-family: "Arial", "Helvetica", sans-serif !important;
+    letter-spacing: 0.05em;
+    line-height: 1.6;
+}
+
+body.a11y-readable-font * {
+    font-family: "Arial", "Helvetica", sans-serif !important;
+}
+
+/* ============================================
+   ZOOM DE TEXTO
+   ============================================ */
+
+body.a11y-text-125 {
+    font-size: 125% !important;
+}
+
+body.a11y-text-150 {
+    font-size: 150% !important;
+}
+
+body.a11y-text-175 {
+    font-size: 175% !important;
+}
+
+body.a11y-text-200 {
+    font-size: 200% !important;
+}
+
+body.a11y-text-75 {
+    font-size: 75% !important;
+}
+
+/* ============================================
+   SCROLLBAR ACCESIBLE
+   ============================================ */
+
+.accessibility-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+.accessibility-panel::-webkit-scrollbar-track {
+    background: var(--a11y-secondary);
+}
+
+.accessibility-panel::-webkit-scrollbar-thumb {
+    background: var(--a11y-primary);
+    border-radius: 4px;
+}
+
+.accessibility-panel::-webkit-scrollbar-thumb:hover {
+    background: var(--a11y-primary-hover);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 480px) {
+    .accessibility-menu {
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .accessibility-toggle {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .accessibility-panel {
+        width: calc(100vw - 20px);
+        max-width: 380px;
+        bottom: 60px;
+    }
+
+    .accessibility-header h2 {
+        font-size: 16px;
+    }
+
+    .accessibility-btn {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 360px) {
+    .accessibility-panel {
+        width: calc(100vw - 10px);
+    }
+
+    .accessibility-content {
+        gap: 12px;
+    }
+
+    .accessibility-section h3 {
+        font-size: 11px;
+    }
+}
+
+/* ============================================
+   MODO DE ALTO CONTRASTE DEL SISTEMA
+   ============================================ */
+
+@media (prefers-contrast: more) {
+    #accessibility-toggle {
+        border: 2px solid currentColor !important;
+    }
+
+    .accessibility-btn {
+        border-width: 2px !important;
+    }
+}
+
+/* ============================================
+   SOPORTE PARA MODO OSCURO DE TAILWIND
+   ============================================ */
+
+/* Cuando Tailwind aplica la clase dark al HTML */
+.dark #accessibility-panel,
+html.dark #accessibility-panel {
+    background-color: #ffffff !important;
+    border-color: #e0dcd8 !important;
+}
+
+.dark #accessibility-panel h2,
+html.dark #accessibility-panel h2 {
+    color: #1b100e !important;
+}
+
+.dark #accessibility-panel h3,
+html.dark #accessibility-panel h3 {
+    color: #e84c30 !important;
+}
+
+.dark #accessibility-panel .accessibility-btn,
+html.dark #accessibility-panel .accessibility-btn {
+    background-color: #faf8f5 !important;
+    color: #1b100e !important;
+    border-color: #e0dcd8 !important;
+}
+
+.dark #accessibility-panel .accessibility-btn:hover:not(:disabled),
+html.dark #accessibility-panel .accessibility-btn:hover:not(:disabled) {
+    background-color: #e84c30 !important;
+    color: white !important;
+    border-color: #e84c30 !important;
+}
+
+.dark #accessibility-panel .text-size-display,
+html.dark #accessibility-panel .text-size-display {
+    background-color: #faf8f5 !important;
+    color: #1b100e !important;
+}
+
+.dark #accessibility-panel .speech-controls,
+html.dark #accessibility-panel .speech-controls {
+    background-color: #faf8f5 !important;
+}
+
+.dark #accessibility-panel .speech-controls label,
+html.dark #accessibility-panel .speech-controls label {
+    color: #1b100e !important;
+}
+
+.dark #accessibility-panel .accessibility-header,
+html.dark #accessibility-panel .accessibility-header {
+    background-color: #faf8f5 !important;
+    border-bottom-color: #e0dcd8 !important;
+}
+
+.dark #accessibility-panel .accessibility-footer,
+html.dark #accessibility-panel .accessibility-footer {
+    background-color: #faf8f5 !important;
+    border-top-color: #e0dcd8 !important;
+    color: #666 !important;
+}
+
+.dark #accessibility-panel .accessibility-close,
+html.dark #accessibility-panel .accessibility-close {
+    color: #1b100e !important;
+}
+
+.dark #accessibility-panel .accessibility-close:hover,
+html.dark #accessibility-panel .accessibility-close:hover {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+}
