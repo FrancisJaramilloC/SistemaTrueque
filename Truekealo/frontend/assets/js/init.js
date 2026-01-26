@@ -17,9 +17,28 @@ function verificarAutenticacion() {
 
 // ==================== Cerrar Sesión ====================
 function configurarCerrarSesion() {
-    // Buscar todos los botones de cerrar sesión
-    const botonesLogout = document.querySelectorAll('[data-action="logout"], button:has(.material-symbols-outlined:contains("logout"))');
-    
+    const botonesLogout = new Set();
+
+    // 1) Botones marcados explícitamente
+    document.querySelectorAll('[data-action="logout"]').forEach(btn => botonesLogout.add(btn));
+
+    // 2) Botones que incluyen icono/material con texto "logout" o texto visible relacionado
+    document.querySelectorAll('button').forEach(btn => {
+        const icon = btn.querySelector('.material-symbols-outlined');
+        const iconText = icon ? icon.textContent.trim().toLowerCase() : '';
+        const text = (btn.textContent || '').toLowerCase();
+        if (iconText === 'logout' || text.includes('logout') || text.includes('cerrar sesión')) {
+            botonesLogout.add(btn);
+        }
+        // Buscar encabezados hijos que contengan el texto
+        btn.querySelectorAll('h3, span, div').forEach(child => {
+            const childText = (child.textContent || '').toLowerCase();
+            if (childText.includes('cerrar sesión') || childText.includes('logout')) {
+                botonesLogout.add(btn);
+            }
+        });
+    });
+
     botonesLogout.forEach(boton => {
         boton.addEventListener('click', (e) => {
             e.preventDefault();
@@ -28,17 +47,6 @@ function configurarCerrarSesion() {
             }
         });
     });
-    
-    // Específico para la página de configuración
-    const btnLogoutConfig = document.querySelector('button:has(h3:contains("Cerrar Sesión"))');
-    if (btnLogoutConfig) {
-        btnLogoutConfig.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
-                AuthAPI.logout();
-            }
-        });
-    }
 }
 
 // ==================== Publicar Artículo ====================

@@ -142,7 +142,7 @@ async def login_form(
 
 
 @router.get("/me", response_model=UserResponse)
-async def get_current_user_info(current_user: User = Depends(get_current_user)):
+async def get_current_user_info(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     """
     Obtiene la información del usuario actual
     
@@ -152,7 +152,8 @@ async def get_current_user_info(current_user: User = Depends(get_current_user)):
     Returns:
         UserResponse: Datos del usuario actual
     """
-    return current_user
+    user = db.query(User).filter(User.id == current_user.id).first()
+    return user
 
 
 class ChangePasswordRequest(BaseModel):
@@ -376,10 +377,7 @@ async def verify_token(
 
 
 @router.post("/reset-password")
-async def reset_password(
-    request: ResetPasswordRequest,
-    db: Session = Depends(get_db)
-):
+async def reset_password(request: ResetPasswordRequest, db: Session = Depends(get_db)):
     """
     Restablece la contraseña usando un token de recuperación
     

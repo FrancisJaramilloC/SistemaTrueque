@@ -11,6 +11,7 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
+from app.database import get_db
 
 if TYPE_CHECKING:
     from app.models.user import User
@@ -95,6 +96,7 @@ def decode_access_token(token: str) -> Optional[dict]:
 # ==================== Dependencias de Autenticación ====================
 async def get_current_user(
     token: str = Depends(oauth2_scheme),
+    db: Session = Depends(get_db),
 ) -> "User":
     """
     Obtiene el usuario actual basado en el token JWT
@@ -109,7 +111,6 @@ async def get_current_user(
     Raises:
         HTTPException: Si el token es inválido o el usuario no existe
     """
-    from app.database import get_db
     from app.models.user import User
     
     credentials_exception = HTTPException(
@@ -128,8 +129,6 @@ async def get_current_user(
     if user_id is None:
         raise credentials_exception
     
-    # Obtener sesión de BD
-    db = next(get_db())
     user = db.query(User).filter(User.id == user_id).first()
     
     if user is None:
