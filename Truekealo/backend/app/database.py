@@ -12,8 +12,11 @@ from app.core.config import settings
 engine = create_engine(
     settings.DATABASE_URL,
     echo=settings.DEBUG,
-    pool_pre_ping=True,  # Verifica conexiones antes de usarlas
-    pool_recycle=3600    # Recicla conexiones cada hora
+    pool_pre_ping=True,      # Verifica conexiones antes de usarlas
+    pool_recycle=3600,       # Recicla conexiones cada hora
+    pool_size=10,            # Tamaño del pool de conexiones
+    max_overflow=20,         # Conexiones adicionales permitidas
+    pool_timeout=30          # Tiempo de espera para obtener conexión
 )
 
 # ==================== Configuración de Sesión ====================

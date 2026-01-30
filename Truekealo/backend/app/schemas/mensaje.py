@@ -24,6 +24,8 @@ class MensajeResponse(MensajeBase):
     remitente_id: int
     destinatario_id: int
     leido: bool
+    tipo: str
+    propuesta_id: Optional[int] = None
     created_at: datetime
     
     class Config:

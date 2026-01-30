@@ -10,7 +10,7 @@ from datetime import datetime
 
 from app.database import get_db
 from app.schemas.mensaje import MensajeCreate, MensajeResponse
-from app.models.mensaje import Mensaje
+from app.models.mensaje import Mensaje, TipoMensaje
 from app.models.user import User
 from app.core.security import get_current_user
 
@@ -80,20 +80,28 @@ async def get_conversacion(
     Returns:
         List[MensajeResponse]: Lista de mensajes de la conversación
     """
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="No autenticado"
+        )
+
     mensajes = db.query(Mensaje).filter(
         or_(
             and_(Mensaje.remitente_id == current_user.id, Mensaje.destinatario_id == usuario_id),
             and_(Mensaje.remitente_id == usuario_id, Mensaje.destinatario_id == current_user.id)
         )
     ).order_by(Mensaje.created_at.asc()).all()
-    
-    # Marcar como leídos los mensajes recibidos
-    for mensaje in mensajes:
-        if mensaje.destinatario_id == current_user.id and not mensaje.leido:
-            mensaje.leido = True
-    
+
+    if not mensajes:
+        return []
+
+    mensajes_no_leidos = [m for m in mensajes if m.destinatario_id == current_user.id and not m.leido]
+    for mensaje in mensajes_no_leidos:
+        mensaje.leido = True
+        db.add(mensaje)
     db.commit()
-    
+
     return mensajes
 
 
@@ -112,25 +120,34 @@ async def get_conversaciones(
     Returns:
         List[dict]: Lista de conversaciones
     """
-    # Obtener todos los mensajes donde el usuario es remitente o destinatario
-    mensajes = db.query(Mensaje).filter(
-        or_(
-            Mensaje.remitente_id == current_user.id,
-            Mensaje.destinatario_id == current_user.id
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="No autenticado"
         )
-    ).order_by(Mensaje.created_at.desc()).all()
-    
-    # Agrupar por usuario (conversación)
-    conversaciones_dict = {}
-    for mensaje in mensajes:
-        # Determinar el ID del otro usuario
-        otro_usuario_id = mensaje.destinatario_id if mensaje.remitente_id == current_user.id else mensaje.remitente_id
-        
-        # Si no está en el diccionario, agregarlo
-        if otro_usuario_id not in conversaciones_dict:
+
+    try:
+        mensajes = db.query(Mensaje).filter(
+            or_(
+                Mensaje.remitente_id == current_user.id,
+                Mensaje.destinatario_id == current_user.id
+            )
+        ).order_by(Mensaje.created_at.desc()).all()
+
+        if not mensajes:
+            return []
+
+        conversaciones_dict = {}
+        for mensaje in mensajes:
+            otro_usuario_id = mensaje.destinatario_id if mensaje.remitente_id == current_user.id else mensaje.remitente_id
+
+            if not otro_usuario_id or otro_usuario_id in conversaciones_dict:
+                continue
+
             otro_usuario = db.query(User).filter(User.id == otro_usuario_id).first()
-            
-            # Contar mensajes no leídos
+            if not otro_usuario:
+                continue
+
             mensajes_no_leidos = db.query(Mensaje).filter(
                 and_(
                     Mensaje.remitente_id == otro_usuario_id,
@@ -138,22 +155,37 @@ async def get_conversaciones(
                     Mensaje.leido == False
                 )
             ).count()
-            
+
+            ultimo_mensaje_usuario = db.query(Mensaje).filter(
+                or_(
+                    and_(Mensaje.remitente_id == current_user.id, Mensaje.destinatario_id == otro_usuario_id),
+                    and_(Mensaje.remitente_id == otro_usuario_id, Mensaje.destinatario_id == current_user.id)
+                ),
+                Mensaje.tipo == TipoMensaje.USER
+            ).order_by(Mensaje.created_at.desc()).first()
+
+            contenido = (ultimo_mensaje_usuario.contenido if ultimo_mensaje_usuario else None) or mensaje.contenido or ""
+            fecha = (ultimo_mensaje_usuario.created_at if ultimo_mensaje_usuario else None) or mensaje.created_at
+
             conversaciones_dict[otro_usuario_id] = {
                 "otro_usuario_id": otro_usuario_id,
-                "otro_usuario_nombre": otro_usuario.nombre_completo,
-                "otro_usuario_email": otro_usuario.email,
-                "ultimo_mensaje": mensaje.contenido,
-                "ultimo_mensaje_fecha": mensaje.created_at,
+                "otro_usuario_nombre": otro_usuario.nombre_completo or "",
+                "otro_usuario_email": otro_usuario.email or "",
+                "ultimo_mensaje": str(contenido) if contenido else "",
+                "ultimo_mensaje_fecha": fecha.isoformat() if fecha else None,
                 "mensajes_no_leidos": mensajes_no_leidos,
                 "es_remitente": mensaje.remitente_id == current_user.id
             }
-    
-    # Convertir a lista y ordenar por fecha
-    conversaciones = list(conversaciones_dict.values())
-    conversaciones.sort(key=lambda x: x["ultimo_mensaje_fecha"], reverse=True)
-    
-    return conversaciones
+
+        conversaciones = [c for c in conversaciones_dict.values() if c.get("ultimo_mensaje_fecha")]
+        conversaciones.sort(key=lambda x: x["ultimo_mensaje_fecha"], reverse=True)
+
+        return conversaciones
+    except Exception as e:
+        print(f"Error en get_conversaciones: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return []
 
 
 @router.put("/{mensaje_id}/leer", response_model=MensajeResponse)
