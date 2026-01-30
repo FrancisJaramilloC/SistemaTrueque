@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Truekealo - Iniciar Sesión</title>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link rel="preload" href="/assets/css/app.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="/assets/css/app.css" rel="stylesheet"></noscript>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#e84c30",
+            "background-light": "#FAF8F5",
+            "background-dark": "#211311",
+            "card-light": "#fcf9f8",
+            "card-dark": "#2a1a18",
+            "text-light": "#1b100e",
+            "text-dark": "#f8f6f6",
+            "text-muted-light": "#97594e",
+            "text-muted-dark": "#a88e89",
+            "active-light": "#f3e9e7",
+            "active-dark": "rgba(232, 76, 48, 0.2)"
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem",
+            "xl": "1rem",
+            "full": "9999px"
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark flex items-center justify-center min-h-screen p-4">
+  <a href="#mainContent" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:bg-primary focus:text-white px-3 py-2 rounded">Saltar al contenido</a>
+  <div class="absolute top-4 right-4">
+    <button id="darkModeToggle" class="flex items-center justify-center w-10 h-10 rounded-lg text-text-light dark:text-text-dark hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary" title="Cambiar tema" aria-label="Cambiar a modo oscuro o claro">
+      <span class="material-symbols-outlined" aria-hidden="true">light_mode</span>
+    </button>
+  </div>
+
+  <main id="mainContent" class="w-full max-w-md" role="main">
+    <div class="bg-card-light dark:bg-card-dark rounded-xl shadow-sm p-8 sm:p-12">
+      <div class="flex flex-col items-center text-center mb-8">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style="background-image: url('https://cdn-icons-png.flaticon.com/512/2917/2917995.png');"></div>
+          <h1 class="text-text-light dark:text-text-dark text-2xl font-bold">Truekealo</h1>
+        </div>
+        <h2 id="loginTitle" class="text-3xl font-bold text-text-light dark:text-text-dark">Bienvenido de nuevo</h2>
+      </div>
+
+      <form id="loginForm" class="flex flex-col gap-5" aria-labelledby="loginTitle">
+        <div>
+          <label class="text-sm font-medium text-text-light dark:text-text-dark mb-2 block" for="email">Correo electrónico</label>
+          <input class="w-full rounded-lg border border-border-light dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark focus:ring-2 focus:ring-primary focus:border-primary" id="email" name="email" placeholder="tu@correo.com" type="email" required aria-required="true" autocomplete="email"/>
+        </div>
+
+        <div>
+          <label class="text-sm font-medium text-text-light dark:text-text-dark mb-2 block" for="password">Contraseña</label>
+          <div class="relative">
+            <input class="w-full rounded-lg border border-border-light dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark focus:ring-2 focus:ring-primary focus:border-primary pr-10" id="password" name="password" placeholder="••••••••" type="password" required aria-required="true" minlength="8" autocomplete="current-password"/>
+            <button type="button" data-toggle-password data-target="password" class="absolute inset-y-0 right-0 flex items-center pr-3 text-text-muted-light dark:text-text-muted-dark hover:text-text-light dark:hover:text-text-dark cursor-pointer">
+              <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
+            </button>
+          </div>
+        </div>
+
+        <button class="w-full flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-primary text-white text-base font-bold leading-normal tracking-wide mt-2 hover:bg-opacity-90 transition-opacity" type="submit">
+          <span class="truncate">Iniciar Sesión</span>
+        </button>
+      </form>
+
+      <div class="text-center mt-6">
+        <a class="text-sm font-medium text-primary hover:underline" href="recuperar-contrasena.html">¿Olvidaste tu contraseña?</a>
+        <p class="text-sm text-text-muted-light dark:text-text-muted-dark mt-4">¿No tienes cuenta? <a class="font-medium text-primary hover:underline" href="crear-cuenta.html">Regístrate aquí</a></p>
+      </div>
+    </div>
+  </main>
+
+  <script src="/assets/js/include-components.js" defer></script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/api-client.js" defer></script>
+  <script src="/assets/js/app.js?v=2.2" defer></script>
+  
+  <!-- Script de integración con backend -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginForm = document.getElementById('loginForm');
+      
+      // Verificar si ya está autenticado
+      if (TruekealoAPI.TokenManager.isAuthenticated()) {
+        window.location.href = '/templates/dashboard.html';
+        return;
+      }
+      
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const submitButton = loginForm.querySelector('button[type="submit"]');
+        
+        // Deshabilitar botón durante la petición
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<span class="truncate">Iniciando sesión...</span>';
+        
+        try {
+          await TruekealoAPI.Auth.login(email, password);
+          // Redirigir al dashboard después del login exitoso
+          window.location.href = '/templates/dashboard.html';
+        } catch (error) {
+          console.error('Error en login:', error);
+        } finally {
+          // Rehabilitar botón
+          submitButton.disabled = false;
+          submitButton.innerHTML = '<span class="truncate">Iniciar Sesión</span>';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+# ==================== Core Backend Framework ====================
+fastapi
+uvicorn
+python-multipart
+
+# ==================== Database & ORM ====================
+sqlalchemy
+pymysql
+
+# ==================== Authentication & Security ====================
+python-jose[cryptography]
+passlib[bcrypt]
+bcrypt==4.0.1
+python-decouple
+pydantic
+pydantic-settings
+email-validator
+
+# ==================== Environment Variables ====================
+python-dotenv
+
+# ==================== Development & Testing ====================
+pytest
+pytest-asyncio
+httpx

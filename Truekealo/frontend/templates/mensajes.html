@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Truekealo - Mensajes</title>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link rel="preload" href="/assets/css/app.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="/assets/css/app.css" rel="stylesheet"></noscript>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#e84c30",
+            "background-light": "#FAF8F5",
+            "background-dark": "#211311",
+            "card-light": "#fcf9f8",
+            "card-dark": "#2a1a18",
+            "text-light": "#1b100e",
+            "text-dark": "#f8f6f6",
+            "text-muted-light": "#97594e",
+            "text-muted-dark": "#a88e89",
+            "active-light": "#f3e9e7",
+            "active-dark": "rgba(232, 76, 48, 0.2)"
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem",
+            "xl": "1rem",
+            "full": "9999px"
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+  <a href="#mainContent" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:bg-primary focus:text-white px-3 py-2 rounded">Saltar al contenido</a>
+  <div class="relative flex min-h-screen w-full">
+    <!-- Sidebar -->
+    <aside class="sticky top-0 flex h-screen w-64 flex-col bg-card-light dark:bg-card-dark p-4">
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3 py-2">
+            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style="background-image: url('https://cdn-icons-png.flaticon.com/512/2917/2917995.png');"></div>
+            <h1 class="text-text-light dark:text-text-dark text-lg font-bold">Truekealo</h1>
+          </div>
+          <button id="darkModeToggle" class="flex items-center justify-center w-10 h-10 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" title="Cambiar tema" aria-label="Cambiar a modo oscuro o claro">
+            <span class="material-symbols-outlined" aria-hidden="true">light_mode</span>
+          </button>
+        </div>
+
+        <nav class="flex flex-col gap-2 mt-4" aria-label="Menú de navegación">
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="dashboard.html">
+            <span class="material-symbols-outlined" aria-hidden="true">home</span>
+            <p class="text-sm font-medium">Inicio</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="mis-articulos.html">
+            <span class="material-symbols-outlined" aria-hidden="true">package_2</span>
+            <p class="text-sm font-medium">Mis Artículos</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="explorar.html">
+            <span class="material-symbols-outlined" aria-hidden="true">search</span>
+            <p class="text-sm font-medium">Explorar</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-active-light dark:bg-active-dark text-primary focus:outline-none focus:ring-2 focus:ring-primary" href="mensajes.html" aria-current="page">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">mark_email_unread</span>
+            <p class="text-sm font-medium">Mensajes</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="perfil.html">
+            <span class="material-symbols-outlined" aria-hidden="true">person</span>
+            <p class="text-sm font-medium">Perfil</p>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary" href="configuracion.html">
+            <span class="material-symbols-outlined" aria-hidden="true">settings</span>
+            <p class="text-sm font-medium">Configuración</p>
+          </a>
+        </nav>
+      </div>
+
+      <a href="publicar.html" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold mt-auto hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" aria-label="Subir nuevo artículo o ítem">
+        <span class="truncate">Subir Ítem</span>
+      </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="mainContent" class="flex-1 overflow-y-auto flex" role="main">
+      <!-- Lista de Conversaciones -->
+      <div class="w-80 border-r border-gray-300 dark:border-gray-700 bg-card-light dark:bg-card-dark flex flex-col">
+        <div class="p-4 border-b border-gray-300 dark:border-gray-700">
+          <h2 class="text-lg font-bold text-text-light dark:text-text-dark">Mensajes</h2>
+        </div>
+        <div class="flex-1 overflow-y-auto" id="conversacionesContainer">
+          <div class="p-4 text-center">
+            <div class="animate-pulse space-y-4">
+              <div class="h-16 bg-gray-200 dark:bg-gray-700 rounded"></div>
+              <div class="h-16 bg-gray-200 dark:bg-gray-700 rounded"></div>
+            </div>
+            <p class="text-text-muted-light dark:text-text-muted-dark mt-4">Cargando...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel de Chat -->
+      <div class="flex-1 flex flex-col" id="chatPanel">
+        <div class="p-4 border-b border-gray-300 dark:border-gray-700 bg-card-light dark:bg-card-dark" id="chatHeader">
+          <h3 class="font-bold text-text-light dark:text-text-dark">Selecciona una conversación</h3>
+        </div>
+        <div class="flex-1 flex items-center justify-center text-text-muted-light dark:text-text-muted-dark" id="chatEmpty">
+          <div class="text-center">
+            <span class="material-symbols-outlined text-5xl mb-4">chat</span>
+            <p>Selecciona una conversación para comenzar</p>
+          </div>
+        </div>
+        
+        <!-- Área de mensajes (oculta inicialmente) -->
+        <div class="flex-1 overflow-y-auto p-4 space-y-4 hidden" id="mensajesContainer"></div>
+        
+        <!-- Input de mensaje (oculto inicialmente) -->
+        <div class="p-4 border-t border-gray-300 dark:border-gray-700 bg-card-light dark:bg-card-dark hidden" id="mensajeInput">
+          <div class="flex gap-2">
+            <input type="text" id="nuevoMensajeTexto" placeholder="Escribe un mensaje..." class="flex-1 rounded-lg border border-gray-300 dark:border-gray-600 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"/>
+            <button onclick="enviarMensaje()" class="px-6 py-2 rounded-lg bg-primary text-white font-medium hover:opacity-90 transition-opacity">
+              <span class="material-symbols-outlined">send</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/assets/js/include-components.js" defer></script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/app.js?v=2.2" defer></script>
+  
+  <script>
+    let conversacionActual = null;
+    let usuarioActualId = null;
+    
+    document.addEventListener('DOMContentLoaded', async () => {
+      const token = localStorage.getItem('access_token');
+      if (!token) {
+        window.location.href = '/templates/login.html';
+        return;
+      }
+      
+      // Obtener ID del usuario actual
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        usuarioActualId = parseInt(payload.sub);
+      } catch (error) {
+        console.error('Error decodificando token:', error);
+        Toast.error('Error de autenticación');
+        return;
+      }
+      
+      // Verificar si hay un mensaje pendiente desde explorar
+      const nuevoMensaje = localStorage.getItem('nuevoMensaje');
+      if (nuevoMensaje) {
+        try {
+          const datos = JSON.parse(nuevoMensaje);
+          localStorage.removeItem('nuevoMensaje');
+          
+          // Abrir conversación con ese usuario
+          await abrirConversacion(datos.destinatario_id, datos.destinatario_nombre);
+          
+          // Pre-llenar mensaje si hay título de artículo
+          if (datos.articulo_titulo) {
+            document.getElementById('nuevoMensajeTexto').value = `Hola, me interesa tu artículo: ${datos.articulo_titulo}`;
+          }
+        } catch (error) {
+          console.error('Error procesando mensaje pendiente:', error);
+        }
+      }
+      
+      await cargarConversaciones();
+    });
+    
+    async function cargarConversaciones() {
+      const token = localStorage.getItem('access_token');
+      const container = document.getElementById('conversacionesContainer');
+      
+      try {
+        const response = await fetch('http://localhost:8000/api/v1/mensajes/conversaciones', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Error ${response.status}`);
+        }
+        
+        const conversaciones = await response.json();
+        
+        if (!conversaciones || conversaciones.length === 0) {
+          container.innerHTML = `
+            <div class="p-4 text-center">
+              <span class="material-symbols-outlined text-4xl text-text-muted-light dark:text-text-muted-dark">mail</span>
+              <p class="text-text-muted-light dark:text-text-muted-dark mt-4">No hay conversaciones aún</p>
+              <p class="text-sm text-text-muted-light dark:text-text-muted-dark mt-2">Visita Explorar para contactar propietarios</p>
+            </div>
+          `;
+          return;
+        }
+        
+        container.innerHTML = conversaciones.map(conv => `
+          <div onclick="abrirConversacion(${conv.otro_usuario_id}, '${conv.otro_usuario_nombre}')" 
+               class="p-4 hover:bg-active-light dark:hover:bg-active-dark cursor-pointer border-b border-gray-200 dark:border-gray-700 transition-colors">
+            <div class="flex items-center gap-3">
+              <div class="bg-primary/20 rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined text-primary">person</span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex justify-between items-start">
+                  <p class="font-medium text-text-light dark:text-text-dark truncate">${conv.otro_usuario_nombre}</p>
+                  ${conv.mensajes_no_leidos > 0 ? `<span class="bg-primary text-white text-xs rounded-full px-2 py-1 ml-2">${conv.mensajes_no_leidos}</span>` : ''}
+                </div>
+                <p class="text-sm text-text-muted-light dark:text-text-muted-dark truncate">${conv.ultimo_mensaje || 'Sin mensajes'}</p>
+              </div>
+            </div>
+          </div>
+        `).join('');
+        
+      } catch (error) {
+        console.error('Error cargando conversaciones:', error);
+        container.innerHTML = `
+          <div class="p-4 text-center">
+            <p class="text-red-500">Error al cargar conversaciones</p>
+          </div>
+        `;
+      }
+    }
+    
+    async function abrirConversacion(usuarioId, usuarioNombre) {
+      conversacionActual = { id: usuarioId, nombre: usuarioNombre };
+      const token = localStorage.getItem('access_token');
+      
+      // Actualizar header
+      document.getElementById('chatHeader').innerHTML = `
+        <div class="flex items-center gap-3">
+          <div class="bg-primary/20 rounded-full w-10 h-10 flex items-center justify-center">
+            <span class="material-symbols-outlined text-primary">person</span>
+          </div>
+          <h3 class="font-bold text-text-light dark:text-text-dark">${usuarioNombre}</h3>
+        </div>
+      `;
+      
+      // Ocultar mensaje vacío, mostrar chat
+      document.getElementById('chatEmpty').classList.add('hidden');
+      document.getElementById('mensajesContainer').classList.remove('hidden');
+      document.getElementById('mensajeInput').classList.remove('hidden');
+      
+      // Cargar mensajes
+      try {
+        const response = await fetch(`http://localhost:8000/api/v1/mensajes/conversacion/${usuarioId}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (!response.ok) {
+          console.error(`Error ${response.status}:`, response.statusText);
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.detail || `Error ${response.status} al cargar mensajes`);
+        }
+        
+        const mensajes = await response.json();
+        const container = document.getElementById('mensajesContainer');
+        
+        if (!mensajes || mensajes.length === 0) {
+          container.innerHTML = `
+            <div class="text-center py-8">
+              <p class="text-text-muted-light dark:text-text-muted-dark">No hay mensajes aún. Inicia la conversación.</p>
+            </div>
+          `;
+        } else {
+          container.innerHTML = mensajes.map(msg => {
+            const esMio = msg.remitente_id === usuarioActualId;
+            return `
+              <div class="flex ${esMio ? 'justify-end' : 'justify-start'}">
+                <div class="${esMio ? 'bg-primary text-white' : 'bg-gray-200 dark:bg-gray-700 text-text-light dark:text-text-dark'} rounded-2xl px-4 py-2 max-w-[70%]">
+                  <p class="text-sm">${msg.contenido}</p>
+                  <p class="text-xs ${esMio ? 'text-white/70' : 'text-text-muted-light dark:text-text-muted-dark'} mt-1">
+                    ${new Date(msg.created_at).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                </div>
+              </div>
+            `;
+          }).join('');
+          
+          // Scroll al último mensaje
+          container.scrollTop = container.scrollHeight;
+        }
+        
+        // Recargar conversaciones para actualizar contadores
+        await cargarConversaciones();
+        
+      } catch (error) {
+        console.error('Error cargando mensajes:', error);
+        const container = document.getElementById('mensajesContainer');
+        container.innerHTML = `
+          <div class="text-center py-8">
+            <span class="material-symbols-outlined text-4xl text-red-500 mb-4">error</span>
+            <p class="text-red-500 font-medium">${error.message || 'Error al cargar los mensajes'}</p>
+            <p class="text-sm text-text-muted-light dark:text-text-muted-dark mt-2">Intenta recargar la conversación</p>
+          </div>
+        `;
+        if (typeof Toast !== 'undefined') {
+          Toast.error(error.message || 'Error al cargar mensajes');
+        }
+      }
+    }
+    
+    async function enviarMensaje() {
+      if (!conversacionActual) {
+        if (typeof Toast !== 'undefined') {
+          Toast.error('No hay conversación activa');
+        }
+        return;
+      }
+      
+      const input = document.getElementById('nuevoMensajeTexto');
+      const contenido = input.value.trim();
+      
+      if (!contenido) {
+        if (typeof Toast !== 'undefined') {
+          Toast.error('Escribe un mensaje');
+        }
+        return;
+      }
+      
+      const token = localStorage.getItem('access_token');
+      
+      try {
+        const response = await fetch('http://localhost:8000/api/v1/mensajes/', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            destinatario_id: conversacionActual.id,
+            contenido: contenido
+          })
+        });
+        
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.detail || `Error ${response.status} al enviar mensaje`);
+        }
+        
+        // Limpiar input
+        input.value = '';
+        
+        // Recargar mensajes
+        await abrirConversacion(conversacionActual.id, conversacionActual.nombre);
+        
+        if (typeof Toast !== 'undefined') {
+          Toast.success('Mensaje enviado');
+        }
+        
+      } catch (error) {
+        console.error('Error enviando mensaje:', error);
+        if (typeof Toast !== 'undefined') {
+          Toast.error(error.message || 'Error al enviar mensaje');
+        }
+      }
+    }
+    
+    // Enviar con Enter
+    document.getElementById('nuevoMensajeTexto')?.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        enviarMensaje();
+      }
+    });
+  </script>
+</body>
+</html>

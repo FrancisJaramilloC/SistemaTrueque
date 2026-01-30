@@ -1,0 +1,45 @@
+<!-- Main Sidebar Navigation - Shared Across All Pages -->
+<aside class="sticky top-0 flex h-screen w-64 flex-col bg-card-light dark:bg-card-dark p-4">
+  <div class="flex flex-col gap-4">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3 py-2">
+        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style="background-image: url('https://cdn-icons-png.flaticon.com/512/2917/2917995.png');"></div>
+        <h1 class="text-text-light dark:text-text-dark text-lg font-bold">Truekealo</h1>
+      </div>
+      <button id="darkModeToggle" class="flex items-center justify-center w-10 h-10 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors" title="Cambiar tema" aria-label="Cambiar tema oscuro/claro">
+        <span class="material-symbols-outlined" aria-hidden="true">light_mode</span>
+      </button>
+    </div>
+
+    <nav class="flex flex-col gap-2 mt-4">
+      <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors data-nav-link" href="dashboard.html" data-page="dashboard">
+        <span class="material-symbols-outlined" aria-hidden="true">home</span>
+        <p class="text-sm font-medium">Inicio</p>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors data-nav-link" href="mis-articulos.html" data-page="mis-articulos">
+        <span class="material-symbols-outlined" aria-hidden="true">package_2</span>
+        <p class="text-sm font-medium">Mis Artículos</p>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors data-nav-link" href="explorar.html" data-page="explorar">
+        <span class="material-symbols-outlined" aria-hidden="true">search</span>
+        <p class="text-sm font-medium">Explorar</p>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors data-nav-link" href="mensajes.html" data-page="mensajes">
+        <span class="material-symbols-outlined" aria-hidden="true">mark_email_unread</span>
+        <p class="text-sm font-medium">Mensajes</p>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors data-nav-link" href="perfil.html" data-page="perfil">
+        <span class="material-symbols-outlined" aria-hidden="true">person</span>
+        <p class="text-sm font-medium">Perfil</p>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-light dark:text-text-dark hover:bg-active-light dark:hover:bg-active-dark transition-colors data-nav-link" href="configuracion.html" data-page="configuracion">
+        <span class="material-symbols-outlined" aria-hidden="true">settings</span>
+        <p class="text-sm font-medium">Configuración</p>
+      </a>
+    </nav>
+  </div>
+
+  <a href="publicar.html" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold mt-auto hover:opacity-90 transition-opacity" aria-label="Subir nuevo artículo">
+    <span class="truncate">Subir Ítem</span>
+  </a>
+</aside>
