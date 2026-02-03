@@ -3,7 +3,7 @@ Módulo de seguridad y autenticación
 Gestiona JWT, hashing de contraseñas y validaciones
 """
 from datetime import datetime, timedelta
-from typing import Optional, Union, Any
+from typing import Optional, Union, Any, TYPE_CHECKING
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from fastapi import Depends, HTTPException, status
@@ -11,8 +11,9 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
-from app.database import get_db
-from app.models.user import User
+
+if TYPE_CHECKING:
+    from app.models.user import User
 
 # ==================== Configuración de Hashing ====================
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -94,15 +95,13 @@ def decode_access_token(token: str) -> Optional[dict]:
 # ==================== Dependencias de Autenticación ====================
 async def get_current_user(
     token: str = Depends(oauth2_scheme),
-    db: Session = Depends(get_db)
-) -> User:
+) -> "User":
     """
     Obtiene el usuario actual basado en el token JWT
     Dependencia reutilizable para proteger endpoints
     
     Args:
         token: Token JWT del header Authorization
-        db: Sesión de base de datos
         
     Returns:
         User: Usuario autenticado
@@ -110,6 +109,9 @@ async def get_current_user(
     Raises:
         HTTPException: Si el token es inválido o el usuario no existe
     """
+    from app.database import get_db
+    from app.models.user import User
+    
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="No se pudieron validar las credenciales",
@@ -126,6 +128,8 @@ async def get_current_user(
     if user_id is None:
         raise credentials_exception
     
+    # Obtener sesión de BD
+    db = next(get_db())
     user = db.query(User).filter(User.id == user_id).first()
     
     if user is None:
@@ -141,8 +145,8 @@ async def get_current_user(
 
 
 async def get_current_active_user(
-    current_user: User = Depends(get_current_user)
-) -> User:
+    current_user: "User" = Depends(get_current_user)
+) -> "User":
     """
     Verifica que el usuario actual esté activo
     

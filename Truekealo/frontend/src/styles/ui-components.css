@@ -1,0 +1,361 @@
+/* ==================== UI Components System ==================== */
+
+/* Design Tokens - Elevation System */
+:root {
+  /* Spacing Scale */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+
+  /* Typography */
+  --font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Border Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* Elevation Shadows - LEVEL 1 (Base Cards) */
+  --shadow-1: 0 2px 4px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-1-hover: 0 4px 8px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+
+  /* Elevation Shadows - LEVEL 2 (Navbar/Sticky) */
+  --shadow-2: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.08);
+  --shadow-2-hover: 0 6px 12px rgba(0, 0, 0, 0.14), 0 3px 6px rgba(0, 0, 0, 0.1);
+
+  /* Elevation Shadows - LEVEL 3 (Dropdowns/Menus) */
+  --shadow-3: 0 8px 16px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  /* Elevation Shadows - LEVEL 4 (Modals/Overlays) */
+  --shadow-4: 0 12px 24px rgba(0, 0, 0, 16), 0 6px 12px rgba(0, 0, 0, 0.12);
+
+  /* Transitions */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-base: 0.2s ease-in-out;
+  --transition-elevate: 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Colors */
+  --color-primary: #e84c30;
+  --color-primary-light: #f5e9e6;
+  --color-primary-dark: #d63e22;
+  --color-secondary: #97594e;
+  --color-success: #10b981;
+  --color-success-light: #d1fae5;
+  --color-danger: #dc2626;
+  --color-danger-light: #fee2e2;
+  --color-warning: #f59e0b;
+  --color-warning-light: #fef3c7;
+  --color-info: #3b82f6;
+  --color-info-light: #dbeafe;
+
+  /* Light Mode */
+  --color-bg-primary: #faf8f5;
+  --color-bg-secondary: #fcf9f8;
+  --color-bg-tertiary: #f3e9e7;
+  --color-text-primary: #1b100e;
+  --color-text-secondary: #97594e;
+  --color-text-tertiary: #b8a4a1;
+  --color-border: #e0d5ce;
+  --color-border-light: #ece6e0;
+  --color-divider: #e8dcd5;
+}
+
+/* ==================== Buttons ==================== */
+.ui-btn {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-semibold);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  transition: all var(--transition-base);
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* Button Sizes */
+.ui-btn--small {
+  padding: var(--spacing-xs) var(--spacing-md);
+  font-size: var(--font-size-sm);
+  height: 2rem;
+}
+
+.ui-btn--medium {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-size: var(--font-size-sm);
+  height: 2.5rem;
+}
+
+.ui-btn--large {
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-size-base);
+  height: 3rem;
+}
+
+/* Button Variants */
+.ui-btn--primary {
+  background-color: var(--color-primary);
+  color: white;
+  box-shadow: var(--shadow-1);
+}
+
+.ui-btn--primary:hover {
+  background-color: var(--color-primary-dark);
+  box-shadow: var(--shadow-2-hover);
+  transform: translateY(-2px);
+}
+
+.ui-btn--primary:active {
+  transform: translateY(0);
+}
+
+.ui-btn--secondary {
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-1);
+}
+
+.ui-btn--secondary:hover {
+  background-color: var(--color-border-light);
+  box-shadow: var(--shadow-1-hover);
+  transform: translateY(-1px);
+}
+
+.ui-btn--success {
+  background-color: var(--color-success);
+  color: white;
+  box-shadow: var(--shadow-1);
+}
+
+.ui-btn--success:hover {
+  background-color: #059669;
+  box-shadow: var(--shadow-2-hover);
+  transform: translateY(-2px);
+}
+
+.ui-btn--danger {
+  background-color: var(--color-danger);
+  color: white;
+  box-shadow: var(--shadow-1);
+}
+
+.ui-btn--danger:hover {
+  background-color: #b91c1c;
+  box-shadow: var(--shadow-2-hover);
+  transform: translateY(-2px);
+}
+
+.ui-btn--outline {
+  background-color: transparent;
+  border: 1.5px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.ui-btn--outline:hover {
+  background-color: var(--color-primary-light);
+  transform: translateY(-1px);
+}
+
+.ui-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ==================== Cards - Level 1 (Elevation) ==================== */
+.ui-card {
+  background-color: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  border: 1px solid var(--color-border-light);
+  box-shadow: var(--shadow-1);
+  transition: all var(--transition-elevate);
+}
+
+.ui-card--elevated {
+  box-shadow: var(--shadow-1);
+}
+
+.ui-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-1-hover);
+  transform: translateY(-2px);
+}
+
+/* ==================== Badges ==================== */
+.ui-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.ui-badge--small {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-xs);
+}
+
+.ui-badge--medium {
+  padding: var(--spacing-xs) var(--spacing-md);
+  font-size: var(--font-size-sm);
+}
+
+.ui-badge--default {
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+}
+
+.ui-badge--primary {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.ui-badge--success {
+  background-color: var(--color-success-light);
+  color: var(--color-success);
+}
+
+.ui-badge--danger {
+  background-color: var(--color-danger-light);
+  color: var(--color-danger);
+}
+
+.ui-badge--warning {
+  background-color: var(--color-warning-light);
+  color: var(--color-warning);
+}
+
+.ui-badge--info {
+  background-color: var(--color-info-light);
+  color: var(--color-info);
+}
+
+/* ==================== Input Groups ==================== */
+.ui-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  width: 100%;
+}
+
+.ui-input-label {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+}
+
+.ui-required {
+  color: var(--color-danger);
+  margin-left: var(--spacing-xs);
+}
+
+.ui-input,
+.ui-select {
+  width: 100%;
+  padding: var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  transition: all var(--transition-base);
+}
+
+.ui-input::placeholder,
+.ui-select {
+  color: var(--color-text-tertiary);
+}
+
+.ui-input:focus,
+.ui-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(232, 76, 48, 0.1);
+  background-color: white;
+}
+
+.ui-input--error {
+  border-color: var(--color-danger);
+}
+
+.ui-input--error:focus {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.ui-input-helper {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+
+.ui-input-helper--error {
+  color: var(--color-danger);
+}
+
+/* ==================== Page Header ==================== */
+.ui-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.ui-page-header__content {
+  flex: 1;
+}
+
+.ui-page-header__title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.ui-page-header__subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.ui-page-header__action {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+/* ==================== Responsive ==================== */
+@media (max-width: 768px) {
+  .ui-page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ui-page-header__action {
+    width: 100%;
+  }
+
+  .ui-page-header__action .ui-btn {
+    width: 100%;
+  }
+}

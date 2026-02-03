@@ -11,7 +11,7 @@ import os
 from pathlib import Path
 
 from app.core.config import settings
-from app.routers import auth, articulos, propuestas, mensajes
+from app.routers import auth, articulos, propuestas, mensajes, actividades
 
 
 # ==================== Ciclo de Vida de la Aplicación ====================
@@ -22,7 +22,8 @@ async def lifespan(app: FastAPI):
     Se ejecuta al iniciar y cerrar la aplicación
     """
     # Startup: Verificar conexión a base de datos
-    print("Iniciando aplicación...")
+    print("🚀 Iniciando aplicación Truekealo...")
+    db_connected = False
     try:
         # No creamos tablas; solo probamos conexión a la BD configurada
         from app.database import engine
@@ -30,14 +31,17 @@ async def lifespan(app: FastAPI):
         with engine.connect() as conn:
             conn.execute(text("SELECT 1"))
         print(f"✅ Conexión a base de datos '{settings.DB_NAME}' exitosa")
+        db_connected = True
     except Exception as e:
         print(f"⚠️ Advertencia: No se pudo conectar a BD '{settings.DB_NAME}': {e}")
         print("La aplicación continuará. Verifica que MariaDB esté corriendo y las credenciales sean correctas.")
     
-    yield
+    print("📡 Servidor listo para recibir peticiones")
+    
+    yield  # La aplicación corre aquí
     
     # Shutdown
-    print("Cerrando aplicación...")
+    print("\n🛑 Cerrando aplicación...")
 
 
 # ==================== Configuración de la Aplicación ====================
@@ -54,10 +58,11 @@ app = FastAPI(
 # ==================== Configuración de CORS ====================
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.ALLOWED_ORIGINS,
-    allow_credentials=settings.CORS_ALLOW_CREDENTIALS,
-    allow_methods=settings.CORS_ALLOW_METHODS,
-    allow_headers=settings.CORS_ALLOW_HEADERS,
+    allow_origins=["*"],  # Permitir todas las origins para desarrollo móvil
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allow_headers=["*"],
+    max_age=3600,
 )
 
 
@@ -120,6 +125,7 @@ app.include_router(auth.router, prefix="/api/v1")
 app.include_router(articulos.router, prefix="/api/v1")
 app.include_router(propuestas.router, prefix="/api/v1")
 app.include_router(mensajes.router, prefix="/api/v1")
+app.include_router(actividades.router, prefix="/api/v1")
 
 
 # ==================== Información de Debug ====================
