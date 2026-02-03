@@ -16,10 +16,5 @@ pydantic
 pydantic-settings
 email-validator
 
-# ==================== Environment Variables ====================
-python-dotenv
+# Email está incluido en Python por defecto (no requiere instalación)
 
-# ==================== Development & Testing ====================
-pytest
-pytest-asyncio
-httpx

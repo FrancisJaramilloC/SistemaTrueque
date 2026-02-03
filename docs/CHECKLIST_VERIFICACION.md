@@ -367,13 +367,11 @@ Database:                   MariaDB 10.x
 
 **Antes de calificar, verificar:**
 
-1. ✅ Leer [docs/INDICE.md](INDICE.md) - Punto de entrada
-2. ✅ Revisar [README.md](../README.md) - Overview
-3. ✅ Ver diagramas en [docs/architecture/](architecture/)
-4. ✅ Leer [docs/DOCUMENTACION_TECNICA.md](DOCUMENTACION_TECNICA.md)
-5. ✅ Revisar código en [Truekealo/](../Truekealo/)
-6. ✅ Considerar [docs/GITFLOW_GUIDE.md](GITFLOW_GUIDE.md)
-7. ✅ Verificar setup en [docs/INSTALACION.md](INSTALACION.md)
+1. ✅ Revisar [README.md](../README.md) - Overview
+2. ✅ Ver diagramas en [docs/architecture/](architecture/)
+3. ✅ Leer [docs/DOCUMENTACION_TECNICA.md](DOCUMENTACION_TECNICA.md)
+4. ✅ Revisar código en [Truekealo/](../Truekealo/)
+5. ✅ Verificar setup en [docs/INSTALACION.md](INSTALACION.md)
 
 ### Pasos de Verificación Rápida
 
