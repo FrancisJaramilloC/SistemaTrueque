@@ -10,7 +10,11 @@ from pydantic import BaseModel
 import secrets
 
 from app.database import get_db
+<<<<<<< HEAD
 from app.schemas.user import UserCreate, UserResponse, Token, UserLogin
+=======
+from app.schemas.user import UserCreate, UserResponse, Token, UserLogin, UserUpdate
+>>>>>>> feature/Movil
 from app.core.security import (
     get_password_hash,
     verify_password,
@@ -155,6 +159,51 @@ async def get_current_user_info(current_user: User = Depends(get_current_user)):
     return current_user
 
 
+<<<<<<< HEAD
+=======
+@router.put("/profile", response_model=UserResponse)
+async def update_profile(
+    user_data: UserUpdate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Actualiza el perfil del usuario autenticado
+    
+    Args:
+        user_data: Datos a actualizar
+        db: Sesión de base de datos
+        current_user: Usuario autenticado
+        
+    Returns:
+        UserResponse: Datos actualizados del usuario
+    """
+    # Obtener el usuario desde la sesión actual de la base de datos
+    user = db.query(User).filter(User.id == current_user.id).first()
+    
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Usuario no encontrado"
+        )
+    
+    # Actualizar solo los campos proporcionados
+    if user_data.nombre_completo is not None:
+        user.nombre_completo = user_data.nombre_completo
+    if user_data.telefono is not None:
+        user.telefono = user_data.telefono
+    if user_data.ubicacion is not None:
+        user.ubicacion = user_data.ubicacion
+    if user_data.avatar_url is not None:
+        user.avatar_url = user_data.avatar_url
+    
+    db.commit()
+    db.refresh(user)
+    
+    return user
+
+
+>>>>>>> feature/Movil
 class ChangePasswordRequest(BaseModel):
     current_password: str
     new_password: str

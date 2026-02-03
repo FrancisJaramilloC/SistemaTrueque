@@ -16,6 +16,10 @@ pydantic
 pydantic-settings
 email-validator
 
+<<<<<<< HEAD
 # ==================== Email ====================
 python-email
+=======
+# Email está incluido en Python por defecto (no requiere instalación)
+>>>>>>> feature/Movil
 
