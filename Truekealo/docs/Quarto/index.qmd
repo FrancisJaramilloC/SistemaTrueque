@@ -1,0 +1,116 @@
+---
+title: "Truekealo"
+subtitle: "Sistema de Intercambio de Artículos"
+author: "Carrera de Computación - FEIRNNR"
+date: today
+format:
+  html:
+    page-layout: full
+---
+
+# 🎯 Bienvenido a Truekealo
+
+Truekealo es una **plataforma integral de intercambio de artículos** que conecta usuarios para realizar transacciones justas y seguras sin necesidad de dinero.
+
+## 📋 Descripción General
+
+```{=html}
+<div class="grid" style="margin: 20px 0;">
+  <div class="g-col-12 g-col-md-4" style="padding: 15px;">
+    <div style="background: #f8f9fa; border-radius: 10px; padding: 20px; text-align: center;">
+      <h3>👥 Para Usuarios</h3>
+      <p>Intercambia artículos de manera fácil, segura y sin costo. Conecta con otros usuarios interesados.</p>
+      <a href="docs/guia-usuario.qmd" class="btn btn-primary">Guía del Usuario</a>
+    </div>
+  </div>
+  
+  <div class="g-col-12 g-col-md-4" style="padding: 15px;">
+    <div style="background: #f8f9fa; border-radius: 10px; padding: 20px; text-align: center;">
+      <h3>👨‍💻 Para Desarrolladores</h3>
+      <p>Documentación técnica completa del proyecto, APIs, y arquitectura del sistema.</p>
+      <a href="docs/guia-desarrollador.qmd" class="btn btn-primary">Guía del Desarrollador</a>
+    </div>
+  </div>
+  
+  <div class="g-col-12 g-col-md-4" style="padding: 15px;">
+    <div style="background: #f8f9fa; border-radius: 10px; padding: 20px; text-align: center;">
+      <h3>⚙️ Para Administradores</h3>
+      <p>Gestión del sistema, configuración de servidores y supervisión de operaciones.</p>
+      <a href="docs/guia-administrador.qmd" class="btn btn-primary">Guía del Administrador</a>
+    </div>
+  </div>
+</div>
+```
+
+## 🚀 Características Principales
+
+- ✅ **Interfaz Intuitiva:** Aplicación web y móvil fácil de usar
+- ✅ **Propuestas de Intercambio:** Negocia términos con otros usuarios
+- ✅ **Mensajería:** Comunícate directamente con otros usuarios
+- ✅ **Gestión de Artículos:** Crea, edita y gestiona tus listados
+- ✅ **Validación de Usuarios:** Sistema de perfiles y reputación
+- ✅ **Seguridad:** Autenticación JWT y encriptación de datos
+
+## 📚 Documentación Disponible
+
+### Introducción
+- [Introducción al Sistema](docs/introduccion.qmd)
+- [Guía de Instalación](docs/instalacion.qmd)
+
+### Guías de Usuario
+- [Guía del Usuario](docs/guia-usuario.qmd) - Cómo usar la plataforma
+- [Guía del Administrador](docs/guia-administrador.qmd) - Gestión del sistema
+
+### Guías Técnicas
+- [Guía del Desarrollador](docs/guia-desarrollador.qmd) - Arquitectura y desarrollo
+- [Especificaciones de Arquitectura](docs/especificaciones/arquitectura.qmd)
+- [Diseño de Base de Datos](docs/especificaciones/base-datos.qmd)
+- [Documentación de API REST](docs/especificaciones/api.qmd)
+- [Seguridad del Sistema](docs/especificaciones/seguridad.qmd)
+
+### Prácticas y Evaluación
+- [APE 007 - Integración Móvil](docs/practicas/ape-007.qmd)
+- [Guía de Pruebas](docs/practicas/pruebas.qmd)
+- [Despliegue en Producción](docs/practicas/despliegue.qmd)
+
+## 🛠️ Stack Tecnológico
+
+```{mermaid}
+graph LR
+    A["Frontend<br/>React + Vite"] --> B["API REST<br/>FastAPI"]
+    C["Mobile<br/>React Native"] --> B
+    B --> D["Base de Datos<br/>PostgreSQL"]
+    E["WebSocket<br/>Real-time"] --> B
+```
+
+## 📊 Estadísticas del Proyecto
+
+| Componente | Tecnología | Estado |
+|-----------|-----------|---------|
+| **Frontend** | React 18 + Vite | ✅ Activo |
+| **Backend** | FastAPI + Python 3.11 | ✅ Activo |
+| **Mobile** | React Native | ✅ Activo |
+| **Base de Datos** | PostgreSQL 15 | ✅ Activo |
+| **Documentación** | Quarto | ✅ Actualizado |
+
+## 🎓 Información Académica
+
+- **Carrera:** Computación
+- **Ciclo:** 5A
+- **Docente:** Edison Leonardo Coronel Romero
+- **Institución:** FEIRNNR
+- **Año Académico:** 2026
+
+## 📞 Contacto y Soporte
+
+Para preguntas, reportar errores o contribuir al proyecto:
+
+- **Email:** [developer@truekealo.com](mailto:developer@truekealo.com)
+- **GitHub:** [Repositorio del Proyecto](https://github.com/)
+- **Issues:** Reporta problemas [aquí](https://github.com/issues)
+
+---
+
+**Última actualización:** `r format(Sys.Date(), '%d de %B de %Y')`
+
+*Esta documentación se mantiene actualizada. Para cambios o sugerencias, contacta al equipo de desarrollo.*

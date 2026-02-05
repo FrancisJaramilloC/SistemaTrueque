@@ -1,0 +1,234 @@
+---
+title: "Especificaciones de Base de Datos"
+author: "Equipo de Arquitectura"
+date: today
+---
+
+# 🗄️ Base de Datos - Esquema y Relaciones
+
+## Descripción General
+
+Truekealo utiliza **PostgreSQL 15+** como base de datos principal. El esquema está diseñado siguiendo principios de normalización relacional con soporte para:
+
+- Integridad referencial mediante restricciones FK
+- Auditoría de cambios con timestamps
+- Indexación optimizada para búsquedas comunes
+- Escalabilidad horizontal
+
+## Tablas Principales
+
+### usuarios
+
+Almacena información de los usuarios registrados.
+
+```{mermaid}
+graph LR
+    A["usuarios"]
+    A --> B["id (PK)"]
+    A --> C["email"]
+    A --> D["nombre_completo"]
+    A --> E["password_hash"]
+    A --> F["bio"]
+    A --> G["ubicacion"]
+    A --> H["rating"]
+    A --> I["activo"]
+    A --> J["fecha_registro"]
+```
+
+| Columna | Tipo | Restricciones | Descripción |
+|---------|------|---------------|-------------|
+| `id` | SERIAL | PRIMARY KEY | Identificador único |
+| `email` | VARCHAR(255) | UNIQUE, NOT NULL | Email del usuario |
+| `nombre_completo` | VARCHAR(255) | NOT NULL | Nombre completo |
+| `password_hash` | VARCHAR(255) | NOT NULL | Hash de contraseña (bcrypt) |
+| `bio` | TEXT | | Biografía personal |
+| `ubicacion` | VARCHAR(255) | | Ciudad/región del usuario |
+| `rating` | NUMERIC(3,2) | DEFAULT 5.0 | Rating promedio (0-5) |
+| `activo` | BOOLEAN | DEFAULT true | Cuenta activa |
+| `fecha_registro` | TIMESTAMP | DEFAULT NOW() | Fecha de creación |
+| `fecha_actualizacion` | TIMESTAMP | DEFAULT NOW() | Última actualización |
+
+**Índices:**
+```sql
+CREATE INDEX idx_usuarios_email ON usuarios(email);
+CREATE INDEX idx_usuarios_ubicacion ON usuarios(ubicacion);
+CREATE INDEX idx_usuarios_activo ON usuarios(activo);
+```
+
+### articulos
+
+Artículos disponibles para intercambio.
+
+| Columna | Tipo | Restricciones | Descripción |
+|---------|------|---------------|-------------|
+| `id` | SERIAL | PRIMARY KEY | Identificador único |
+| `titulo` | VARCHAR(255) | NOT NULL | Título del artículo |
+| `descripcion` | TEXT | NOT NULL | Descripción detallada |
+| `categoria` | VARCHAR(100) | NOT NULL | Categoría (deportes, electrónica, etc.) |
+| `estado_articulo` | VARCHAR(50) | DEFAULT 'disponible' | Estado actual |
+| `valor_estimado` | DECIMAL(10,2) | | Valor en USD aproximado |
+| `propietario_id` | INTEGER | NOT NULL, FK | Usuario propietario |
+| `imagen_url` | VARCHAR(500) | | URL de imagen principal |
+| `fecha_creacion` | TIMESTAMP | DEFAULT NOW() | Fecha de creación |
+| `fecha_actualizacion` | TIMESTAMP | DEFAULT NOW() | Última actualización |
+
+**Estados válidos:**
+- `disponible`: Listo para intercambiar
+- `en_propuesta`: Tiene propuesta pendiente
+- `intercambiado`: Ya fue intercambiado
+- `retirado`: Propietario lo retiró
+
+**Índices:**
+```sql
+CREATE INDEX idx_articulos_propietario ON articulos(propietario_id);
+CREATE INDEX idx_articulos_categoria ON articulos(categoria);
+CREATE INDEX idx_articulos_estado ON articulos(estado_articulo);
+```
+
+### propuestas
+
+Propuestas de intercambio entre usuarios.
+
+| Columna | Tipo | Restricciones | Descripción |
+|---------|------|---------------|-------------|
+| `id` | SERIAL | PRIMARY KEY | Identificador único |
+| `articulo_solicitado_id` | INTEGER | NOT NULL, FK | Artículo que quiere |
+| `usuario_solicitante_id` | INTEGER | NOT NULL, FK | Usuario que propone |
+| `usuario_propietario_id` | INTEGER | NOT NULL, FK | Propietario del artículo |
+| `estado` | VARCHAR(50) | DEFAULT 'pendiente' | Estado de la propuesta |
+| `mensaje` | TEXT | | Mensaje del solicitante |
+| `fecha_creacion` | TIMESTAMP | DEFAULT NOW() | Fecha de creación |
+| `fecha_respuesta` | TIMESTAMP | | Fecha de respuesta |
+| `fecha_cierre` | TIMESTAMP | | Fecha de finalización |
+
+**Estados válidos:**
+- `pendiente`: Esperando respuesta
+- `aceptada`: Aceptada por el propietario
+- `rechazada`: Rechazada
+- `cancelada`: Cancelada por el solicitante
+- `completada`: Intercambio realizado
+
+**Relación Many-to-Many:**
+
+La tabla `propuesta_articulos` conecta una propuesta con múltiples artículos ofrecidos:
+
+| Columna | Tipo | Restricciones |
+|---------|------|---------------|
+| `id` | SERIAL | PRIMARY KEY |
+| `propuesta_id` | INTEGER | NOT NULL, FK |
+| `articulo_id` | INTEGER | NOT NULL, FK |
+
+### mensajes
+
+Mensajes privados entre usuarios.
+
+| Columna | Tipo | Restricciones | Descripción |
+|---------|------|---------------|-------------|
+| `id` | SERIAL | PRIMARY KEY | Identificador único |
+| `usuario_remitente_id` | INTEGER | NOT NULL, FK | Usuario que envía |
+| `usuario_destinatario_id` | INTEGER | NOT NULL, FK | Usuario que recibe |
+| `contenido` | TEXT | NOT NULL | Contenido del mensaje |
+| `leido` | BOOLEAN | DEFAULT false | Marcado como leído |
+| `fecha_creacion` | TIMESTAMP | DEFAULT NOW() | Fecha de envío |
+| `fecha_lectura` | TIMESTAMP | | Fecha de lectura |
+
+**Índices:**
+```sql
+CREATE INDEX idx_mensajes_remitente ON mensajes(usuario_remitente_id);
+CREATE INDEX idx_mensajes_destinatario ON mensajes(usuario_destinatario_id);
+CREATE INDEX idx_mensajes_leido ON mensajes(leido);
+CREATE INDEX idx_mensajes_conversacion ON mensajes(usuario_remitente_id, usuario_destinatario_id);
+```
+
+## Diagrama de Relaciones
+
+```{mermaid}
+erDiagram
+    USUARIOS ||--o{ ARTICULOS : propietario
+    USUARIOS ||--o{ PROPUESTAS : solicitante
+    USUARIOS ||--o{ PROPUESTAS : propietario
+    USUARIOS ||--o{ MENSAJES : remitente
+    USUARIOS ||--o{ MENSAJES : destinatario
+    ARTICULOS ||--o{ PROPUESTAS : solicitado
+    PROPUESTAS ||--o{ PROPUESTA_ARTICULOS : contiene
+    PROPUESTA_ARTICULOS }o--|| ARTICULOS : ofrece
+```
+
+## Scripts de Inicialización
+
+### Crear usuario
+```sql
+INSERT INTO usuarios (email, nombre_completo, password_hash, ubicacion)
+VALUES ('usuario@example.com', 'Juan Pérez', 'hash_bcrypt...', 'Quito');
+```
+
+### Crear artículo
+```sql
+INSERT INTO articulos (titulo, descripcion, categoria, propietario_id, valor_estimado)
+VALUES ('Bicicleta', 'Bici de montaña', 'deportes', 1, 200.00);
+```
+
+### Crear propuesta
+```sql
+INSERT INTO propuestas (articulo_solicitado_id, usuario_solicitante_id, usuario_propietario_id, mensaje)
+VALUES (1, 2, 1, 'Me interesa intercambiar por esto');
+
+INSERT INTO propuesta_articulos (propuesta_id, articulo_id)
+VALUES (1, 5), (1, 12);
+```
+
+### Enviar mensaje
+```sql
+INSERT INTO mensajes (usuario_remitente_id, usuario_destinatario_id, contenido)
+VALUES (1, 2, 'Hola, ¿sigue disponible tu artículo?');
+```
+
+## Optimizaciones de Rendimiento
+
+### Búsqueda de artículos
+```sql
+SELECT a.* FROM articulos a
+WHERE a.categoria = $1
+  AND a.estado_articulo = 'disponible'
+  AND a.fecha_creacion > NOW() - INTERVAL '30 days'
+ORDER BY a.fecha_creacion DESC
+LIMIT 50;
+```
+
+### Contar transacciones de usuario
+```sql
+SELECT COUNT(*) as completadas
+FROM propuestas
+WHERE (usuario_solicitante_id = $1 OR usuario_propietario_id = $1)
+  AND estado = 'completada';
+```
+
+### Obtener conversaciones recientes
+```sql
+SELECT DISTINCT
+  CASE WHEN usuario_remitente_id = $1 THEN usuario_destinatario_id
+       ELSE usuario_remitente_id END as usuario_id,
+  MAX(fecha_creacion) as ultima_fecha
+FROM mensajes
+WHERE usuario_remitente_id = $1 OR usuario_destinatario_id = $1
+GROUP BY usuario_id
+ORDER BY ultima_fecha DESC
+LIMIT 20;
+```
+
+## Seguridad de Datos
+
+### Restricciones de Acceso
+- Las contraseñas se almacenan como **bcrypt hash** (no en texto plano)
+- Los emails son únicos para evitar duplicados
+- Las FK garantizan integridad referencial
+
+### Auditoría
+- `fecha_creacion` registra cuándo se creó cada registro
+- `fecha_actualizacion` registra cambios
+- Los cambios de estado quedan en `fecha_respuesta`/`fecha_cierre`
+
+---
+
+**Versión del Schema:** 1.0  
+**Última actualización:** `r format(Sys.Date(), '%d de %B de %Y')`

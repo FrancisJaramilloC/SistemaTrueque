@@ -1,0 +1,362 @@
+---
+title: "Especificaciones de Arquitectura"
+author: "Equipo de Arquitectura"
+date: today
+---
+
+# 🏗️ Arquitectura del Sistema
+
+## Visión General
+
+Truekealo sigue una arquitectura de **tres capas** (3-tier) con separación clara de responsabilidades:
+
+```{mermaid}
+graph TB
+    A["Frontend Layer"]
+    B["Backend Layer"]
+    C["Data Layer"]
+    D["External Services"]
+    
+    A -->|HTTP/REST| B
+    B -->|SQL| C
+    B -->|SMTP/APIs| D
+    
+    A --> A1["React SPA"]
+    A --> A2["React Native Mobile"]
+    
+    B --> B1["FastAPI Server"]
+    B --> B2["Pydantic Models"]
+    B --> B3["SQLAlchemy ORM"]
+    
+    C --> C1["PostgreSQL"]
+    C --> C2["File Storage"]
+    
+    D --> D1["Email Service"]
+    D --> D2["Authentication"]
+```
+
+## Capa de Presentación (Frontend)
+
+### Aplicación Web
+- **Framework:** React 18+
+- **Build Tool:** Vite
+- **State Management:** Context API + Custom Hooks
+- **HTTP Client:** Axios
+- **Styling:** CSS3 + PostCSS
+- **Type System:** PropTypes
+
+**Estructura:**
+```
+src/
+├── components/          # Componentes reutilizables
+├── pages/              # Páginas principales
+├── context/            # Context API providers
+├── hooks/              # Custom hooks
+├── services/           # API calls
+├── utils/              # Utilidades
+└── styles/             # Estilos globales
+```
+
+### Aplicación Mobile
+- **Framework:** Expo (React Native)
+- **Navigation:** Expo Router
+- **HTTP Client:** Axios
+- **Styling:** NativeWind (Tailwind para React Native)
+
+**Estructura:**
+```
+app/
+├── (tabs)/             # Navegación con pestañas
+├── (auth)/             # Flujo de autenticación
+├── articulo/           # Detalles de artículo
+└── conversacion/       # Chat privado
+```
+
+## Capa de Aplicación (Backend)
+
+### Stack Tecnológico
+- **Framework:** FastAPI 0.100+
+- **ASGI Server:** Uvicorn
+- **Database ORM:** SQLAlchemy 2.0
+- **Validation:** Pydantic 2.0
+- **Authentication:** JWT (PyJWT)
+- **Password Hashing:** bcrypt
+- **Email:** Python email library + SMTP
+
+### Estructura de Proyecto
+
+```
+backend/
+├── app/
+│   ├── __init__.py
+│   ├── main.py              # Punto de entrada
+│   ├── database.py          # Configuración DB
+│   ├── core/
+│   │   ├── config.py        # Variables de entorno
+│   │   ├── security.py      # JWT, bcrypt
+│   │   └── email.py         # Servicio de email
+│   ├── models/
+│   │   ├── user.py
+│   │   ├── articulo.py
+│   │   ├── propuesta.py
+│   │   └── mensaje.py
+│   ├── schemas/
+│   │   ├── user.py          # Pydantic schemas
+│   │   ├── articulo.py
+│   │   ├── propuesta.py
+│   │   └── mensaje.py
+│   └── routers/
+│       ├── auth.py
+│       ├── articulos.py
+│       ├── propuestas.py
+│       └── mensajes.py
+├── requirements.txt
+└── .env
+```
+
+### Patrones de Diseño
+
+#### 1. Separación de Capas
+
+**Models (SQLAlchemy ORM):**
+```python
+class Usuario(Base):
+    __tablename__ = "usuarios"
+    
+    id: Mapped[int] = mapped_column(primary_key=True)
+    email: Mapped[str] = mapped_column(String(255), unique=True)
+    nombre_completo: Mapped[str] = mapped_column(String(255))
+    password_hash: Mapped[str] = mapped_column(String(255))
+    
+    # Relaciones
+    articulos: Mapped[list["Articulo"]] = relationship(back_populates="propietario")
+```
+
+**Schemas (Pydantic para validación):**
+```python
+class UsuarioCreate(BaseModel):
+    email: EmailStr
+    nombre_completo: str
+    password: str
+
+class UsuarioResponse(BaseModel):
+    id: int
+    email: str
+    nombre_completo: str
+    rating: float
+```
+
+#### 2. Inyección de Dependencias
+
+```python
+@router.get("/usuarios/me", response_model=UsuarioResponse)
+async def get_current_user(
+    current_user: Usuario = Depends(get_current_user)
+):
+    return current_user
+
+async def get_current_user(
+    token: str = Depends(oauth2_scheme)
+) -> Usuario:
+    payload = verify_token(token)
+    user_id = payload.get("sub")
+    return db.query(Usuario).filter(Usuario.id == user_id).first()
+```
+
+#### 3. Manejo de Errores
+
+```python
+class ArticuloNotFoundError(Exception):
+    pass
+
+@router.get("/articulos/{id}")
+async def get_articulo(id: int, db: Session = Depends(get_db)):
+    articulo = db.query(Articulo).filter(Articulo.id == id).first()
+    if not articulo:
+        raise HTTPException(
+            status_code=404,
+            detail="Artículo no encontrado"
+        )
+    return articulo
+```
+
+## Capa de Datos
+
+### Base de Datos
+
+- **Sistema:** PostgreSQL 15+
+- **Conexión:** psycopg2
+- **Pool de Conexiones:** SQLAlchemy connection pooling
+- **Migraciones:** Alembic (versionamiento de schema)
+
+**Variables de conexión:**
+```
+DATABASE_URL=postgresql://user:password@localhost:5432/truekealo
+```
+
+### Almacenamiento de Archivos
+
+- **Uploads:** `/uploads/articulos/`
+- **Formatos soportados:** JPEG, PNG, WebP
+- **Tamaño máximo:** 5MB por imagen
+- **Optimización:** Redimensionamiento automático
+
+## Flujos Principales
+
+### 1. Flujo de Registro
+
+```{mermaid}
+sequenceDiagram
+    actor User
+    participant Web as Frontend
+    participant API as FastAPI
+    participant DB as PostgreSQL
+    participant Email as Servicio Email
+    
+    User->>Web: Completa formulario
+    Web->>API: POST /auth/register
+    API->>DB: Crea usuario (password_hash)
+    DB-->>API: Usuario creado
+    API->>Email: Envía email de confirmación
+    API-->>Web: 201 Created
+    Web-->>User: Redirige a login
+```
+
+### 2. Flujo de Autenticación
+
+```{mermaid}
+sequenceDiagram
+    actor User
+    participant Web as Frontend
+    participant API as FastAPI
+    
+    User->>Web: Ingresa credenciales
+    Web->>API: POST /auth/login
+    API->>API: Verifica credenciales con bcrypt
+    API->>API: Genera JWT token
+    API-->>Web: token (access, refresh)
+    Web->>Web: Almacena en localStorage
+    Web->>API: Headers: Authorization: Bearer <token>
+```
+
+### 3. Flujo de Intercambio
+
+```{mermaid}
+sequenceDiagram
+    actor UserA as Usuario A
+    actor UserB as Usuario B
+    participant API as FastAPI
+    participant DB as PostgreSQL
+    
+    UserA->>API: Crea propuesta
+    API->>DB: Inserta en propuestas
+    DB-->>API: propuesta_id
+    API->>API: Notifica a Usuario B
+    UserB->>API: Responde propuesta
+    API->>DB: Actualiza estado = aceptada
+    DB-->>API: Propuesta actualizada
+    API->>DB: Cambia estado artículos a intercambiados
+    API->>API: Marca transacción como completada
+```
+
+## Seguridad
+
+### Autenticación
+
+- **Método:** JWT (JSON Web Tokens)
+- **Algoritmo:** HS256
+- **Expiración:** 7 días (access token)
+- **Refresh:** Soportado
+
+```python
+def create_access_token(data: dict, expires_delta: timedelta = None):
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(days=7)
+    to_encode.update({"exp": expire})
+    
+    encoded_jwt = jwt.encode(
+        to_encode,
+        SECRET_KEY,
+        algorithm=ALGORITHM
+    )
+    return encoded_jwt
+```
+
+### Hashing de Contraseñas
+
+```python
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+def hash_password(password: str) -> str:
+    return pwd_context.hash(password)
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    return pwd_context.verify(plain_password, hashed_password)
+```
+
+### CORS (Cross-Origin Resource Sharing)
+
+```python
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "https://truekealo.com"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+```
+
+## Despliegue
+
+### Entornos
+
+**Desarrollo:**
+```bash
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+**Producción:**
+```bash
+gunicorn app.main:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
+```
+
+### Variables de Entorno Críticas
+
+```bash
+# Database
+DATABASE_URL=postgresql://user:password@host:5432/truekealo
+
+# Security
+SECRET_KEY=tu_clave_secreta_muy_larga_aleatorio
+ALGORITHM=HS256
+
+# Email
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=tu_email@gmail.com
+SMTP_PASSWORD=tu_contraseña
+
+# Aplicación
+ENVIRONMENT=production
+DEBUG=False
+```
+
+## Escalabilidad
+
+### Estrategias
+
+1. **Base de Datos:** Indexación, query optimization, connection pooling
+2. **Cache:** Redis para sesiones y datos frecuentes
+3. **CDN:** CloudFlare para assets estáticos
+4. **Load Balancing:** Nginx para distribuir tráfico
+5. **Microservicios:** Posible separación de servicios en futuro
+
+---
+
+**Versión de Arquitectura:** 2.0  
+**Última actualización:** `r format(Sys.Date(), '%d de %B de %Y')`

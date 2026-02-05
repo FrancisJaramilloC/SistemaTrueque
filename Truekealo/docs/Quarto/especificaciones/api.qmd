@@ -1,0 +1,332 @@
+---
+title: "Documentación de API REST"
+author: "Equipo de Backend"
+date: today
+---
+
+# 🔌 API REST - Documentación Completa
+
+La API REST de Truekealo proporciona todos los endpoints necesarios para interactuar con el sistema.
+
+## Base URL
+
+```
+http://localhost:8000/api/v1  (Desarrollo)
+https://api.truekealo.com     (Producción)
+```
+
+## Autenticación
+
+Todos los endpoints protegidos requieren un token JWT en el header:
+
+```http
+Authorization: Bearer <token>
+```
+
+### POST /auth/login
+Autenticar usuario
+
+**Request:**
+```json
+{
+  "email": "usuario@example.com",
+  "password": "password123"
+}
+```
+
+**Response (200 OK):**
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "token_type": "bearer",
+  "user": {
+    "id": 1,
+    "email": "usuario@example.com",
+    "nombre_completo": "Juan Pérez"
+  }
+}
+```
+
+## Usuarios
+
+### GET /usuarios/me
+Obtener perfil del usuario actual
+
+**Autenticación:** Requerida
+
+**Response (200 OK):**
+```json
+{
+  "id": 1,
+  "email": "usuario@example.com",
+  "nombre_completo": "Juan Pérez",
+  "bio": "Amante de la tecnología",
+  "ubicacion": "Quito",
+  "rating": 4.8,
+  "articulos_activos": 5,
+  "transacciones_completadas": 12
+}
+```
+
+### PUT /usuarios/me
+Actualizar perfil
+
+**Autenticación:** Requerida
+
+**Request:**
+```json
+{
+  "nombre_completo": "Juan Carlos Pérez",
+  "bio": "Desarrollador y entusiasta del intercambio",
+  "ubicacion": "Quito, Ecuador"
+}
+```
+
+## Artículos
+
+### GET /articulos/
+Listar artículos
+
+**Parámetros Query:**
+- `skip` (int, default=0): Saltar registros
+- `limit` (int, default=50): Máximo de registros
+- `categoria` (string, opcional): Filtrar por categoría
+- `estado` (string, opcional): Filtrar por estado
+
+**Response (200 OK):**
+```json
+[
+  {
+    "id": 1,
+    "titulo": "Bicicleta de montaña",
+    "descripcion": "Bici en excelente estado",
+    "categoria": "deportes",
+    "estado_articulo": "disponible",
+    "valor_estimado": 200,
+    "imagen_url": "/uploads/articulos/001.jpg",
+    "propietario_id": 2,
+    "propietario": {
+      "nombre_completo": "María García",
+      "rating": 4.9
+    },
+    "fecha_creacion": "2026-02-01T10:30:00Z"
+  }
+]
+```
+
+### POST /articulos/
+Crear nuevo artículo
+
+**Autenticación:** Requerida
+
+**Request:**
+```json
+{
+  "titulo": "Laptop HP",
+  "descripcion": "Laptop HP 15 pulgadas, 8GB RAM",
+  "categoria": "electrónica",
+  "valor_estimado": 400
+}
+```
+
+**Response (201 Created):**
+```json
+{
+  "id": 25,
+  "titulo": "Laptop HP",
+  "descripcion": "Laptop HP 15 pulgadas, 8GB RAM",
+  "categoria": "electrónica",
+  "estado_articulo": "disponible",
+  "valor_estimado": 400,
+  "propietario_id": 1,
+  "fecha_creacion": "2026-02-03T14:30:00Z"
+}
+```
+
+### POST /articulos/{id}/imagen
+Subir imagen de artículo
+
+**Autenticación:** Requerida  
+**Content-Type:** multipart/form-data
+
+**Parámetros:**
+- `file` (file, requerido): Archivo de imagen (JPEG, PNG, WebP)
+
+**Response (200 OK):**
+```json
+{
+  "id": 25,
+  "imagen_url": "/uploads/articulos/25_abcdef.jpg",
+  "tamano": 245632,
+  "tipo": "image/jpeg"
+}
+```
+
+### GET /articulos/{id}
+Obtener detalles de un artículo
+
+**Response (200 OK):**
+```json
+{
+  "id": 1,
+  "titulo": "Bicicleta de montaña",
+  "descripcion": "Bici en excelente estado",
+  "categoria": "deportes",
+  "estado_articulo": "disponible",
+  "valor_estimado": 200,
+  "imagen_url": "/uploads/articulos/001.jpg",
+  "propietario": {
+    "id": 2,
+    "nombre_completo": "María García",
+    "rating": 4.9,
+    "ubicacion": "Quito"
+  },
+  "fecha_creacion": "2026-02-01T10:30:00Z",
+  "fecha_actualizacion": "2026-02-01T10:30:00Z"
+}
+```
+
+## Propuestas
+
+### POST /propuestas/
+Crear propuesta de intercambio
+
+**Autenticación:** Requerida
+
+**Request:**
+```json
+{
+  "articulo_solicitado_id": 1,
+  "articulos_ofrecidos": [5, 12],
+  "mensaje": "Me gustaría intercambiar estos artículos por tu bicicleta"
+}
+```
+
+**Response (201 Created):**
+```json
+{
+  "id": 42,
+  "articulo_solicitado_id": 1,
+  "usuario_solicitante_id": 3,
+  "articulos_ofrecidos": [5, 12],
+  "estado": "pendiente",
+  "mensaje": "Me gustaría intercambiar estos artículos por tu bicicleta",
+  "fecha_creacion": "2026-02-03T14:30:00Z"
+}
+```
+
+### GET /propuestas/
+Listar propuestas (recibidas y enviadas)
+
+**Autenticación:** Requerida
+
+**Response (200 OK):**
+```json
+{
+  "propuestas_recibidas": [
+    {
+      "id": 42,
+      "articulo_solicitado": {...},
+      "usuario_solicitante": {...},
+      "articulos_ofrecidos": [...],
+      "estado": "pendiente",
+      "fecha_creacion": "2026-02-03T14:30:00Z"
+    }
+  ],
+  "propuestas_enviadas": [...]
+}
+```
+
+### PUT /propuestas/{id}
+Responder a propuesta
+
+**Autenticación:** Requerida
+
+**Request:**
+```json
+{
+  "estado": "aceptada"
+}
+```
+
+Valores válidos: `aceptada`, `rechazada`, `cancelada`
+
+## Mensajes
+
+### POST /mensajes/
+Enviar mensaje
+
+**Autenticación:** Requerida
+
+**Request:**
+```json
+{
+  "usuario_destinatario_id": 2,
+  "contenido": "¿Sigue disponible la bicicleta?"
+}
+```
+
+**Response (201 Created):**
+```json
+{
+  "id": 123,
+  "usuario_remitente_id": 1,
+  "usuario_destinatario_id": 2,
+  "contenido": "¿Sigue disponible la bicicleta?",
+  "leido": false,
+  "fecha_creacion": "2026-02-03T14:30:00Z"
+}
+```
+
+### GET /mensajes/{usuario_id}
+Obtener conversación con un usuario
+
+**Autenticación:** Requerida
+
+**Response (200 OK):**
+```json
+[
+  {
+    "id": 120,
+    "usuario_remitente_id": 2,
+    "contenido": "Hola, me interesa tu artículo",
+    "leido": true,
+    "fecha_creacion": "2026-02-02T10:00:00Z"
+  },
+  {
+    "id": 121,
+    "usuario_remitente_id": 1,
+    "contenido": "Hola, sí sigue disponible",
+    "leido": true,
+    "fecha_creacion": "2026-02-02T10:05:00Z"
+  }
+]
+```
+
+## Códigos de Estado
+
+| Código | Significado | Descripción |
+|--------|-------------|-------------|
+| 200 | OK | Solicitud exitosa |
+| 201 | Created | Recurso creado exitosamente |
+| 400 | Bad Request | Solicitud inválida |
+| 401 | Unauthorized | No autenticado |
+| 403 | Forbidden | Sin permisos |
+| 404 | Not Found | Recurso no encontrado |
+| 409 | Conflict | Conflicto (ej: duplicado) |
+| 500 | Server Error | Error del servidor |
+
+## Manejo de Errores
+
+```json
+{
+  "detail": "Mensaje de error descriptivo",
+  "error_code": "INVALID_INPUT",
+  "timestamp": "2026-02-03T14:30:00Z"
+}
+```
+
+---
+
+**Versión:** 1.0  
+**Última actualización:** `r format(Sys.Date(), '%d de %B de %Y')`

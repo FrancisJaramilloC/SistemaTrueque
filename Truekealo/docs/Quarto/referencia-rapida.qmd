@@ -1,0 +1,357 @@
+---
+title: "Guía Rápida de Referencia"
+author: "Equipo de Documentación"
+date: today
+---
+
+# ⚡ Guía Rápida de Referencia - Truekealo
+
+Esta página te ayuda a encontrar rápidamente lo que necesitas.
+
+## 🎯 ¿Qué soy y dónde voy?
+
+### 👤 Soy Usuario Final
+**Quiero:** Usar el sistema para intercambiar artículos
+
+→ **Lee:** [Guía del Usuario](guia-usuario.qmd)
+
+**Pasos rápidos:**
+1. Crea cuenta en página principal
+2. Completa tu perfil
+3. Publica artículos
+4. Busca artículos de otros
+5. Haz propuestas
+6. ¡Intercambia!
+
+**Contacto:** soporte@truekealo.com
+
+---
+
+### 👨‍💻 Soy Desarrollador
+**Quiero:** Entender cómo funciona y contribuir código
+
+→ **Lee:** [Instalación](instalacion.qmd) → [Guía del Desarrollador](guia-desarrollador.qmd) → [Especificaciones Técnicas](especificaciones/arquitectura.qmd)
+
+**Pasos rápidos:**
+1. Instala dependencias (Python, Node.js, PostgreSQL)
+2. Clona repositorio
+3. Configura `.env`
+4. Inicia backend: `uvicorn app.main:app --reload`
+5. Inicia frontend: `npm run dev`
+6. Abre navegador en `http://localhost:3000`
+
+**Stack:** FastAPI + React + PostgreSQL
+
+---
+
+### 🔐 Soy Administrador
+**Quiero:** Gestionar usuarios, artículos y reportes
+
+→ **Lee:** [Guía del Administrador](guia-administrador.qmd)
+
+**Acceso:** 
+- Panel admin en `/admin`
+- Requiere credenciales de administrador
+- Email: **admin@truekealo.com**
+
+**Tareas comunes:**
+- Suspender usuarios problemáticos
+- Eliminar artículos inapropiados
+- Resolver reportes
+- Ver estadísticas
+
+---
+
+### 🚀 Soy DevOps/SysAdmin
+**Quiero:** Desplegar, monitorear y mantener el sistema
+
+→ **Lee:** [Despliegue](practicas/despliegue.qmd) → [Seguridad](especificaciones/seguridad.qmd)
+
+**Tareas principales:**
+- Desplegar en producción
+- Configurar base de datos
+- Implementar backups
+- Monitorear logs
+- Actualizar dependencias
+
+**Opciones de deploy:**
+- Heroku (fácil, recomendado para inicios)
+- AWS (escalable, profesional)
+- Docker + Kubernetes (flexible)
+
+---
+
+### 📚 Soy Estudiante (APE 007)
+**Quiero:** Completar el proyecto práctico del curso
+
+→ **Lee:** [APE 007](practicas/ape-007.qmd) → [Pruebas](practicas/pruebas.qmd) → [Despliegue](practicas/despliegue.qmd)
+
+**Requisitos de proyecto:**
+- Sistema de intercambio funcionando
+- Frontend y backend implementados
+- Pruebas unitarias e integración
+- Documentación clara
+- Presentación de 10 minutos
+
+**Evaluación:**
+- Funcionalidad: 40%
+- Código: 25%
+- Documentación: 15%
+- Presentación: 10%
+- Creatividad: 10%
+
+---
+
+### 🧪 Soy QA/Tester
+**Quiero:** Asegurar la calidad del sistema
+
+→ **Lee:** [Pruebas](practicas/pruebas.qmd) → [API](especificaciones/api.qmd)
+
+**Tipos de pruebas:**
+- Unitarias (pytest)
+- Integración (TestClient)
+- Funcionales (flujos completos)
+- Seguridad (validación)
+- Rendimiento (carga)
+
+**Herramientas:**
+- Pytest para backend
+- Jest para frontend
+- Postman para API
+
+---
+
+## 📋 Referencia Rápida
+
+### Endpoints de API Principales
+
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| POST | `/auth/register` | Registrar usuario nuevo |
+| POST | `/auth/login` | Iniciar sesión |
+| GET | `/usuarios/me` | Obtener perfil actual |
+| POST | `/articulos` | Crear nuevo artículo |
+| GET | `/articulos` | Listar artículos |
+| POST | `/propuestas` | Crear propuesta |
+| GET | `/propuestas` | Ver propuestas |
+| POST | `/mensajes` | Enviar mensaje |
+
+**Documentación completa:** [API REST](especificaciones/api.qmd)
+
+---
+
+### Comandos Útiles del Proyecto
+
+```bash
+# Backend
+cd backend
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+
+# Frontend
+cd frontend
+npm install
+npm run dev
+
+# Testing
+pytest backend/tests/ -v
+npm test
+
+# Documentación
+quarto preview        # Ver localmente
+quarto render        # Compilar
+```
+
+---
+
+### Variables de Entorno Clave
+
+**Backend (.env):**
+```
+DATABASE_URL=postgresql://user:password@localhost:5432/truekealo
+SECRET_KEY=tu_clave_secreta_aqui
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=10080
+ENVIRONMENT=development
+```
+
+**Frontend (.env):**
+```
+VITE_API_URL=http://localhost:8000/api/v1
+```
+
+---
+
+## 🔍 Encontrar Información Específica
+
+### Si necesitas información sobre...
+
+**Autenticación y Seguridad**
+→ [Especificación de Seguridad](especificaciones/seguridad.qmd)
+
+**Estructura de Base de Datos**
+→ [Especificación de Base de Datos](especificaciones/base-datos.qmd)
+
+**Arquitectura del Sistema**
+→ [Especificación de Arquitectura](especificaciones/arquitectura.qmd)
+
+**Endpoints de API**
+→ [Documentación de API](especificaciones/api.qmd)
+
+**Instalación Local**
+→ [Guía de Instalación](instalacion.qmd)
+
+**Flujos del Usuario**
+→ [Guía del Usuario](guia-usuario.qmd)
+
+**Desarrollo de Código**
+→ [Guía del Desarrollador](guia-desarrollador.qmd)
+
+**Gestión del Sistema**
+→ [Guía del Administrador](guia-administrador.qmd)
+
+**Testing**
+→ [Guía de Pruebas](practicas/pruebas.qmd)
+
+**Despliegue en Producción**
+→ [Guía de Despliegue](practicas/despliegue.qmd)
+
+---
+
+## 📞 Contacto y Soporte
+
+### Canales de Soporte
+
+| Canal | Uso | Tiempo de Respuesta |
+|-------|-----|-------------------|
+| **Email:** soporte@truekealo.com | Problemas generales | 24 horas |
+| **GitHub Issues** | Bugs de código | 48 horas |
+| **Discord** | Ayuda comunitaria | 1-2 horas |
+| **Teléfono (emergencia)** | +1-800-TRUEKEALO | Inmediato |
+
+### Reportar Problemas
+
+**Si encontraste un bug:**
+1. Busca si ya existe un issue en GitHub
+2. Proporciona pasos para reproducir
+3. Incluye logs de error
+4. Especifica versión de navegador/SO
+
+**Si tienes pregunta sobre documentación:**
+- Revisa primero el índice de búsqueda
+- Lee el documento relevante completamente
+- Si persiste, contacta soporte
+
+---
+
+## 🎓 Recursos Adicionales
+
+### Tutoriales
+- [Quarto Documentation](https://quarto.org/)
+- [FastAPI Tutorial](https://fastapi.tiangolo.com/)
+- [React Documentation](https://react.dev/)
+- [PostgreSQL Docs](https://www.postgresql.org/docs/)
+
+### Comunidades
+- Stack Overflow (tag: fastapi, reactjs)
+- GitHub Discussions
+- Reddit (r/webdev, r/learnprogramming)
+- DEV.to (blog técnico)
+
+### Libros Recomendados
+- "Clean Code" - Robert Martin
+- "The Pragmatic Programmer"
+- "Design Patterns" - Gang of Four
+
+---
+
+## ✅ Checklist Rápido
+
+### Antes de reportar un problema
+- [ ] ¿Revisé la documentación?
+- [ ] ¿Busqué en issues similares?
+- [ ] ¿Probé en otra máquina/navegador?
+- [ ] ¿Revisé los logs?
+- [ ] ¿Incluyo pasos para reproducir?
+
+### Antes de hacer deploy
+- [ ] ¿Pasaron todas las pruebas?
+- [ ] ¿Revisé variables de entorno?
+- [ ] ¿Ejecuté migraciones de BD?
+- [ ] ¿Tengo backup reciente?
+- [ ] ¿Notifiqué al equipo?
+
+### Antes de hacer push
+- [ ] ¿Mi código sigue el style guide?
+- [ ] ¿Incluye tests?
+- [ ] ¿Documenté cambios?
+- [ ] ¿Sin código comentado?
+- [ ] ¿Mensaje de commit descriptivo?
+
+---
+
+## 📊 Vista Rápida de Estructura
+
+```
+Truekealo/
+├── backend/          ← API FastAPI
+├── frontend/         ← App React
+├── mobile/           ← App Expo
+├── docs/             ← Documentación Quarto
+│   ├── guias/
+│   ├── especificaciones/
+│   └── practicas/
+└── _quarto.yml       ← Config de documentación
+```
+
+---
+
+## 🚀 Comenzar Rápidamente
+
+### Opción 1: Solo Usar (Usuario)
+1. Ve a www.truekealo.com
+2. Regístrate
+3. ¡Comienza a intercambiar!
+
+### Opción 2: Desarrollar Localmente
+1. Lee [Instalación](instalacion.qmd)
+2. Ejecuta comandos de setup
+3. Abre `http://localhost:3000`
+
+### Opción 3: Desplegar en Producción
+1. Lee [Despliegue](practicas/despliegue.qmd)
+2. Elige tu proveedor (Heroku/AWS/etc)
+3. Ejecuta comando de deploy
+
+---
+
+## 💡 Pro Tips
+
+✨ **Busca en la documentación:**
+- Usa Ctrl+F para buscar dentro de una página
+- Usa la barra de búsqueda en la navbar para buscar globalmente
+
+🔗 **Navega entre documentos:**
+- Usa breadcrumbs en la parte superior
+- Haz clic en items del sidebar
+- Usa links contextuales en texto
+
+📱 **En móvil:**
+- Haz clic en ☰ para abrir sidebar
+- Haz clic en 🔍 para buscar
+- Desliza para navegar
+
+---
+
+**¿Perdido?** → Usa la barra de búsqueda 🔍  
+**¿Pregunta rápida?** → Ve al [FAQs](guia-usuario.qmd#preguntas-frecuentes)  
+**¿Problema técnico?** → Consulta [Troubleshooting](practicas/despliegue.qmd#troubleshooting)  
+
+---
+
+**Última actualización:** `r format(Sys.Date(), '%d de %B de %Y')`  
+**Versión:** 1.0.0  
+
+¡Bienvenido a Truekealo! 🎉

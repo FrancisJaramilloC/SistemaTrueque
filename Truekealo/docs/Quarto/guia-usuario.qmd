@@ -1,0 +1,308 @@
+---
+title: "Guía del Usuario"
+author: "Equipo de Soporte"
+date: today
+toc: true
+number-sections: true
+---
+
+# 👤 Guía de Uso - Truekealo
+
+¡Bienvenido a Truekealo! Esta guía te ayudará a aprovechar al máximo nuestro sistema de intercambio.
+
+## 1. Primeros Pasos
+
+### 1.1 Crear tu Cuenta
+
+1. Haz clic en **"Registrarse"** en la página principal
+2. Completa el formulario:
+   - **Email:** Tu dirección de correo electrónico
+   - **Nombre Completo:** Tu nombre
+   - **Contraseña:** Mínimo 8 caracteres, con mayúscula y número
+3. Lee y acepta los **Términos de Servicio**
+4. Haz clic en **"Crear Cuenta"**
+5. Recibirás un email de confirmación (revisa spam si no lo ves)
+
+> **Tip:** Usa un email que revises frecuentemente, lo usaremos para notificaciones importantes
+
+### 1.2 Completar tu Perfil
+
+Después de registrarte:
+
+1. Ve a **Mi Perfil** (esquina superior derecha)
+2. Completa tu información:
+   - **Foto de Perfil:** Sube una foto clara de ti (opcional)
+   - **Biografía:** Cuéntanos sobre ti (máx 200 caracteres)
+   - **Ubicación:** Tu ciudad o región
+   - **Teléfono:** Para coordinación de intercambios (opcional)
+
+3. Haz clic en **"Guardar Cambios"**
+
+> **Importante:** Un perfil completo aumenta tu reputación y facilita intercambios
+
+## 2. Publicar Artículos
+
+### 2.1 Pasos para Publicar
+
+1. Ve a **Mis Artículos** en el menú principal
+2. Haz clic en **"Nuevo Artículo"**
+3. Completa la información:
+
+| Campo | Instrucciones |
+|-------|--------------|
+| **Título** | Nombre corto y descriptivo (ej: "Bicicleta de montaña") |
+| **Descripción** | Detalla el estado, características, marca, año, etc. |
+| **Categoría** | Elige la que mejor describe tu artículo |
+| **Valor Estimado** | Precio aproximado en USD (ayuda a equilibrar intercambios) |
+| **Imagen** | Foto clara, buena iluminación, mostrando todo el artículo |
+
+### 2.2 Consejos para Mejores Resultados
+
+✅ **Haz:**
+- Toma fotos nítidas y bien iluminadas
+- Muestra el artículo desde diferentes ángulos
+- Describe defectos o daños honestamente
+- Sé específico en la descripción
+- Actualiza regularmente el estado
+
+❌ **Evita:**
+- Fotos borrosas o muy oscuras
+- Mentir sobre el estado del artículo
+- Descripciones vagas
+- Spam o contenido inapropiado
+- Artículos que violen leyes
+
+### 2.3 Editar o Eliminar Artículos
+
+**Editar:**
+1. Ve a **Mis Artículos**
+2. Haz clic en el artículo
+3. Haz clic en **"Editar"**
+4. Realiza los cambios
+5. Haz clic en **"Guardar"**
+
+**Eliminar:**
+1. Ve a **Mis Artículos**
+2. Haz clic en el artículo
+3. Haz clic en **"Eliminar"**
+4. Confirma la eliminación
+
+> **Nota:** Artículos con propuestas pendientes no se pueden eliminar hasta resolver las propuestas
+
+## 3. Buscar y Explorar
+
+### 3.1 Usar los Filtros
+
+En la página principal, puedes filtrar artículos por:
+
+- **Categoría:** Electrónica, Deportes, Libros, Ropa, etc.
+- **Ubicación:** Filtra por tu ciudad
+- **Ordenar:** Más recientes, mejor rating, valor estimado
+
+### 3.2 Ver Detalles del Artículo
+
+Al hacer clic en un artículo, verás:
+
+- Fotos del artículo
+- Descripción detallada
+- Valor estimado
+- Perfil del propietario + rating
+- Ubicación
+- Fecha de publicación
+
+## 4. Hacer Propuestas
+
+### 4.1 Crear una Propuesta
+
+1. Ve a un artículo que te interese
+2. Haz clic en **"Hacer Propuesta"**
+3. Completa:
+   - **Selecciona tus artículos:** Elige uno o más de tus artículos para intercambiar
+   - **Mensaje (opcional):** Escribe por qué estás interesado
+4. Haz clic en **"Enviar Propuesta"**
+
+### 4.2 Estados de la Propuesta
+
+```{mermaid}
+stateDiagram-v2
+    Enviada --> Aceptada: Propietario acepta
+    Enviada --> Rechazada: Propietario rechaza
+    Enviada --> Cancelada: Tú cancelas
+    Aceptada --> Completada: Intercambio realizado
+    Rechazada --> [*]
+    Cancelada --> [*]
+    Completada --> [*]
+```
+
+### 4.3 Consejos para Propuestas Exitosas
+
+✅ **Aumenta probabilidad de aceptación:**
+- Propuestas **equilibradas** en valor
+- **Artículos en buen estado**
+- **Mensaje cortés** explicando tu interés
+- **Perfil completo** con buena reputación
+
+❌ **Evita:**
+- Propuestas muy desequilibradas
+- Múltiples propuestas del mismo artículo
+- Mensajes inapropiados
+- Propuestas de artículos dañados sin mencionarlo
+
+## 5. Gestionar Propuestas
+
+### 5.1 Propuestas Recibidas
+
+1. Ve a **Propuestas Recibidas** en el menú
+2. Verás una lista de propuestas para tus artículos
+3. Para cada propuesta puedes:
+   - **Ver Detalles:** Observa qué artículos te ofrecen
+   - **Ver Perfil:** Conoce al usuario interesado
+   - **Aceptar:** Confirma el intercambio
+   - **Rechazar:** Declina políticamente
+   - **Preguntar:** Envía un mensaje privado
+
+### 5.2 Propuestas Enviadas
+
+1. Ve a **Propuestas Enviadas** en el menú
+2. Ves el estado de tus propuestas:
+   - **Pendiente:** Esperando respuesta
+   - **Aceptada:** ¡El usuario aceptó!
+   - **Rechazada:** El usuario declinó
+   - **Cancelada:** Tú cancelaste
+   - **Completada:** Intercambio realizado
+
+## 6. Mensajería Privada
+
+### 6.1 Enviar Mensajes
+
+1. Ve a **Mensajes** en el menú
+2. Haz clic en **"Nuevo Mensaje"** o selecciona usuario existente
+3. Escribe tu mensaje
+4. Haz clic en **"Enviar"**
+
+### 6.2 Consejos de Comunicación
+
+✅ **Buena comunicación:**
+- Sé cortés y respetuoso
+- Responde rápidamente (en 24 horas idealmente)
+- Coordina detalles (lugar, hora, fecha)
+- Confirma recientemente antes de encontrarte
+- Sé honesto sobre el estado de artículos
+
+❌ **Evita:**
+- Lenguaje ofensivo o discriminatorio
+- Compartir información personal sensible (contraseñas, cuentas bancarias)
+- Presión para intercambios desequilibrados
+- No presentarse a citas sin avisar
+
+## 7. Sistema de Rating
+
+### 7.1 ¿Cómo Funciona el Rating?
+
+- Después de cada intercambio completado, ambos usuarios se califican
+- Rango: **1 a 5 estrellas** (⭐⭐⭐⭐⭐)
+- Puedes dejar un **comentario** (opcional)
+- Tu rating promedio aparece en tu perfil
+
+### 7.2 Qué Califica la Gente
+
+✅ **Merece 5 estrellas:**
+- Artículo en estado como se describió
+- Comunicación excelente
+- Puntual al encontrarse
+- Amable y respetuoso
+
+⭐⭐⭐ **Merece 3 estrellas:**
+- Pequeñas discrepancias con la descripción
+- Comunicación algo lenta
+- Fue puntual pero podría mejorar
+
+⭐ **Merece 1 estrella:**
+- Artículo muy diferente a lo descrito
+- Comunicación pobre o inexistente
+- No presentarse a cita acordada
+- Comportamiento inapropiado
+
+### 7.3 Protege tu Reputación
+
+- Describe artículos **honestamente**
+- Comunica **cambios de planes inmediatamente**
+- **Sé puntual** a citas
+- **Respeta acuerdos**
+- Intercambia solo si estás **seguro**
+
+## 8. Seguridad y Confianza
+
+### 8.1 Consejos de Seguridad Personal
+
+- Encuentra siempre en **lugares públicos**
+- Lleva a un **amigo o familiar**
+- Avisa a alguien dónde irás
+- Verifica la identidad del otro usuario
+- No compartas **información personal**
+- Confía en tu **intuición**
+
+### 8.2 Verificación de Usuarios
+
+- Busca usuarios con **ratings altos**
+- Lee **comentarios recientes**
+- Verifica que tengan **perfil completo**
+- Ve el **historial de transacciones**
+
+### 8.3 Reportar Problemas
+
+Si encuentras un problema:
+
+1. Ve a **Ayuda** → **Reportar**
+2. Selecciona el tipo de problema
+3. Proporciona detalles y evidencia
+4. Nuestro equipo investigará
+
+**Reporta:**
+- Contenido inapropiado
+- Fraude o estafa
+- Abuso o acoso
+- Artículos falsificados
+
+## 9. Preguntas Frecuentes
+
+### ¿Hay costos para usar Truekealo?
+
+No, ¡es completamente gratuito! No hay comisiones ni cuotas ocultas.
+
+### ¿Qué pasa si un intercambio no se completa?
+
+Si alguien cancela sin razón válida, se le baja el rating. La reputación es importante.
+
+### ¿Cómo cambio mi contraseña?
+
+1. Ve a **Mi Perfil** → **Configuración**
+2. Haz clic en **"Cambiar Contraseña"**
+3. Ingresa contraseña actual y nueva
+4. Haz clic en **"Actualizar"**
+
+### ¿Puedo eliminar mi cuenta?
+
+Sí, en **Configuración** → **Peligro** → **Eliminar Cuenta**
+
+> **Advertencia:** Esto elimina tu perfil e historial permanentemente
+
+### ¿Cómo contacto soporte?
+
+1. Ve a **Ayuda** → **Contactar Soporte**
+2. O envía email a: **soporte@truekealo.com**
+
+## 10. Consejos Finales
+
+🎯 **Para intercambios exitosos:**
+1. Sé **honesto y directo**
+2. **Comunica claramente**
+3. Propuestas **equitativas**
+4. **Respeta tiempos**
+5. Construye **relaciones duraderas**
+
+---
+
+**Versión de Guía del Usuario:** 1.0  
+**Última actualización:** `r format(Sys.Date(), '%d de %B de %Y')`  
+**¿Necesitas ayuda?** Contacta: **soporte@truekealo.com**

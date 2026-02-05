@@ -1,0 +1,446 @@
+---
+title: "Guía del Administrador"
+author: "Equipo de Infraestructura"
+date: today
+toc: true
+number-sections: true
+---
+
+# 🔧 Guía del Administrador - Truekealo
+
+Esta guía está destinada a administradores del sistema. Requiere acceso con privilegios.
+
+## 1. Panel de Administración
+
+### 1.1 Acceso al Panel
+
+1. Ve a `https://truekealo.com/admin`
+2. Inicia sesión con cuenta de administrador
+3. Si no tienes acceso, contacta al super-admin
+
+### 1.2 Estructura del Panel
+
+```
+Dashboard
+├── Estadísticas
+├── Usuarios
+├── Artículos
+├── Propuestas
+├── Mensajes
+├── Reportes
+├── Configuración
+└── Auditoría
+```
+
+## 2. Gestión de Usuarios
+
+### 2.1 Ver Usuarios
+
+**Ruta:** Admin → Usuarios
+
+Ves una tabla con:
+- ID del usuario
+- Email y nombre
+- Número de artículos
+- Rating promedio
+- Fecha de registro
+- Estado (Activo/Suspendido)
+
+**Filtros disponibles:**
+- Por estado (Activo, Suspendido, Nuevo)
+- Por rating
+- Por fecha
+- Búsqueda por email
+
+### 2.2 Acciones sobre Usuarios
+
+#### Suspender Usuario
+
+Cuando un usuario viola las normas:
+
+1. Busca el usuario
+2. Haz clic en **"Acciones"** → **"Suspender"**
+3. Elige duración:
+   - **1 día:** Amonestación
+   - **7 días:** Violación moderada
+   - **Permanente:** Conducta grave
+4. Escribe **razón de suspensión**
+5. Haz clic en **"Confirmar"**
+
+**Efectos de suspensión:**
+- El usuario no puede publicar artículos
+- No puede hacer propuestas
+- Sigue viendo su cuenta (puede cambiar contraseña)
+
+#### Eliminar Usuario
+
+Para violaciones graves (spam, fraude, amenazas):
+
+1. Haz clic en **"Acciones"** → **"Eliminar Cuenta"**
+2. Escribe **razón de eliminación** (requerida)
+3. **Confirma dos veces** (protección contra accidentes)
+4. Se elimina el usuario y todos sus datos
+
+**⚠️ Advertencia:** Esta acción es **PERMANENTE**. Guarda backup si es necesario.
+
+#### Reset de Contraseña
+
+Si un usuario olvida su contraseña o sospecha compromiso:
+
+1. Haz clic en **"Acciones"** → **"Reset Contraseña"**
+2. Sistema enviará email de reset
+3. Usuario recibe enlace temporal
+4. Usuario crea nueva contraseña
+
+#### Ver Detalles del Usuario
+
+1. Haz clic en el nombre del usuario
+2. Ves:
+   - Información de perfil
+   - Historial de transacciones
+   - Comentarios/ratings recibidos
+   - Artículos publicados
+   - Reportes en contra
+   - Acciones administrativas tomadas
+
+## 3. Gestión de Artículos
+
+### 3.1 Moderar Artículos
+
+**Ruta:** Admin → Artículos
+
+**Tipos de artículos:**
+- **Activos:** Disponibles para intercambio
+- **Pendientes:** Esperando aprobación
+- **Reportados:** Denunciados por usuarios
+- **Eliminados:** Removidos del sistema
+
+### 3.2 Eliminar Artículo
+
+Si un artículo viola normas:
+
+1. Busca el artículo
+2. Haz clic en **"Ver"** para revisar detalles
+3. Si es inapropiado, haz clic en **"Eliminar"**
+4. Escribe **razón** (mostrada al usuario)
+5. El usuario recibe notificación
+
+**Razones comunes:**
+- Producto falsificado
+- Contenido inapropiado/sexual
+- Descripción engañosa
+- Spam
+- Violación de derechos
+
+### 3.3 Aprobar Artículos Reportados
+
+Cuando usuarios reportan un artículo:
+
+1. Ve a **Reportes de Artículos**
+2. Revisa descripción del reporte
+3. Examina el artículo reportado
+4. Decide:
+   - **Apoyar reporte:** Elimina artículo
+   - **Rechazar reporte:** Artículo sigue activo
+   - **Suspender usuario:** Si hay violación grave
+
+## 4. Gestión de Propuestas
+
+### 4.1 Monitorear Propuestas
+
+**Ruta:** Admin → Propuestas
+
+Ves todas las propuestas del sistema:
+- Entre qué usuarios
+- Qué artículos
+- Estado actual
+- Fechas
+
+### 4.2 Intervenir en Disputas
+
+Si usuarios reportan un problema con propuesta:
+
+1. Haz clic en la propuesta
+2. Lee ambas perspectivas
+3. Revisa los artículos
+4. Revisa ratings de ambos usuarios
+5. Toma decisión:
+
+**Si usuario A tiene razón:**
+- Marcar propuesta como incumplida para usuario B
+- Bajar rating de usuario B
+- Avisar a usuario B sobre consecuencias
+
+**Si hay conflicto:**
+- Contactar a ambos usuarios
+- Intentar mediación
+- Si es necesario, suspender al usuario que incumple
+
+### 4.3 Estadísticas de Propuestas
+
+**Ver:** Admin → Estadísticas → Propuestas
+
+- Total propuestas creadas
+- Tasa de aceptación
+- Tasa de rechazo
+- Tiempo promedio de respuesta
+- Propuestas completadas
+
+## 5. Reportes de Usuario
+
+### 5.1 Gestionar Reportes
+
+**Ruta:** Admin → Reportes
+
+Ves reportes de usuarios contra otros usuarios:
+- Acoso/amenazas
+- Fraude/estafa
+- Cuenta comprometida
+- Contenido inapropiado
+
+### 5.2 Procesar Reporte
+
+1. Lee descripción detallada
+2. Revisa evidencia proporcionada
+3. Investiga perfil del denunciante
+4. Investiga perfil del denunciado
+5. Decide acción:
+
+**Acciones posibles:**
+
+| Acción | Cuando | Efecto |
+|--------|--------|--------|
+| Descartar | Falsa acusación | Se cierra reporte |
+| Advertencia | Primera violación menor | Aviso al usuario |
+| Suspensión | Violación moderada | Usuario no puede usar 1-7 días |
+| Eliminación | Violación grave | Cuenta eliminada permanentemente |
+
+### 5.3 Documentar Casos
+
+Siempre deja nota sobre decisión:
+
+1. Haz clic en **"Agregar Nota"**
+2. Escribe decisión y razón
+3. Marca como **"Cerrado"**
+
+**Ejemplo de nota:**
+```
+Usuario B reportó a Usuario A por abuso verbal.
+Revisé conversaciones privadas.
+Usuario A envió mensajes inapropiados en 3 ocasiones.
+Decisión: Suspensión de 7 días + advertencia.
+Monitoreando para reincidencia.
+```
+
+## 6. Configuración del Sistema
+
+### 6.1 Variables de Entorno
+
+**Ruta:** Admin → Configuración → Variables
+
+Configurar sin reiniciar servidor (si soporta):
+
+- `MAX_FILE_SIZE`: Tamaño máximo de archivos
+- `EMAIL_FROM`: Email de notificaciones
+- `MAINTENANCE_MODE`: True para mantenimiento
+- `RATE_LIMIT`: Máximo de requests por minuto
+
+### 6.2 Mantenimiento
+
+**Ruta:** Admin → Mantenimiento
+
+**Activar Modo Mantenimiento:**
+1. Haz clic en **"Activar Mantenimiento"**
+2. Elige duración
+3. Escribe mensaje a mostrar a usuarios
+4. Confirma
+
+**Durante mantenimiento:**
+- Usuarios ven página de mantenimiento
+- APIs devuelven 503 Service Unavailable
+- Admins aún pueden acceder
+
+**Ejemplo:**
+```
+El sistema está en mantenimiento.
+Volveremos en 2 horas.
+Disculpa las molestias.
+```
+
+### 6.3 Backup y Restauración
+
+**Ruta:** Admin → Backup
+
+**Realizar backup manual:**
+1. Haz clic en **"Crear Backup"**
+2. Sistema captura:
+   - Base de datos completa
+   - Archivos de usuario
+   - Configuración
+3. Backup disponible para descargar
+
+**Restaurar desde backup:**
+1. Sube archivo de backup
+2. Escoge fecha para restaurar
+3. **Confirma dos veces** (¡perderás datos después de esa fecha!)
+4. Sistema restaura
+
+## 7. Auditoría y Logging
+
+### 7.1 Ver Logs
+
+**Ruta:** Admin → Auditoría
+
+Ves todos los eventos importantes:
+- Logins fallidos
+- Cambios de admin
+- Eliminaciones de usuario
+- Suspensiones
+- Reportes procesados
+
+**Filtros:**
+- Por tipo de evento
+- Por usuario
+- Por rango de fechas
+- Por severidad
+
+### 7.2 Investigar Incidentes
+
+Ejemplo: Usuario reporta cuenta comprometida
+
+1. Ve a Auditoría
+2. Filtra por ese usuario
+3. Ve todos los eventos:
+   - Logins desde qué IPs
+   - Cambios de información
+   - Acciones tomadas
+   - Mensajes enviados
+4. Determina si fue comprometida
+5. Toma acción (reset password, etc.)
+
+## 8. Estadísticas y Reportes
+
+### 8.1 Dashboard Principal
+
+**Ves en tiempo real:**
+
+```{mermaid}
+graph LR
+    D["Dashboard"]
+    D --> A["Usuarios Activos<br/>1,245"]
+    D --> B["Artículos Publicados<br/>5,432"]
+    D --> C["Propuestas Pendientes<br/>342"]
+    D --> E["Reportes Sin Resolver<br/>12"]
+    D --> F["Tasa de Éxito<br/>78%"]
+```
+
+### 8.2 Reportes Personalizados
+
+**Ruta:** Admin → Reportes
+
+Generar reportes por período:
+
+**Reporte Mensual:**
+- Nuevos usuarios
+- Artículos publicados
+- Propuestas completadas
+- Usuarios suspendidos
+- Reportes procesados
+- Ingresos (si es de pago)
+
+**Exportar como:**
+- PDF
+- Excel
+- CSV
+
+## 9. Seguridad Administrativa
+
+### 9.1 Permisos
+
+**Niveles de admin:**
+
+| Nivel | Permisos |
+|-------|----------|
+| **Super Admin** | Todo |
+| **Admin Moderación** | Moderación usuarios, artículos, propuestas |
+| **Admin Técnico** | Configuración, backups, logs |
+| **Admin Soporte** | Ver tickets, responder usuarios |
+
+### 9.2 Auditoría de Acciones Admin
+
+Todas las acciones de admin son registradas:
+- Quién hizo qué
+- Cuándo
+- Desde qué IP
+- Qué cambió
+
+**Revisar:** Admin → Auditoría Admin
+
+### 9.3 Mejores Prácticas de Seguridad
+
+✅ **Hacer:**
+- Usar contraseña **fuerte y única**
+- Cambiar password **cada 90 días**
+- Usar **autenticación de dos factores**
+- Salir de sesión cuando termines
+- Revisar logs regularmente
+- No compartir credenciales
+
+❌ **Evitar:**
+- Usar admin panel desde wifi público
+- Dejar sesión activa
+- Compartir cuenta con otros
+- Tomar acciones sin revisar
+- Documentar conversaciones privadas
+- Usar datos de usuarios sin consentimiento
+
+## 10. Procedimientos de Emergencia
+
+### 10.1 Ataque de Spam
+
+1. Ve a **Admin → Usuarios**
+2. Filtra usuarios nuevos (últimas horas)
+3. Si ves patrón:
+   - Emails similares
+   - Artículos idénticos
+   - Descripciones de copia
+4. Selecciona todos
+5. Haz clic en **"Eliminar en Lote"**
+6. Escribe razón: "Spam Coordin
+
+ado"
+
+### 10.2 Base de Datos Corrupta
+
+1. Ve a **Admin → Mantenimiento**
+2. Haz clic en **"Activar Modo Mantenimiento"**
+3. Restaura último backup conocido como bueno
+4. Verifica integridad
+5. Desactiva mantenimiento
+
+### 10.3 Incidencia de Seguridad
+
+1. **Inmediatamente:** Desactiva cuenta comprometida
+2. **En 1 hora:** Notifica al equipo técnico
+3. **En 24 horas:** Notifica a usuarios afectados
+4. **En 48 horas:** Reporte de incidente completo
+
+## 11. Checklist Mensual
+
+- [ ] Revisar usuarios nuevos
+- [ ] Procesar reportes pendientes
+- [ ] Revisar logs de seguridad
+- [ ] Verificar backup más reciente
+- [ ] Revisar estadísticas de uso
+- [ ] Actualizar software/dependencias
+- [ ] Cambiar contraseña admin
+- [ ] Revisar capacidad de almacenamiento
+- [ ] Responder tickets de soporte
+- [ ] Documentar incidentes
+
+---
+
+**Versión de Guía Admin:** 1.0  
+**Última actualización:** `r format(Sys.Date(), '%d de %B de %Y')`  
+**Contacto de Emergencia:** **admin@truekealo.com**  
+**Teléfono de Emergencia:** **+1-800-TRUEKEALO**

@@ -1,0 +1,412 @@
+---
+title: "Especificaciones de Seguridad"
+author: "Equipo de Seguridad"
+date: today
+---
+
+# 🔐 Seguridad del Sistema
+
+## Principios Fundamentales
+
+La seguridad en Truekealo se basa en estos principios:
+
+1. **Defense in Depth:** Múltiples capas de seguridad
+2. **Least Privilege:** Acceso mínimo necesario
+3. **Security by Design:** Seguridad desde el inicio
+4. **Transparency:** Auditoría y trazabilidad
+
+## Autenticación y Autorización
+
+### Flujo de Autenticación
+
+```{mermaid}
+sequenceDiagram
+    actor User
+    participant Client as Cliente Web
+    participant API as FastAPI
+    participant DB as Base de Datos
+    
+    User->>Client: Ingresa credenciales
+    Client->>API: POST /auth/login
+    API->>DB: Busca usuario
+    DB-->>API: Usuario encontrado
+    API->>API: Compara password con bcrypt
+    alt Credenciales válidas
+        API->>API: Genera JWT token
+        API-->>Client: Token + Refresh
+        Client->>Client: Almacena en localStorage
+    else Credenciales inválidas
+        API-->>Client: 401 Unauthorized
+    end
+```
+
+### Gestión de Tokens JWT
+
+**Access Token:**
+```json
+{
+  "sub": 1,
+  "email": "usuario@example.com",
+  "exp": 1702548000,
+  "iat": 1702461600,
+  "type": "access"
+}
+```
+
+**Configuración Recomendada:**
+```python
+ACCESS_TOKEN_EXPIRE_MINUTES = 10080  # 7 días
+REFRESH_TOKEN_EXPIRE_DAYS = 30
+ALGORITHM = "HS256"
+```
+
+### Protección de Endpoints
+
+```python
+from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPBearer, HTTPAuthCredentials
+
+security = HTTPBearer()
+
+async def verify_token(credentials: HTTPAuthCredentials = Depends(security)):
+    token = credentials.credentials
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        user_id = payload.get("sub")
+        if user_id is None:
+            raise HTTPException(status_code=401)
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401)
+    return user_id
+
+@router.get("/protected")
+async def protected_route(user_id: int = Depends(verify_token)):
+    return {"user_id": user_id}
+```
+
+## Encriptación
+
+### Contraseñas
+
+**NO hacer:**
+```python
+# ❌ NUNCA almacenar en texto plano
+user.password = "micontraseña123"
+```
+
+**Hacer:**
+```python
+# ✅ Usar bcrypt
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+def hash_password(password: str) -> str:
+    return pwd_context.hash(password)
+
+# Costo computacional (rounds)
+# cost=12 es el recomendado (tarda ~0.3 segundos)
+```
+
+### Datos Sensibles en Tránsito
+
+- **HTTPS/TLS 1.3:** Obligatorio en producción
+- **Certificados SSL:** De una CA confiable
+- **Cipher Suites:** Solo algoritmos modernos
+
+**Validación en FastAPI:**
+```python
+from fastapi import HTTPException
+
+@app.middleware("http")
+async def enforce_https(request: Request, call_next):
+    if request.url.scheme != "https" and not DEBUG:
+        return JSONResponse(
+            status_code=403,
+            content={"detail": "HTTPS required"}
+        )
+    return await call_next(request)
+```
+
+### Datos en Reposo
+
+**En Base de Datos:**
+- Las contraseñas están hasheadas con bcrypt
+- Los tokens JWT se generan dinámicamente
+- No se almacenan tokens en BD
+
+**En Archivos Subidos:**
+- Las imágenes se validan por tipo MIME
+- Se almacenan fuera del directorio web
+- Se renombran para evitar path traversal
+
+## Control de Acceso
+
+### Roles y Permisos
+
+```python
+from enum import Enum
+
+class UserRole(str, Enum):
+    USUARIO = "usuario"
+    ADMIN = "admin"
+    MODERADOR = "moderador"
+
+# En modelo de base de datos
+class Usuario(Base):
+    __tablename__ = "usuarios"
+    role: Mapped[UserRole] = mapped_column(default=UserRole.USUARIO)
+
+# Protección de endpoints
+async def require_admin(user: Usuario = Depends(get_current_user)):
+    if user.role != UserRole.ADMIN:
+        raise HTTPException(status_code=403, detail="Forbidden")
+    return user
+
+@router.delete("/articulos/{id}")
+async def delete_articulo(
+    id: int,
+    current_user: Usuario = Depends(require_admin)
+):
+    # Solo admins pueden eliminar
+    pass
+```
+
+### Validación de Propiedad
+
+```python
+@router.put("/articulos/{id}")
+async def update_articulo(
+    id: int,
+    data: ArticuloUpdate,
+    current_user: Usuario = Depends(get_current_user)
+):
+    articulo = db.query(Articulo).filter(Articulo.id == id).first()
+    
+    # Verificar que el usuario es propietario
+    if articulo.propietario_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Forbidden")
+    
+    articulo.titulo = data.titulo
+    db.commit()
+    return articulo
+```
+
+## Validación de Entrada
+
+### Pydantic Schemas
+
+```python
+from pydantic import BaseModel, EmailStr, Field, field_validator
+
+class UsuarioCreate(BaseModel):
+    email: EmailStr  # Valida formato de email
+    nombre_completo: str = Field(min_length=3, max_length=255)
+    password: str = Field(min_length=8)
+    
+    @field_validator('password')
+    @classmethod
+    def validate_password(cls, v):
+        if not any(char.isdigit() for char in v):
+            raise ValueError('Password debe contener números')
+        if not any(char.isupper() for char in v):
+            raise ValueError('Password debe contener mayúsculas')
+        return v
+
+class ArticuloCreate(BaseModel):
+    titulo: str = Field(min_length=5, max_length=255)
+    descripcion: str = Field(min_length=10, max_length=5000)
+    categoria: str = Field(pattern="^[a-z_]+$")
+    valor_estimado: float = Field(gt=0, le=100000)
+```
+
+### SQL Injection Prevention
+
+```python
+# ❌ VULNERABLE a SQL injection
+result = db.execute(f"SELECT * FROM usuarios WHERE email = '{email}'")
+
+# ✅ SEGURO con ORM
+user = db.query(Usuario).filter(Usuario.email == email).first()
+
+# ✅ SEGURO con parámetros
+result = db.execute(
+    text("SELECT * FROM usuarios WHERE email = :email"),
+    {"email": email}
+)
+```
+
+## Protección Contra Ataques
+
+### CSRF (Cross-Site Request Forgery)
+
+```python
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://truekealo.com", "https://www.truekealo.com"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["Content-Type", "Authorization"],
+    max_age=3600,  # Preflight cache
+)
+```
+
+### XSS (Cross-Site Scripting)
+
+**Frontend React:**
+```jsx
+// ❌ VULNERABLE
+<div dangerouslySetInnerHTML={{ __html: userInput }} />
+
+// ✅ SEGURO - React escapa automáticamente
+<div>{userInput}</div>
+
+// Si es necesario HTML, usar librería segura
+import DOMPurify from 'dompurify';
+<div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(userInput) }} />
+```
+
+### Rate Limiting
+
+```python
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+
+@router.post("/auth/login")
+@limiter.limit("5/minute")
+async def login(request: Request, credentials: LoginSchema):
+    # Máximo 5 intentos de login por minuto
+    pass
+
+@router.post("/usuarios")
+@limiter.limit("100/hour")
+async def create_user(user: UsuarioCreate):
+    # Máximo 100 registros por hora
+    pass
+```
+
+### Validación de Archivos Subidos
+
+```python
+from pathlib import Path
+import mimetypes
+
+ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
+ALLOWED_MIMES = {"image/jpeg", "image/png", "image/webp"}
+MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
+
+@router.post("/articulos/{id}/imagen")
+async def upload_image(
+    id: int,
+    file: UploadFile = File(...),
+    current_user: Usuario = Depends(get_current_user)
+):
+    # Validar extensión
+    ext = Path(file.filename).suffix.lower()
+    if ext not in ALLOWED_EXTENSIONS:
+        raise HTTPException(status_code=400, detail="Invalid file type")
+    
+    # Validar tipo MIME
+    mime_type, _ = mimetypes.guess_type(file.filename)
+    if mime_type not in ALLOWED_MIMES:
+        raise HTTPException(status_code=400, detail="Invalid MIME type")
+    
+    # Validar tamaño
+    contents = await file.read()
+    if len(contents) > MAX_FILE_SIZE:
+        raise HTTPException(status_code=413, detail="File too large")
+    
+    # Renombrar para evitar path traversal
+    import uuid
+    safe_filename = f"{uuid.uuid4()}{ext}"
+    
+    # Guardar en directorio seguro
+    file_path = Path("uploads/articulos") / safe_filename
+    file_path.parent.mkdir(parents=True, exist_ok=True)
+    file_path.write_bytes(contents)
+    
+    return {"filename": safe_filename}
+```
+
+## Auditoría y Logging
+
+### Registro de Eventos de Seguridad
+
+```python
+import logging
+from datetime import datetime
+
+security_logger = logging.getLogger("security")
+
+def log_login_attempt(email: str, success: bool, ip: str):
+    security_logger.info(
+        f"Login attempt - Email: {email}, Success: {success}, IP: {ip}, Time: {datetime.utcnow()}"
+    )
+
+def log_permission_denied(user_id: int, resource: str, ip: str):
+    security_logger.warning(
+        f"Permission denied - User: {user_id}, Resource: {resource}, IP: {ip}"
+    )
+
+@router.post("/auth/login")
+async def login(credentials: LoginSchema, request: Request):
+    user = db.query(Usuario).filter(Usuario.email == credentials.email).first()
+    
+    if not user or not verify_password(credentials.password, user.password_hash):
+        log_login_attempt(credentials.email, False, request.client.host)
+        raise HTTPException(status_code=401)
+    
+    log_login_attempt(credentials.email, True, request.client.host)
+    token = create_access_token({"sub": user.id})
+    return {"access_token": token}
+```
+
+### Logs Estructurados
+
+```python
+import json
+from datetime import datetime
+
+def log_user_action(user_id: int, action: str, resource_id: int, details: dict):
+    log_entry = {
+        "timestamp": datetime.utcnow().isoformat(),
+        "user_id": user_id,
+        "action": action,
+        "resource_id": resource_id,
+        "details": details
+    }
+    # Enviar a sistema de logging centralizado
+    security_logger.info(json.dumps(log_entry))
+
+# Uso
+log_user_action(
+    user_id=1,
+    action="articulo_creado",
+    resource_id=25,
+    details={"titulo": "Laptop", "categoria": "electrónica"}
+)
+```
+
+## Checklist de Seguridad
+
+- [ ] Usar HTTPS en producción
+- [ ] Cambiar SECRET_KEY en variables de entorno
+- [ ] Validar todas las entradas del usuario
+- [ ] Usar prepared statements o ORM
+- [ ] Implementar rate limiting
+- [ ] Loguear eventos de seguridad
+- [ ] Revisar CORS whitelist
+- [ ] Usar headers de seguridad HTTP
+- [ ] Mantener dependencias actualizadas
+- [ ] Realizar auditorías de seguridad periódicas
+
+---
+
+**Versión de Seguridad:** 1.0  
+**Última actualización:** `r format(Sys.Date(), '%d de %B de %Y')`  
+**Próxima revisión:** 90 días

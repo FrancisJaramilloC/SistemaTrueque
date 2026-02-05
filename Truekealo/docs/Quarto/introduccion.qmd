@@ -1,0 +1,151 @@
+---
+title: "Introducción al Sistema"
+author: "Carrera de Computación"
+date: today
+---
+
+# Introducción a Truekealo
+
+## ¿Qué es Truekealo?
+
+Truekealo es una plataforma digital diseñada para facilitar el **intercambio de artículos** entre usuarios de manera segura, confiable y sin intermediarios. Es un sistema que aprovecha la economía colaborativa para promover la sostenibilidad y el acceso equitativo a bienes.
+
+## Propósito del Proyecto
+
+El objetivo de Truekealo es:
+
+1. **Facilitar intercambios:** Permitir que usuarios intercambien artículos de forma sencilla
+2. **Comunidad segura:** Implementar mecanismos de seguridad y verificación de usuarios
+3. **Comunicación directa:** Permitir negociación y acuerdo entre partes
+4. **Trazabilidad:** Mantener registro de todas las transacciones
+5. **Sostenibilidad:** Promover la reutilización de artículos
+
+## Actores Principales
+
+```{mermaid}
+graph TD
+    A["Usuario Básico<br/>Comprador/Vendedor"] --> B["Sistema Truekealo"]
+    C["Usuario Premium<br/>Vendedor Frecuente"] --> B
+    D["Administrador<br/>Gestión del Sistema"] --> B
+    B --> E["Base de Datos"]
+    B --> F["Notificaciones"]
+    B --> G["Mensajería"]
+```
+
+### 👥 Usuarios Básicos
+- Pueden listar artículos para intercambiar
+- Recibir y hacer propuestas
+- Comunicarse con otros usuarios
+- Valorar transacciones completadas
+
+### 👑 Usuarios Administrativos
+- Gestión de usuarios
+- Moderación de contenido
+- Análisis de datos
+- Configuración del sistema
+
+## Funcionalidades Clave
+
+### 📱 Gestión de Artículos
+- Crear listados con descripción, categoría e imágenes
+- Editar o eliminar artículos
+- Marcar como disponibles/no disponibles
+- Galería de imágenes
+
+### 💬 Propuestas de Intercambio
+- Crear propuestas de intercambio
+- Negociar términos
+- Aceptar o rechazar propuestas
+- Historial de propuestas
+
+### 📧 Comunicación
+- Sistema de mensajería en tiempo real
+- Notificaciones de actividad
+- Alertas de propuestas nuevas
+
+### ⭐ Reputación
+- Sistema de calificación de usuarios
+- Historial de transacciones
+- Verificación de perfil
+
+## Casos de Uso
+
+### Caso 1: Intercambio Simple
+```
+Usuario A → Listar Artículo X
+         → Usuario B ve el artículo
+         → Usuario B propone intercambiar con Artículo Y
+         → Usuario A acepta
+         → Transacción completada
+```
+
+### Caso 2: Negociación
+```
+Usuario A → Listar Artículo X (valor estimado $100)
+         → Usuario B propone Artículo Y + Artículo Z
+         → Negociación por mensajería
+         → Se llega a acuerdo
+         → Se completa el intercambio
+```
+
+## Requisitos del Sistema
+
+### Para Usuarios
+- Conexión a Internet
+- Navegador web moderno
+- O aplicación móvil instalada
+- Correo electrónico válido
+
+### Para Desarrollo
+- Lenguaje: Python 3.11+
+- Base de Datos: PostgreSQL 15+
+- Frontend: React 18+, Node.js 18+
+- Mobile: React Native
+
+## Estructura de la Documentación
+
+Esta documentación está organizada en las siguientes secciones:
+
+```
+├── 📚 Documentación Principal
+│   ├── Introducción (este documento)
+│   ├── Instalación
+│   └── Primeros Pasos
+│
+├── 👥 Guías de Usuario
+│   ├── Guía del Usuario Final
+│   └── Guía del Administrador
+│
+├── 👨‍💻 Guías Técnicas
+│   ├── Arquitectura del Sistema
+│   ├── Base de Datos
+│   ├── API REST
+│   └── Seguridad
+│
+└── 🎓 Prácticas y Evaluación
+    ├── APE 007
+    ├── Pruebas
+    └── Despliegue
+```
+
+## Cronograma Académico
+
+| Actividad | Fecha | Estado |
+|-----------|-------|--------|
+| Fase 1: Diseño | Enero 2026 | ✅ Completado |
+| Fase 2: Desarrollo Backend | Enero-Febrero 2026 | ✅ Completado |
+| Fase 3: Frontend | Febrero 2026 | ⏳ En Progreso |
+| Fase 4: Mobile | Febrero-Marzo 2026 | ⏳ En Progreso |
+| Fase 5: Pruebas | Marzo 2026 | ⏳ Pendiente |
+| Fase 6: Despliegue | Marzo 2026 | ⏳ Pendiente |
+
+## Próximos Pasos
+
+1. **Para Usuarios:** Consulta la [Guía del Usuario](guia-usuario.qmd)
+2. **Para Desarrolladores:** Lee la [Guía del Desarrollador](guia-desarrollador.qmd)
+3. **Para Instalación:** Sigue la [Guía de Instalación](instalacion.qmd)
+
+---
+
+**Versión:** 1.0  
+**Última actualización:** `r format(Sys.Date(), '%d de %B de %Y')`

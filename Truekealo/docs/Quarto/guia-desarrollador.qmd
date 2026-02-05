@@ -1,0 +1,265 @@
+---
+title: "Guía del Desarrollador"
+author: "Equipo Técnico"
+date: today
+---
+
+# 👨‍💻 Guía del Desarrollador
+
+Bienvenido a la guía de desarrollo de Truekealo. Esta sección contiene toda la información técnica necesaria para trabajar con el proyecto.
+
+## Arquitectura del Sistema
+
+```{mermaid}
+graph TB
+    A["Cliente Web<br/>React + Vite"] --> B["API REST<br/>FastAPI"]
+    C["Aplicación Móvil<br/>React Native"] --> B
+    D["WebSocket Server<br/>Real-time"] --> B
+    B --> E["Base de Datos<br/>PostgreSQL"]
+    F["Cache<br/>Redis"] --> B
+    G["Storage<br/>S3/Local"] --> B
+```
+
+## Stack Tecnológico
+
+### Backend
+- **Framework:** FastAPI 0.100+
+- **Lenguaje:** Python 3.11
+- **Base de Datos:** PostgreSQL 15
+- **ORM:** SQLAlchemy 2.0
+- **Autenticación:** JWT (PyJWT)
+- **Validación:** Pydantic v2
+- **API Documentation:** OpenAPI/Swagger
+
+### Frontend
+- **Framework:** React 18
+- **Build Tool:** Vite
+- **Estilos:** Tailwind CSS
+- **Estado:** Redux Toolkit
+- **HTTP Client:** Axios
+- **Testing:** Vitest + React Testing Library
+
+### Mobile
+- **Framework:** React Native
+- **Gestión de Estado:** Redux/Provider
+- **Almacenamiento Local:** SQLite
+- **HTTP:** Axios (React Native)
+
+## Estructura del Proyecto
+
+```
+truekealo/
+├── backend/                    # API REST
+│   ├── app/
+│   │   ├── main.py            # Aplicación principal
+│   │   ├── core/              # Configuración y seguridad
+│   │   ├── models/            # Modelos de datos
+│   │   ├── schemas/           # Esquemas de validación
+│   │   ├── routers/           # Rutas de la API
+│   │   ├── database.py        # Configuración de BD
+│   │   └── __init__.py
+│   ├── alembic/               # Migraciones de BD
+│   ├── requirements.txt        # Dependencias Python
+│   ├── .env                   # Variables de entorno
+│   └── README.md
+│
+├── frontend/                   # Aplicación Web
+│   ├── src/
+│   │   ├── components/        # Componentes React
+│   │   ├── pages/             # Páginas
+│   │   ├── services/          # Servicios API
+│   │   ├── store/             # Estado Redux
+│   │   ├── styles/            # Estilos globales
+│   │   └── App.jsx
+│   ├── public/
+│   ├── package.json
+│   ├── vite.config.js
+│   └── README.md
+│
+├── mobile/                     # Aplicación Móvil
+│   ├── src/
+│   │   ├── components/
+│   │   ├── screens/
+│   │   ├── services/
+│   │   └── navigation/
+│   ├── package.json
+│   └── README.md
+│
+└── docs/                       # Documentación (Quarto)
+    ├── index.qmd
+    ├── _quarto.yml
+    └── ...
+```
+
+## Configuración de Desarrollo
+
+### Variables de Entorno Backend
+
+```env
+# Database
+DATABASE_URL=postgresql://user:password@localhost:5432/truekealo
+SQLALCHEMY_ECHO=False
+
+# JWT
+SECRET_KEY=tu-clave-secreta-aqui
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+REFRESH_TOKEN_EXPIRE_DAYS=7
+
+# CORS
+ALLOWED_ORIGINS=["http://localhost:3000","http://localhost:5173","http://localhost:8081"]
+
+# Email
+SMTP_SERVER=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=tu-email@gmail.com
+SMTP_PASSWORD=tu-contrasena
+FROM_EMAIL=noreply@truekealo.com
+
+# Storage
+UPLOAD_DIR=uploads/
+MAX_FILE_SIZE=5242880  # 5MB
+
+# Logging
+LOG_LEVEL=INFO
+```
+
+### Variables de Entorno Frontend
+
+```env
+VITE_API_URL=http://localhost:8000/api/v1
+VITE_WS_URL=ws://localhost:8000/ws
+VITE_APP_NAME=Truekealo
+VITE_ENVIRONMENT=development
+```
+
+## Flujos de Desarrollo
+
+### Crear una Nueva Feature
+
+```bash
+# 1. Crear rama
+git checkout -b feature/nueva-funcionalidad
+
+# 2. Hacer cambios y commits
+git add .
+git commit -m "feat: descripción de cambios"
+
+# 3. Push y crear Pull Request
+git push origin feature/nueva-funcionalidad
+```
+
+### Convenciones de Commits
+
+```
+feat:     Nueva funcionalidad
+fix:      Corrección de bug
+docs:     Cambios en documentación
+style:    Cambios de formato (sin cambios lógicos)
+refactor: Refactorización de código
+test:     Agregar o actualizar tests
+chore:    Cambios en configuración
+```
+
+## Testing
+
+### Backend - Tests Unitarios
+
+```bash
+cd backend
+pytest tests/ -v
+```
+
+### Frontend - Tests
+
+```bash
+cd frontend
+npm run test
+npm run test:coverage
+```
+
+### Pruebas de Integración
+
+```bash
+npm run test:e2e
+```
+
+## Documentación de API
+
+La documentación interactiva de la API está disponible en:
+
+- **Swagger UI:** `http://localhost:8000/docs`
+- **ReDoc:** `http://localhost:8000/redoc`
+
+## Mejores Prácticas
+
+### Backend
+
+1. **Type Hints:** Siempre usar type hints en Python
+   ```python
+   def get_user(user_id: int) -> User:
+       pass
+   ```
+
+2. **Validación:** Usar Pydantic schemas
+   ```python
+   class UserCreate(BaseModel):
+       email: EmailStr
+       password: constr(min_length=8)
+   ```
+
+3. **Errores:** Manejar errores apropiadamente
+   ```python
+   try:
+       ...
+   except ValueError as e:
+       raise HTTPException(status_code=400, detail=str(e))
+   ```
+
+### Frontend
+
+1. **Componentes:** Crear componentes reutilizables
+2. **Estado:** Usar Redux para estado global
+3. **Estilos:** Usar Tailwind CSS
+4. **Testing:** Escribir tests para componentes
+
+## Debugging
+
+### Backend
+
+```python
+# Usar logging
+import logging
+logger = logging.getLogger(__name__)
+logger.info(f"User {user_id} logged in")
+
+# O usar debugger
+import pdb; pdb.set_trace()
+```
+
+### Frontend
+
+```javascript
+// Usar console
+console.log("Value:", value);
+console.error("Error:", error);
+
+// O usar debugger en DevTools
+debugger;
+```
+
+## Despliegue
+
+Consulta [Guía de Despliegue](practicas/despliegue.qmd) para instrucciones de producción.
+
+## Recursos Útiles
+
+- [FastAPI Docs](https://fastapi.tiangolo.com/)
+- [React Docs](https://react.dev/)
+- [PostgreSQL Docs](https://www.postgresql.org/docs/)
+- [Python Best Practices](https://pep8.org/)
+
+---
+
+**Versión:** 1.0  
+**Última actualización:** `r format(Sys.Date(), '%d de %B de %Y')`

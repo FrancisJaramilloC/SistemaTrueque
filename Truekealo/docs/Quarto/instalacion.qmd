@@ -1,0 +1,235 @@
+---
+title: "Guía de Instalación"
+author: "Equipo de Desarrollo"
+date: today
+---
+
+# 🚀 Guía de Instalación
+
+Esta guía te ayudará a instalar y configurar Truekealo en tu entorno local de desarrollo.
+
+## Requisitos Previos
+
+### Sistema Operativo
+- Windows 10+ / macOS 10.15+ / Linux (Ubuntu 20.04+)
+
+### Software Requerido
+- **Git:** [https://git-scm.com/](https://git-scm.com/)
+- **Python 3.11+:** [https://www.python.org/](https://www.python.org/)
+- **Node.js 18+:** [https://nodejs.org/](https://nodejs.org/)
+- **PostgreSQL 15+:** [https://www.postgresql.org/](https://www.postgresql.org/)
+- **Visual Studio Code:** [https://code.visualstudio.com/](https://code.visualstudio.com/)
+
+### Verificar Instalación
+
+```bash
+# Verificar Python
+python --version  # Debe ser 3.11+
+
+# Verificar Node.js
+node --version   # Debe ser 18+
+npm --version
+
+# Verificar Git
+git --version
+
+# Verificar PostgreSQL
+psql --version
+```
+
+## Instalación del Backend
+
+### 1. Clonar Repositorio
+
+```bash
+git clone https://github.com/usuario/truekealo.git
+cd truekealo
+```
+
+### 2. Crear Entorno Virtual
+
+```bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
+
+# macOS / Linux
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Instalar Dependencias
+
+```bash
+cd backend
+pip install -r requirements.txt
+```
+
+### 4. Configurar Variables de Entorno
+
+Copia `.env.example` a `.env` y configura:
+
+```bash
+cp .env.example .env
+```
+
+Edita `.env` con tus valores:
+
+```env
+# Database
+DATABASE_URL=postgresql://user:password@localhost:5432/truekealo
+
+# JWT
+SECRET_KEY=tu-clave-secreta-aqui
+ALGORITHM=HS256
+
+# CORS
+ALLOWED_ORIGINS=["http://localhost:3000","http://localhost:5173"]
+
+# Email
+SMTP_SERVER=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=tu-email@gmail.com
+SMTP_PASSWORD=tu-contrasena
+```
+
+### 5. Crear Base de Datos
+
+```bash
+# Conectar a PostgreSQL
+psql -U postgres
+
+# En la consola psql:
+CREATE DATABASE truekealo;
+CREATE USER truekealo_user WITH PASSWORD 'password';
+ALTER ROLE truekealo_user SET client_encoding TO 'utf8';
+ALTER ROLE truekealo_user SET default_transaction_isolation TO 'read committed';
+GRANT ALL PRIVILEGES ON DATABASE truekealo TO truekealo_user;
+```
+
+### 6. Ejecutar Migraciones
+
+```bash
+# En el directorio backend/
+alembic upgrade head
+```
+
+### 7. Ejecutar Servidor Backend
+
+```bash
+# En el directorio backend/
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+El servidor estará disponible en: `http://localhost:8000`
+
+## Instalación del Frontend
+
+### 1. Instalar Dependencias
+
+```bash
+cd frontend
+npm install
+```
+
+### 2. Configurar Variables de Entorno
+
+```bash
+cp .env.example .env.local
+```
+
+Edita `.env.local`:
+
+```env
+VITE_API_URL=http://localhost:8000/api/v1
+VITE_APP_NAME=Truekealo
+```
+
+### 3. Ejecutar Servidor de Desarrollo
+
+```bash
+npm run dev
+```
+
+La aplicación estará disponible en: `http://localhost:5173`
+
+## Instalación de Aplicación Móvil
+
+### Opción 1: React Native
+
+```bash
+cd mobile
+npm install
+
+# Para Android
+npm run android
+
+# Para iOS
+npm run ios
+```
+
+## Verificación de Instalación
+
+### Backend
+```bash
+# Verificar API
+curl http://localhost:8000/api/v1/health
+```
+
+Respuesta esperada:
+```json
+{"status": "ok"}
+```
+
+### Frontend
+Abre en navegador: `http://localhost:5173`
+
+Deberías ver la página de inicio de Truekealo.
+
+## Troubleshooting
+
+### Problema: Puerto 8000 ya está en uso
+
+```bash
+# Encontrar el proceso usando el puerto
+netstat -ano | findstr :8000  # Windows
+lsof -i :8000                  # macOS/Linux
+
+# Terminar el proceso o usar otro puerto
+uvicorn app.main:app --reload --port 8001
+```
+
+### Problema: Error de conexión a Base de Datos
+
+```bash
+# Verificar que PostgreSQL está corriendo
+sudo systemctl status postgresql  # Linux
+brew services list               # macOS
+services.msc                      # Windows
+
+# Verificar credenciales en .env
+psql -U truekealo_user -d truekealo -h localhost
+```
+
+### Problema: Node modules no instala
+
+```bash
+# Limpiar cache
+npm cache clean --force
+rm -rf node_modules package-lock.json
+
+# Reinstalar
+npm install
+```
+
+## Próximos Pasos
+
+1. ✅ Backend funcionando en `http://localhost:8000`
+2. ✅ Frontend funcionando en `http://localhost:5173`
+3. 📖 Lee la [Guía del Desarrollador](guia-desarrollador.qmd)
+4. 🧪 Consulta la [Guía de Pruebas](practicas/pruebas.qmd)
+
+---
+
+**Versión:** 1.0  
+**Última actualización:** `r format(Sys.Date(), '%d de %B de %Y')`

@@ -1,0 +1,108 @@
+project:
+  type: website
+  title: "Truekealo - Sistema de Intercambio de Artículos"
+  execute-dir: project
+  output-dir: _site
+
+website:
+  title: "Truekealo"
+  description: "Documentación completa del sistema de intercambio de artículos"
+  
+  navbar:
+    title: "Truekealo"
+    logo: docs/assets/logo.svg
+    background: primary
+    search: true
+    tools:
+      - icon: github
+        href: https://github.com/
+        aria-label: GitHub
+    
+    left:
+      - href: docs/index.qmd
+        text: "Inicio"
+      - href: docs/referencia-rapida.qmd
+        text: "Referencia Rápida"
+      - href: docs/guia-usuario.qmd
+        text: "Guía de Usuario"
+      - href: docs/guia-desarrollador.qmd
+        text: "Guía del Desarrollador"
+      - text: "Especificaciones"
+        menu:
+          - docs/especificaciones/arquitectura.qmd
+          - docs/especificaciones/base-datos.qmd
+          - docs/especificaciones/api.qmd
+          - docs/especificaciones/seguridad.qmd
+      - text: "Prácticas"
+        menu:
+          - docs/practicas/ape-007.qmd
+          - docs/practicas/pruebas.qmd
+          - docs/practicas/despliegue.qmd
+    
+    right:
+      - icon: chat-right-text
+        aria-label: Report an issue
+        onclick: "window.open('https://github.com/')"
+  
+  sidebar:
+    - id: docs-sidebar
+      contents:
+        - section: "📚 Documentación Principal"
+          contents:
+            - docs/index.qmd
+            - docs/referencia-rapida.qmd
+            - docs/introduccion.qmd
+            - docs/instalacion.qmd
+        
+        - section: "👥 Guías"
+          contents:
+            - docs/guia-usuario.qmd
+            - docs/guia-desarrollador.qmd
+            - docs/guia-administrador.qmd
+        
+        - section: "⚙️ Especificaciones Técnicas"
+          contents:
+            - docs/especificaciones/arquitectura.qmd
+            - docs/especificaciones/base-datos.qmd
+            - docs/especificaciones/api.qmd
+            - docs/especificaciones/seguridad.qmd
+        
+        - section: "🎓 Prácticas y Evaluación"
+          contents:
+            - docs/practicas/ape-007.qmd
+            - docs/practicas/pruebas.qmd
+            - docs/practicas/despliegue.qmd
+  
+  page-footer:
+    left: |
+      © 2026 Truekealo. Carrera de Computación - FEIRNNR
+      
+      **Docente:** Edison Leonardo Coronel Romero
+    
+    center: |
+      Built with [Quarto](https://quarto.org/)
+    
+    right: |
+      **Versión:** 1.0
+      
+      Última actualización: {{date}}
+
+  search:
+    location: navbar
+    type: overlay
+
+format:
+  html:
+    theme: [cosmo, docs/assets/custom.scss]
+    css: docs/assets/custom.css
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    highlight-style: github
+    code-block-bg: true
+    code-overflow: wrap
+    smooth-scroll: true
+    
+    page-layout: article
+    margin-top: 2em
+    margin-bottom: 2em
