@@ -22,8 +22,12 @@ async def lifespan(app: FastAPI):
     Se ejecuta al iniciar y cerrar la aplicación
     """
     # Startup: Verificar conexión a base de datos
+<<<<<<< HEAD
+    print("Iniciando aplicación...")
+=======
     print("🚀 Iniciando aplicación Truekealo...")
     db_connected = False
+>>>>>>> feature/Movil
     try:
         # No creamos tablas; solo probamos conexión a la BD configurada
         from app.database import engine
@@ -31,17 +35,27 @@ async def lifespan(app: FastAPI):
         with engine.connect() as conn:
             conn.execute(text("SELECT 1"))
         print(f"✅ Conexión a base de datos '{settings.DB_NAME}' exitosa")
+<<<<<<< HEAD
+=======
         db_connected = True
+>>>>>>> feature/Movil
     except Exception as e:
         print(f"⚠️ Advertencia: No se pudo conectar a BD '{settings.DB_NAME}': {e}")
         print("La aplicación continuará. Verifica que MariaDB esté corriendo y las credenciales sean correctas.")
     
+<<<<<<< HEAD
+    yield
+    
+    # Shutdown
+    print("Cerrando aplicación...")
+=======
     print("📡 Servidor listo para recibir peticiones")
     
     yield  # La aplicación corre aquí
     
     # Shutdown
     print("\n🛑 Cerrando aplicación...")
+>>>>>>> feature/Movil
 
 
 # ==================== Configuración de la Aplicación ====================
@@ -58,11 +72,18 @@ app = FastAPI(
 # ==================== Configuración de CORS ====================
 app.add_middleware(
     CORSMiddleware,
+<<<<<<< HEAD
+    allow_origins=settings.ALLOWED_ORIGINS,
+    allow_credentials=settings.CORS_ALLOW_CREDENTIALS,
+    allow_methods=settings.CORS_ALLOW_METHODS,
+    allow_headers=settings.CORS_ALLOW_HEADERS,
+=======
     allow_origins=["*"],  # Permitir todas las origins para desarrollo móvil
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allow_headers=["*"],
     max_age=3600,
+>>>>>>> feature/Movil
 )
 
 

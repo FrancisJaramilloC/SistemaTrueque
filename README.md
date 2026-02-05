@@ -6,6 +6,108 @@
 
 ##  Descripción
 
+<<<<<<< HEAD
+Truekealo es una plataforma web de **intercambio colaborativo de artículos** entre usuarios. Permite que personas publiquen artículos que no usan, busquen artículos de otros usuarios y realicen propuestas de intercambio sin intervención de dinero.
+
+### Características Principales
+
+-  **Autenticación Segura** con JWT y contraseñas hasheadas (bcrypt)
+-  **Interfaz Responsive** con diseño mobile-first y soporte dark mode
+-  **Sistema de Artículos** con CRUD completo, búsqueda y filtros
+-  **Propuestas de Intercambio** entre usuarios
+-  **Perfiles de Usuario** con información personal y historial
+-  **API REST** documentada con Swagger/OpenAPI
+-  **Menú de Accesibilidad Completo** con múltiples herramientas (WCAG 2.1 AA)
+-  **Arquitectura Escalable** con separación de capas
+
+### Frontend
+- **HTML5** - Markup semántico
+- **CSS3** - Tailwind CSS + CSS personalizado
+- **JavaScript ES6+** - Vanilla JS sin dependencias externas
+
+### Backend
+- **FastAPI** - Framework web moderno y rápido
+- **SQLAlchemy** - ORM para gestión de datos
+- **Pydantic** - Validación de datos
+- **Python-Jose** - JWT authentication
+- **Passlib** - Password hashing
+
+### Base de Datos
+- **MariaDB ** - Base de datos relacional
+
+##  Documentación Completa
+
+**[👉 ACCEDE AL ÍNDICE DE DOCUMENTACIÓN](docs/INDICE.md)** ← Punto de entrada principal
+
+### Documentos Principales
+
+| Documento | Descripción | Tiempo |
+|-----------|-------------|--------|
+| **[INDICE.md](docs/INDICE.md)** | Índice navegable de toda la documentación | 2 min |
+| **[RESUMEN_VISUAL.md](docs/RESUMEN_VISUAL.md)** | Diagramas y visualizaciones del sistema | 5 min |
+| **[DOCUMENTACION_TECNICA.md](docs/DOCUMENTACION_TECNICA.md)** | Arquitectura, API, seguridad, ejemplos | 30 min |
+| **[INSTALACION.md](docs/INSTALACION.md)** | Guía paso a paso (BD, backend, frontend) | 20 min |
+| **[GITFLOW_GUIDE.md](docs/GITFLOW_GUIDE.md)** | Control de versiones y convenciones | 15 min |
+| **[RESUMEN_EJECUTIVO.md](docs/RESUMEN_EJECUTIVO.md)** | Resumen ejecutivo y checklist | 10 min |
+| **[CHECKLIST_VERIFICACION.md](docs/CHECKLIST_VERIFICACION.md)** | Verificación de entregables | 5 min |
+| **[architecture/](docs/architecture/)** | Diagramas C4 en PlantUML | 10 min |
+
+---
+
+##  Inicio Rápido
+
+### Requisitos
+- Python 3.9+
+- MariaDB 10.x
+- Navegador moderno
+
+### Instalación (Resumida)
+
+```bash
+# Backend
+cd Truekealo/backend
+python -m venv venv
+source venv/bin/activate      # o: venv\Scripts\activate en Windows
+cp .env.example .env
+pip install -r requirements.txt
+python -m uvicorn app.main:app --reload
+
+# Frontend (otra terminal)
+cd Truekealo/frontend
+python -m http.server 5500
+```
+
+**Acceder en:** http://localhost:5500  
+**Swagger API:** http://localhost:8000/api/docs
+
+**Para instalación completa con BD:** Ver [docs/INSTALACION.md](docs/INSTALACION.md)
+
+##  Rutas de Aprendizaje
+
+###  Rápida (30 min)
+1. [README.md](README.md) - Este archivo
+2. [RESUMEN_VISUAL.md](docs/RESUMEN_VISUAL.md) - Visualizar arquitectura
+3. [INSTALACION.md](docs/INSTALACION.md) - Setup rápido
+
+###  Desarrollo
+1. [INSTALACION.md](docs/INSTALACION.md) - Setup completo
+2. [DOCUMENTACION_TECNICA.md](docs/DOCUMENTACION_TECNICA.md) - Entender API
+
+
+##  Endpoints Principales
+
+```
+POST   /api/v1/auth/register        # Registro
+POST   /api/v1/auth/login           # Login
+GET    /api/v1/articulos/           # Listar artículos
+POST   /api/v1/articulos/           # Crear artículo
+GET    /api/v1/propuestas/recibidas # Propuestas recibidas
+PATCH  /api/v1/propuestas/{id}      # Aceptar/rechazar
+```
+
+**Documentación interactiva:** http://localhost:8000/api/docs  
+**ReDoc alternativo:** http://localhost:8000/api/redoc
+=======
 Truekealo es una plataforma **multiplataforma** (web y móvil) de **intercambio colaborativo de artículos** entre usuarios. Permite que personas publiquen artículos que no usan, busquen artículos de otros usuarios y realicen propuestas de intercambio sin intervención de dinero.
 
 ### 📱 Disponible en:
@@ -280,8 +382,12 @@ npm start
 ###  Desarrollo
 1. [INSTALACION.md](docs/INSTALACION.md) - Setup completo
 2. [DOCUMENTACION_TECNICA.md](docs/DOCUMENTACION_TECNICA.md) - Entender API
+>>>>>>> feature/Movil
 
+---
 
+<<<<<<< HEAD
+=======
 ##  Endpoints Principales
 
 ### API Backend
@@ -339,6 +445,7 @@ configuracion        # Cambiar contraseña
 
 ---
 
+>>>>>>> feature/Movil
 ##  Seguridad
 
 ✅ JWT Authentication (30 min expiration)  
@@ -373,6 +480,15 @@ configuracion        # Cambiar contraseña
 
 ```
 Backend:         1500+ líneas Python (15 archivos)
+<<<<<<< HEAD
+Frontend:        2500+ líneas HTML/CSS/JS
+Documentación:   8700+ líneas (7 archivos)
+Diagramas C4:    4 niveles (PlantUML)
+Endpoints:       15+ documentados
+Base de Datos:   4 tablas normalizadas
+Dependencias:    27 paquetes Python
+Total:           40+ archivos, 12,000+ líneas
+=======
 Frontend Web:    3500+ líneas JSX/CSS (40+ componentes)
 Frontend Móvil:  2800+ líneas JSX (25+ pantallas)
 Documentación:   10000+ líneas (9 archivos)
@@ -381,6 +497,7 @@ Endpoints:       15+ documentados
 Base de Datos:   4 tablas normalizadas
 Dependencias:    27 paquetes Python + 11 paquetes npm (web) + 9 paquetes (móvil)
 Total:           80+ archivos, 17,800+ líneas
+>>>>>>> feature/Movil
 ```
 
 Ver [CHECKLIST_VERIFICACION.md](docs/CHECKLIST_VERIFICACION.md) para detalle completo.
@@ -436,6 +553,12 @@ El menú de accesibilidad está disponible en todas las páginas del sitio:
 
 ### 📄 Archivos del Sistema
 
+<<<<<<< HEAD
+- `frontend/assets/js/accessibility.js` - Lógica principal (561 líneas)
+- `frontend/assets/css/accessibility-menu.css` - Estilos del menú
+- `frontend/assets/css/accessibility.css` - Estilos de accesibilidad aplicados
+- `frontend/includes/accessibility-menu.html` - HTML del componente
+=======
 - **Frontend React**:
   - `frontend-react/src/components/AccessibilityPanel.jsx` - Componente React del panel
   - `frontend-react/src/hooks/useAccessibility.js` - Hook personalizado con toda la lógica
@@ -447,6 +570,7 @@ El menú de accesibilidad está disponible en todas las páginas del sitio:
   - `frontend/assets/css/accessibility-menu.css` - Estilos del menú
   - `frontend/assets/css/accessibility.css` - Estilos de accesibilidad aplicados
   - `frontend/includes/accessibility-menu.html` - HTML del componente
+>>>>>>> feature/Movil
 
 ---
 
@@ -459,6 +583,11 @@ cd Truekealo/backend
 source venv/bin/activate
 python -m uvicorn app.main:app --reload
 
+<<<<<<< HEAD
+# Terminal 2: Frontend  
+cd Truekealo/frontend
+python -m http.server 5500
+=======
 # Terminal 2: Frontend Web
 cd Truekealo/frontend
 npm install
@@ -477,6 +606,7 @@ npm start
 export const API_URL = 'http://TU_IP:8001/api/v1';
 // Ejemplo: 'http://192.168.1.100:8001/api/v1'
 // Tu dispositivo y PC deben estar en la misma red WiFi
+>>>>>>> feature/Movil
 ```
 
 **Ver API docs:**
@@ -492,10 +622,14 @@ Ver [DOCUMENTACION_TECNICA.md#troubleshooting](docs/DOCUMENTACION_TECNICA.md)
 ## Documentación de Referencia
 
 -  [Backend README](Truekealo/backend/README.md) - Info del servidor
+<<<<<<< HEAD
+-  [Arquitectura C4](docs/architecture/README.md) - Cómo ver diagramas
+=======
 -  [Frontend Web README](Truekealo/frontend/README.md) - Aplicación web
 -  [Mobile README](Truekealo/mobile/README.md) - Aplicación móvil completa
 -  [Arquitectura C4](docs/architecture/README.md) - Cómo ver diagramas
 -  [FIX Eliminar Artículos](docs/FIX_ELIMINAR_ARTICULOS.md) - Corrección móvil
+>>>>>>> feature/Movil
 
 ---
 

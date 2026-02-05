@@ -24,8 +24,11 @@ class MensajeResponse(MensajeBase):
     remitente_id: int
     destinatario_id: int
     leido: bool
+<<<<<<< HEAD
+=======
     tipo: str
     propuesta_id: Optional[int] = None
+>>>>>>> feature/Movil
     created_at: datetime
     
     class Config:

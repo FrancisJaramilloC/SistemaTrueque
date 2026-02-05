@@ -10,9 +10,14 @@ from typing import List
 from app.database import get_db
 from app.schemas.propuesta import PropuestaCreate, PropuestaUpdate, PropuestaResponse, PropuestaDetalle
 from app.models.propuesta import Propuesta, EstadoPropuesta
+<<<<<<< HEAD
+from app.models.articulo import Articulo
+from app.models.user import User
+=======
 from app.models.articulo import Articulo, EstadoArticulo
 from app.models.user import User
 from app.models.mensaje import Mensaje, TipoMensaje
+>>>>>>> feature/Movil
 from app.core.security import get_current_user
 
 router = APIRouter(prefix="/propuestas", tags=["Propuestas"])
@@ -66,6 +71,8 @@ async def create_propuesta(
             detail="No puedes hacer una propuesta sobre tu propio artículo"
         )
     
+<<<<<<< HEAD
+=======
     # Verificar que el artículo solicitado esté disponible
     if articulo_solicitado.estado_articulo != "disponible":
         raise HTTPException(
@@ -93,6 +100,7 @@ async def create_propuesta(
             detail="Ya tienes una propuesta pendiente para este artículo. Espera respuesta antes de enviar otra."
         )
     
+>>>>>>> feature/Movil
     # Crear la propuesta
     new_propuesta = Propuesta(
         usuario_ofertante_id=current_user.id,
@@ -106,6 +114,8 @@ async def create_propuesta(
     db.commit()
     db.refresh(new_propuesta)
     
+<<<<<<< HEAD
+=======
     # Crear mensaje automático para iniciar conversación
     mensaje_contenido = f"Te he enviado una propuesta de intercambio:\n\n"
     mensaje_contenido += f"🔄 Ofrezco: {articulo_ofrecido.titulo}\n"
@@ -124,6 +134,7 @@ async def create_propuesta(
     db.add(nuevo_mensaje)
     db.commit()
     
+>>>>>>> feature/Movil
     return new_propuesta
 
 
@@ -171,6 +182,8 @@ async def get_propuestas_enviadas(
     return [_serialize_propuesta(p) for p in propuestas]
 
 
+<<<<<<< HEAD
+=======
 @router.get("/resumen", response_model=dict)
 async def get_resumen_pendientes(
     db: Session = Depends(get_db),
@@ -205,6 +218,7 @@ async def get_resumen_pendientes(
     }
 
 
+>>>>>>> feature/Movil
 @router.get("/{propuesta_id}", response_model=PropuestaDetalle)
 async def get_propuesta(
     propuesta_id: int,
@@ -274,6 +288,15 @@ async def update_propuesta_estado(
             detail="Propuesta no encontrada"
         )
     
+<<<<<<< HEAD
+    # Solo el receptor puede aceptar/rechazar
+    if propuesta.usuario_receptor_id != current_user.id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Solo el receptor puede actualizar esta propuesta"
+        )
+    
+=======
     # Validar permisos según el estado
     es_receptor = propuesta.usuario_receptor_id == current_user.id
     es_ofertante = propuesta.usuario_ofertante_id == current_user.id
@@ -303,10 +326,13 @@ async def update_propuesta_estado(
             )
     
     # Actualizar estado de la propuesta
+>>>>>>> feature/Movil
     propuesta.estado = propuesta_data.estado
     if propuesta_data.mensaje:
         propuesta.mensaje = propuesta_data.mensaje
     
+<<<<<<< HEAD
+=======
     # Si se acepta la propuesta, cambiar ambos artículos a INTERCAMBIADO
     if propuesta_data.estado == EstadoPropuesta.ACEPTADA:
         articulo_ofrecido = db.query(Articulo).filter(Articulo.id == propuesta.articulo_ofrecido_id).first()
@@ -356,6 +382,7 @@ async def update_propuesta_estado(
             )
             db.add(mensaje_rechazo)
     
+>>>>>>> feature/Movil
     db.commit()
     db.refresh(propuesta)
     
@@ -399,13 +426,46 @@ def _serialize_propuesta(propuesta: Propuesta) -> dict:
     }
 
 
+<<<<<<< HEAD
+@router.get("/resumen", response_model=dict)
+async def get_resumen_pendientes(
+=======
 @router.put("/{propuesta_id}/revertir", response_model=PropuestaResponse)
 async def revertir_intercambio(
     propuesta_id: int,
+>>>>>>> feature/Movil
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
     """
+<<<<<<< HEAD
+    Devuelve un resumen de propuestas pendientes para el usuario actual.
+
+    Se consideran pendientes todas las propuestas en estado "pendiente" donde el
+    usuario sea ofertante o receptor. Este valor se usa para el contador de
+    intercambios pendientes en el dashboard y se calcula al momento de la
+    consulta, sin procesos automáticos.
+    """
+    pendientes = db.query(Propuesta).filter(
+        Propuesta.estado == EstadoPropuesta.PENDIENTE,
+        or_(
+            Propuesta.usuario_ofertante_id == current_user.id,
+            Propuesta.usuario_receptor_id == current_user.id
+        )
+    ).count()
+
+    total_usuario = db.query(Propuesta).filter(
+        or_(
+            Propuesta.usuario_ofertante_id == current_user.id,
+            Propuesta.usuario_receptor_id == current_user.id
+        )
+    ).count()
+
+    return {
+        "pendientes": pendientes,
+        "total": total_usuario
+    }
+=======
     Revierte un intercambio aceptado, volviendo los artículos a DISPONIBLE
     
     Args:
@@ -481,3 +541,4 @@ async def revertir_intercambio(
     db.refresh(propuesta)
     
     return propuesta
+>>>>>>> feature/Movil

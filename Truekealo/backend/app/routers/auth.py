@@ -10,7 +10,11 @@ from pydantic import BaseModel
 import secrets
 
 from app.database import get_db
+<<<<<<< HEAD
+from app.schemas.user import UserCreate, UserResponse, Token, UserLogin
+=======
 from app.schemas.user import UserCreate, UserResponse, Token, UserLogin, UserUpdate
+>>>>>>> feature/Movil
 from app.core.security import (
     get_password_hash,
     verify_password,
@@ -155,6 +159,8 @@ async def get_current_user_info(current_user: User = Depends(get_current_user)):
     return current_user
 
 
+<<<<<<< HEAD
+=======
 @router.put("/profile", response_model=UserResponse)
 async def update_profile(
     user_data: UserUpdate,
@@ -197,6 +203,7 @@ async def update_profile(
     return user
 
 
+>>>>>>> feature/Movil
 class ChangePasswordRequest(BaseModel):
     current_password: str
     new_password: str

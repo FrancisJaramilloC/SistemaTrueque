@@ -10,7 +10,11 @@ from datetime import datetime
 
 from app.database import get_db
 from app.schemas.mensaje import MensajeCreate, MensajeResponse
+<<<<<<< HEAD
+from app.models.mensaje import Mensaje
+=======
 from app.models.mensaje import Mensaje, TipoMensaje
+>>>>>>> feature/Movil
 from app.models.user import User
 from app.core.security import get_current_user
 
@@ -80,18 +84,31 @@ async def get_conversacion(
     Returns:
         List[MensajeResponse]: Lista de mensajes de la conversación
     """
+<<<<<<< HEAD
+=======
     if not current_user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="No autenticado"
         )
 
+>>>>>>> feature/Movil
     mensajes = db.query(Mensaje).filter(
         or_(
             and_(Mensaje.remitente_id == current_user.id, Mensaje.destinatario_id == usuario_id),
             and_(Mensaje.remitente_id == usuario_id, Mensaje.destinatario_id == current_user.id)
         )
     ).order_by(Mensaje.created_at.asc()).all()
+<<<<<<< HEAD
+    
+    # Marcar como leídos los mensajes recibidos
+    for mensaje in mensajes:
+        if mensaje.destinatario_id == current_user.id and not mensaje.leido:
+            mensaje.leido = True
+    
+    db.commit()
+    
+=======
 
     if not mensajes:
         return []
@@ -102,6 +119,7 @@ async def get_conversacion(
         db.add(mensaje)
     db.commit()
 
+>>>>>>> feature/Movil
     return mensajes
 
 
@@ -120,6 +138,27 @@ async def get_conversaciones(
     Returns:
         List[dict]: Lista de conversaciones
     """
+<<<<<<< HEAD
+    # Obtener todos los mensajes donde el usuario es remitente o destinatario
+    mensajes = db.query(Mensaje).filter(
+        or_(
+            Mensaje.remitente_id == current_user.id,
+            Mensaje.destinatario_id == current_user.id
+        )
+    ).order_by(Mensaje.created_at.desc()).all()
+    
+    # Agrupar por usuario (conversación)
+    conversaciones_dict = {}
+    for mensaje in mensajes:
+        # Determinar el ID del otro usuario
+        otro_usuario_id = mensaje.destinatario_id if mensaje.remitente_id == current_user.id else mensaje.remitente_id
+        
+        # Si no está en el diccionario, agregarlo
+        if otro_usuario_id not in conversaciones_dict:
+            otro_usuario = db.query(User).filter(User.id == otro_usuario_id).first()
+            
+            # Contar mensajes no leídos
+=======
     if not current_user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -148,6 +187,7 @@ async def get_conversaciones(
             if not otro_usuario:
                 continue
 
+>>>>>>> feature/Movil
             mensajes_no_leidos = db.query(Mensaje).filter(
                 and_(
                     Mensaje.remitente_id == otro_usuario_id,
@@ -155,6 +195,24 @@ async def get_conversaciones(
                     Mensaje.leido == False
                 )
             ).count()
+<<<<<<< HEAD
+            
+            conversaciones_dict[otro_usuario_id] = {
+                "otro_usuario_id": otro_usuario_id,
+                "otro_usuario_nombre": otro_usuario.nombre_completo,
+                "otro_usuario_email": otro_usuario.email,
+                "ultimo_mensaje": mensaje.contenido,
+                "ultimo_mensaje_fecha": mensaje.created_at,
+                "mensajes_no_leidos": mensajes_no_leidos,
+                "es_remitente": mensaje.remitente_id == current_user.id
+            }
+    
+    # Convertir a lista y ordenar por fecha
+    conversaciones = list(conversaciones_dict.values())
+    conversaciones.sort(key=lambda x: x["ultimo_mensaje_fecha"], reverse=True)
+    
+    return conversaciones
+=======
 
             ultimo_mensaje_usuario = db.query(Mensaje).filter(
                 or_(
@@ -186,6 +244,7 @@ async def get_conversaciones(
         import traceback
         traceback.print_exc()
         return []
+>>>>>>> feature/Movil
 
 
 @router.put("/{mensaje_id}/leer", response_model=MensajeResponse)

@@ -2,6 +2,14 @@
 Modelo de Mensaje
 Define la estructura de la tabla 'mensajes' en la base de datos
 """
+<<<<<<< HEAD
+from sqlalchemy import Column, Integer, Text, ForeignKey, DateTime, Boolean
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+from app.database import Base
+
+
+=======
 from sqlalchemy import Column, Integer, Text, ForeignKey, DateTime, Boolean, String, Enum as SQLEnum
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
@@ -15,6 +23,7 @@ class TipoMensaje(str, enum.Enum):
     SYSTEM = "system"
 
 
+>>>>>>> feature/Movil
 class Mensaje(Base):
     """
     Modelo de Mensaje para comunicación entre usuarios
@@ -40,8 +49,11 @@ class Mensaje(Base):
     # ==================== Contenido ====================
     contenido = Column(Text, nullable=False)
     leido = Column(Boolean, default=False)
+<<<<<<< HEAD
+=======
     tipo = Column(SQLEnum(TipoMensaje), default=TipoMensaje.USER, nullable=False)
     propuesta_id = Column(Integer, ForeignKey("propuestas.id", ondelete="SET NULL"), nullable=True)
+>>>>>>> feature/Movil
     
     # ==================== Timestamps ====================
     created_at = Column(DateTime(timezone=True), server_default=func.now())
